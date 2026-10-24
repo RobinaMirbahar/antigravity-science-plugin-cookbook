@@ -1,33 +1,35 @@
 ---
-title: "Anatomy of a Production AI Agent Plugin: Building Custom Skills, Rules, Lifecycle Hooks & 3D MCP Sidecars in Google Antigravity (Science Plugin Blueprint)"
+title: "From Ancient Latin Epigraphy to 3D Protein Folding: Engineering Custom Plugins, PEP 723 Skills & WebGL MCP Sidecars in Google Antigravity"
 published: false
-description: "A hands-on engineering deep dive and cookbook for Google Antigravity's Customization System — dissecting the official 33-skill Science Plugin (v1.3.1), PEP 723 uv micro-environments, zero-leak credential protocols, and interactive 3D Mol* MCP Sidecars."
-tags: ai, gemini,bioinformatics, opensource
+description: "I reverse-engineered Google Antigravity's 33-skill Science Plugin (v1.3.1) and built an open-source interactive 3D Biomolecular & Variant Studio, a zero-dependency PEP 723 C-alpha QC auditor, and a full custom plugin cookbook."
+tags: ai, gemini, bioinformatics, opensource
 cover_image: https://www.gstatic.com/antigravity/buildWithGoogle/science/banner.png
 ---
 
 ![Science Plugin: scientific tools for your agent](https://www.gstatic.com/antigravity/buildWithGoogle/science/banner.png)
 
-When scaling an autonomous coding or research agent from a general-purpose assistant into a domain-specific expert, **dumping 50 pages of API documentation into a single system prompt fails quickly**. It bloats the context window, introduces instruction drift, and offers no deterministic guarantees for rate limiting, credential security, or interactive visualization.
+What happens when you ask an AI coding agent to **score a non-coding human genomic variant with AlphaGenome**, **map a missense mutation onto an AlphaFold 3D protein structure**, **screen ChEMBL for nanomolar small-molecule inhibitors**, or **restore a damaged 2,000-year-old Roman inscription using Google DeepMind's Aeneas model**?
 
-**Google Antigravity** solves this at the systems level through its **Customization & Plugin Architecture**—a composable hierarchy of **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Model Context Protocol (MCP) Servers (`mcp_config.json`)**, and **Interactive Auxiliary Pane Sidecars (`sidecar.json`)**.
+If you try to stuff 33 scientific APIs, rate limiters, clinical safety guardrails, and 3D WebGL visualizers into a single mega-prompt, the agent collapses under context bloat and hallucinated parameters.
 
-Instead of speaking in abstract theory, in this engineering deep dive and cookbook we will reverse-engineer one of the most sophisticated official bundles in the ecosystem—the **Google Antigravity Science Plugin (`v1.3.1`)**—and use its exact architectural patterns to build, package, and debug your own custom Antigravity plugins from scratch.
+**Google Antigravity** solves this at the runtime level with its **Plugin & Customization Architecture**—combining **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Dual-Process 3D MCP Sidecars (`mcp_config.json` + `sidecar.json`)**.
 
-### What We Will Cover in This Cookbook
+Instead of just reading the docs, I reverse-engineered the newly released **Google Antigravity Science Plugin (`v1.3.1`)** and built the open-source **[Antigravity Science Plugin Cookbook & Interactive 3D Studio](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)**—complete with a **live browser-based 3D Biomolecular & Variant WebGL Sandbox**, a **zero-dependency PEP 723 3D protein + PAE generator**, and a production **`bio-structural-qc` custom plugin**.
 
-1. **The 5 Pillars of Antigravity Customizations:** How Rules, Skills, Plugins, Lifecycle Hooks, and MCP Sidecars fit together—plus the 5-tier **Discovery & Precedence Hierarchy** and **20,000-Token Rules Budget**.
-2. **Inside the Official `science` Plugin (`v1.3.1`):** Dissecting a production bundle containing **33 specialized scientific skills** (AlphaFold, AlphaGenome, ChEMBL, PDB, ClinVar, gnomAD, Reactome, Aeneas/Ithaca), an always-on visualization rule, and an interactive **3D Mol\* Biomolecular Structure Viewer**.
-3. **Pattern #1 — Self-Contained `uv` + PEP 723 Micro-Scripts:** How to give skills deterministic CLI superpowers with inline dependency declarations (`# /// script`) and built-in QPS rate-limiting—zero `pip install` pollution required.
-4. **Pattern #2 — The Zero-Leak Credential Protocol:** How the `credentials` skill verifies API keys (`ALPHAGENOME_API_KEY`) using silent exit codes (`grep -sq`) and hidden terminal prompts (`read -s`) so secrets never enter the LLM context window or chat transcript.
-5. **Pattern #3 — Dual-Process MCP + WebGL UI Sidecars:** How `mcp_config.json` and `sidecar.json` work together to bridge atomic MCP tool calls (`load_structure`, `highlight_region`) with a live 3D Mol\* canvas via `sidecar://` pills.
-6. **Build Your Own Plugin From Scratch:** Complete, copy-pasteable code for a custom **`bio-structural-qc`** plugin—including `plugin.json`, `rules/AGENTS.md`, `hooks.json` (`PreToolUse` / `PostToolUse`), a PEP 723 Python structure-auditor skill, and Language Server RPC commands (`GetAllPlugins`, `JetboxWriteState`).
+---
+
+## Try the Live 3D Biomolecular & MCP Sidecar Studio in Your Browser
+
+* **[Launch the Interactive 3D Biomolecular & Variant WebGL Studio (`index.html`)](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)**
+  * *Explore 3D C-alpha backbones & non-covalent contact networks for **TP53 (`AF-P04637`)**, **Crambin (`1CRN`)**, and **EGFR Kinase + Gefitinib (`CHEMBL203`)**.*
+  * *Click any 3D residue sphere via raycasting to trigger live **`annotate_region`** MCP tool calls, inspect **AlphaFold pLDDT** & **AlphaGenome Variant Impact (AVI)** scores, upload your own `.pdb`/`.cif` files, or run the interactive **Aeneas Latin Epigraphy** restoration demo!*
+* **[Full Source Code & `bio-structural-qc` Plugin on GitHub (`RobinaMirbahar/antigravity-science-plugin-cookbook`)](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)**
 
 ---
 
 ## 1. The Antigravity Customization Architecture & Context Economics
 
-To understand why Antigravity plugins scale to dozens of specialized tools without degrading reasoning accuracy, look at how the runtime separates **always-on constraints** from **on-demand procedural knowledge**:
+Why can the Science plugin bundle **33 complex scientific skills** and a **9-tool 3D WebGL MCP server** without slowing down everyday coding turns? Because Antigravity strictly separates **always-on behavioral guardrails** from **on-demand procedural execution**:
 
 ```mermaid
 flowchart TB
@@ -59,40 +61,40 @@ flowchart TB
     Discovery --> Bundle --> Runtime
 ```
 
-### The 5 Customization Primitives
+### The 5 Customization Primitives & Their Token Budgets
 
 | Primitive | Config File / Path | Loading Behavior | Token Budget & Engineering Role |
 | :--- | :--- | :--- | :--- |
 | **Rules** | `GEMINI.md`, `AGENTS.md`, `rules/AGENTS.md` | **Always-On** (within directory or active plugin scope) | **24,000 bytes/file cap**; shares a dedicated **20,000-token aggregate rules budget** (`defaultRulesBudget`). Over-budget rules gracefully demote to file path pointers. |
-| **Skills** | `skills/<name>/SKILL.md` | **Progressive Disclosure** (On-Demand) | Only the YAML `name` and `description` (~40–80 tokens) are injected into the system prompt. The full `SKILL.md` and `references/` are read *only* when activated. |
+| **Skills** | `skills/<name>/SKILL.md` | **Progressive Disclosure** (On-Demand) | Only the YAML `name` and `description` (~40–80 tokens) are injected into the system prompt. The full `SKILL.md` (up to 32 KB!) and `references/` are read *only* when activated. |
 | **Plugins** | `plugins/<dir>/plugin.json` | **Atomic Bundle** | Namespaces and toggles related `skills/`, `rules/`, `hooks.json`, `mcp_config.json`, and `sidecars/` as a single unit. |
-| **Hooks** | `hooks.json` (at plugin or `.agents/` root) | **Lifecycle Event Triggers** | Intercepts `SessionStart`, `PreInvocation`, `PreToolUse`, `PostToolUse`, `PostInvocation`, and `Stop` to run shell validators or linters. |
+| **Hooks** | `hooks.json` (at plugin or `.agents/` root) | **Lifecycle Event Triggers** | Intercepts `SessionStart`, `PreInvocation`, `PreToolUse`, `PostToolUse`, `PostInvocation`, and `Stop` to run shell validators, audit loggers, or linters. |
 | **MCP & Sidecars** | `mcp_config.json` + `sidecars/<name>/sidecar.json` | **Tool + UI Integration** | Connects local (`stdio`) or remote (`Streamable HTTP`) tool servers and mounts interactive HTML/WebGL views in the Auxiliary Pane. |
 
 ---
 
 ## 2. Dissecting the Official `science` Plugin (`v1.3.1`)
 
-When you install the official **Science** plugin from the Antigravity Marketplace (`antigravity-plugins-official/plugin/science`), it lands in `~/.gemini/config/plugins/science/`. Let's inspect its exact directory layout:
+When installed from the Antigravity Marketplace (`antigravity-plugins-official/plugin/science`), the bundle unpacks into `~/.gemini/config/plugins/science/`. Look at how cleanly the 33 skills, sidecar binaries, and rules are organized:
 
 ```text
 ~/.gemini/config/plugins/science/
 ├── plugin.json                                  # Bundle manifest (v1.3.1)
 ├── mcp_config.json                              # Registers biomolecular_structure_viewer_mcp
-├── README.md                                    # User-facing documentation (ignored by agent)
+├── README.md                                    # User-facing documentation (never read by agent)
 ├── SKILL_LICENSES.md                            # Third-party database attribution & terms
 ├── rules/
 │   └── AGENTS.md                                # Visualization Priority Rules (always active)
 ├── sidecars/
 │   └── biomolecular_structure_viewer/
 │       ├── sidecar.json                         # Auxiliary Pane Web UI definition
-│       ├── ui.html                              # Mol* 3D canvas entrypoint
+│       ├── ui.html                              # PDBe Mol* v3.12.0 + Lit v3.1.2 3D entrypoint
 │       └── dist/
-│           ├── main.js                          # Bundled Mol* frontend (183 KB)
+│           ├── main.js                          # Bundled Mol* UI overlay frontend (183 KB)
 │           ├── server.cjs                       # Local state & WebSocket/HTTP server (68 KB)
 │           └── mcp_entry.cjs                    # MCP stdio server entrypoint (30 KB)
 └── skills/                                      # 33 Progressive-Disclosure Scientific Skills
-    ├── alphafold_database_fetch_and_analyze/    # pLDDT & PAE domain boundary heuristics
+    ├── alphafold_database_fetch_and_analyze/    # pLDDT & sliding-window PAE domain heuristics
     ├── alphagenome_atlas_website_links/         # Deep-links to AlphaGenome Atlas
     ├── alphagenome_single_variant_analysis/     # RNA-seq, DNASE, ChIP & splicing effects
     ├── alphagenome_variant_impact_score/        # AVI scoring, VCF annotation, GENCODE v46 GTF
@@ -135,34 +137,17 @@ When you install the official **Science** plugin from the Antigravity Marketplac
     └── workflow_skill_creator/                  # Interactive distiller: turns chat workflows into skills
 ```
 
-### How the Manifest (`plugin.json`) Stays Minimal
-
-Here is the actual `plugin.json` from the Science plugin:
-
-```json
-{
-  "name": "science",
-  "displayName": "Science",
-  "version": "1.3.1",
-  "description": "Curated collection of agent skills for science tasks.",
-  "logo": "https://www.gstatic.com/antigravity/buildWithGoogle/science/logo.svg"
-}
-```
-
-> **Engineering Note on `plugin.json` Fields:**
-> When authoring your own local plugins, keep `plugin.json` strict. Supported top-level keys are `name`, `displayName`, `version`, `description`, `logo` (use a relative path like `"assets/logo.svg"` for custom plugins), `suggestedPrompts` (up to 3 starter strings for UI cards), and `disabled` (boolean). Unrecognized fields like `author` or `homepage` are silently discarded by the loader.
-
 ---
 
-## 3. Four Production Design Patterns from the Science Plugin
+## 3. Five Production Engineering Patterns Inside the Science Plugin
 
-Let's examine the four architectural patterns inside `science` that make its 33 skills reliable in production.
+While inspecting the source files across all 33 skills, five engineering patterns stood out that every agent builder should steal.
 
 ### Pattern 1: Always-On Behavioral Routing via `rules/AGENTS.md`
 
-If an agent has access to Python, Matplotlib, PyMOL, and an interactive 3D WebGL viewer, how do you guarantee it always chooses the interactive 3D viewer first and never forgets to give the user a clickable UI button?
+When an agent has access to Matplotlib, headless PyMOL, and an interactive 3D Mol\* sidecar, how do you guarantee it prioritizes the interactive 3D viewer and never forgets to surface the clickable UI pill?
 
-You don't repeat that instruction in all 33 skills. Instead, you put it once in `rules/AGENTS.md` inside the plugin:
+You place a compact, always-on rule in `rules/AGENTS.md`:
 
 ```markdown
 # Science Visualization Priority Rules
@@ -184,102 +169,75 @@ experience that the user can explore directly.
     the viewer's skill; don't read sidecar files to build it.
 ```
 
-Because `rules/AGENTS.md` is automatically active whenever the `science` plugin is enabled, every conversation inherits this behavioral guardrail immediately.
-
 ---
 
-### Pattern 2: Zero-Pollution Python Helpers with `uv` + PEP 723 Inline Metadata
+### Pattern 2: Zero-Pollution Python Micro-Environments (`uv` + PEP 723 + Sliding-Window PAE Math)
 
-Scientific workflows rely on specialized Python libraries (`polite-http`, `biopython`, `numpy`, `requests`), but running global `pip install` inside a user's project workspace is a classic anti-pattern that breaks virtual environments.
+Running global `pip install` inside a user's repository breaks virtual environments. Instead, every Science skill uses `uv run` with **PEP 723 inline script metadata (`# /// script`)** and enforces rate limits and mathematical heuristics inside deterministic Python scripts.
 
-The Science plugin solves this by pairing the `uv` package manager with **PEP 723 inline script metadata** (`# /// script`) or skill-scoped `pyproject.toml` files. Look at `skills/alphafold_database_fetch_and_analyze/scripts/fetch_structure.py`:
+For example, in `skills/alphafold_database_fetch_and_analyze/scripts/`:
+* `fetch_structure.py` uses `polite-http` with a hard `qps=1.0` rate limit (`CLIENT = http_client.HttpClient("https://alphafold.ebi.ac.uk", qps=1.0)`) and automatically falls back to the longest isoform for massive proteins (`> 2,700` amino acids like Dystrophin).
+* `analyze_pae.py` forbids the LLM from guessing domain boundaries by running a **20-residue sliding-window Predicted Aligned Error (PAE) clustering algorithm** (`distance_cutoff=7.0 Å`, `min_domain_size=40`, `merge_cutoff=15.0 Å`):
 
 ```python
-"""Fetches AlphaFold structure files (mmCIF + PAE) for a UniProt ID."""
+"""Analyzes Predicted Aligned Error (PAE) and detects domain boundaries."""
 
 # /// script
 # requires-python = ">=3.10"
-# dependencies = [
-#   "polite-http",
-# ]
+# dependencies = []
 # ///
 
-import argparse
-import json
-import os
-import sys
-from polite_http import http_client
+def find_sub_domains(pae_matrix, distance_cutoff=7.0, min_domain_size=40):
+    """Identifies structurally independent sub-domains based on the PAE matrix."""
+    n_res = len(pae_matrix)
+    domains, current_domain = [], []
 
-# Enforce a strict 1.0 QPS rate limit at the client layer
-CLIENT = http_client.HttpClient("https://alphafold.ebi.ac.uk", qps=1.0)
+    for i in range(n_res):
+        if not current_domain:
+            current_domain.append(i)
+            continue
 
-def fetch_structure(uniprot_id: str, output_dir: str):
-    """Downloads the mmCIF file and PAE JSON for a given UniProt ID from AFDB."""
-    uniprot_id = uniprot_id.strip().upper()
-    api_url = f"https://alphafold.ebi.ac.uk/api/prediction/{uniprot_id}"
-    os.makedirs(output_dir, exist_ok=True)
+        window_size = min(20, len(current_domain))
+        recent_res = current_domain[-window_size:]
+        pae_sum = sum(pae_matrix[r][i] + pae_matrix[i][r] for r in recent_res)
+        avg_pae = pae_sum / (2.0 * window_size)
 
-    data = CLIENT.fetch_json(api_url)
-    # Prefer canonical isoform matching the exact UniProt accession;
-    # fall back to longest isoform for massive proteins (e.g., Dystrophin > 2700 aa)
-    entry = next(
-        (e for e in data if e.get("uniprotAccession") == uniprot_id),
-        max(data, key=lambda e: e.get("sequenceEnd", 0))
-    )
-    # Saves AF-<ID>-F1-metadata.json, .cif coordinates, and PAE matrix JSON...
-```
+        if avg_pae < distance_cutoff:
+            current_domain.append(i)
+        else:
+            if len(current_domain) >= min_domain_size:
+                domains.append(current_domain)
+            current_domain = [i]
 
-When the agent runs:
-
-```bash
-uv run scripts/fetch_structure.py P04637 -o ./artifacts/P04637/
-```
-
-`uv` reads the `# /// script` header, resolves `polite-http` in an isolated cache in milliseconds, enforces the 1.0 QPS rate limit against EBI's AlphaFold API, and never touches the user's project `venv`.
-
-Notice also how the `alphafold-database-fetch-and-analyze` `SKILL.md` enforces **negative routing boundaries** right in its YAML frontmatter so the agent never hallucinates a UniProt ID from a gene symbol:
-
-```yaml
----
-name: alphafold-database-fetch-and-analyze
-description: >
-  Retrieve and analyze AlphaFold predicted structures for a protein. Use when
-  the user provides a specific UniProt Accession ID and wants structural
-  confidence metrics (pLDDT), domain boundary analysis, or disorder
-  assessment. Do not use if the user only has a protein name, gene name,
-  or amino acid sequence — ask for a UniProt ID first.
----
+    if len(current_domain) >= min_domain_size:
+        domains.append(current_domain)
+    return [[comp[0] + 1, comp[-1] + 1] for comp in domains]
 ```
 
 ---
 
 ### Pattern 3: The Zero-Leak Credential Protocol (`skills/credentials/SKILL.md`)
 
-Several scientific APIs—such as **AlphaGenome** (`ALPHAGENOME_API_KEY`) or NCBI E-utilities (`NCBI_API_KEY`)—require API keys. A naive agent asks the user: *"Please paste your API key in the chat"* or runs `cat ~/.env`, which permanently leaks the secret into the LLM context window and conversation logs.
+Genomic and literature APIs like **AlphaGenome** (`ALPHAGENOME_API_KEY`) require secret keys. If an agent asks a user to paste their API key into the chat—or runs `cat ~/.env`—that secret is permanently recorded in the conversation transcript and model context.
 
-The Science plugin includes a dedicated `credentials` skill that enforces a **Zero-Leak Verification & Prompting Protocol**:
-
-1. **Silent Existence Check (Exit Code Only):** Before running any tool that needs a key, the agent runs `grep` in quiet/no-error mode (`-sq`). It inspects *only* the process exit code (`0` = present, non-zero = missing) and explicitly forbids `cat ~/.env`, `printenv`, or `echo $VAR`:
-
+The `credentials` skill solves this with a strict **Zero-Leak Protocol**:
+1. **Silent Exit-Code Verification:** The agent checks whether the variable exists in `~/.env` using `grep -sq` (quiet + suppress errors), reading *only* the `0` vs. non-zero exit code:
    ```bash
    grep -sq "^ALPHAGENOME_API_KEY=" ~/.env
    ```
-
-2. **Hidden-Input Terminal Onboarding:** If the exit code is non-zero, the agent stops immediately and gives the user a one-line command to run in their own terminal using `read -s` (silent input), which writes the secret directly to `~/.env` without echoing it to the screen or the agent:
-
+2. **Hidden Terminal Prompting (`read -s`):** If missing, the agent stops immediately and outputs a terminal command for the user to run locally where keystrokes are hidden (`read -s`):
    ```bash
    printf "Enter ALPHAGENOME_API_KEY (typing hidden): " && read -s val && echo && echo "ALPHAGENOME_API_KEY=$val" >> "$HOME/.env" && echo "Saved."
    ```
-
-3. **Automatic `dotenv` Loading:** All helper scripts in the plugin load `~/.env` internally via `python-dotenv`, so the agent never passes API keys as CLI arguments.
+3. **Internal `dotenv` Ingestion:** Helper scripts load `~/.env` internally via `dotenv`, so the key never appears in command-line flags or stdout.
 
 ---
 
-### Pattern 4: Dual-Process 3D MCP Sidecars (`mcp_config.json` + `sidecar.json`)
+### Pattern 4: Dual-Process 3D WebGL Sidecars (`mcp_config.json` + `sidecar.json` + `ui.html`)
 
-The crown jewel of the Science plugin is the **Biomolecular Structure Viewer**, which renders interactive 3D proteins and nucleic acids via **Mol\*** directly inside Antigravity's Auxiliary Pane.
+How does the **Biomolecular Structure Viewer** let the agent highlight 3D protein regions while the human rotates the molecule and pins 3D residue notes in real time?
 
-It is wired using two small JSON files that coordinate an **MCP Server** (for the agent) and a **Web UI Sidecar** (for the human user):
+It pairs an **MCP Server** (`dist/mcp_entry.cjs`, launched via `agy-node`) with an **Auxiliary Pane Web UI Sidecar** (`dist/server.cjs` + `ui.html`, powered by **PDBe Mol\* `v3.12.0`** and **Lit `v3.1.2`**):
 
 ```mermaid
 sequenceDiagram
@@ -287,125 +245,114 @@ sequenceDiagram
     participant Agent as Antigravity Agent
     participant AF as Skill: alphafold / pdb
     participant MCP as MCP: mcp_entry.cjs
-    participant Sidecar as Sidecar: server.cjs + Mol* UI
+    participant Sidecar as Sidecar: server.cjs + PDBe Mol* UI
 
-    User->>Agent: "Visualize p53 (UniProt P04637) and highlight the DNA-binding domain"
+    User->>Agent: "Visualize TP53 (UniProt P04637) and highlight the R248Q DNA-contact hotspot"
     Agent->>AF: uv run scripts/fetch_structure.py P04637 -o <artifact_dir>
     AF-->>Agent: Saved AF-P04637-F1-model_v6.cif + PAE JSON
     Agent->>MCP: load_structure(id="AF-P04637-F1-model_v6.cif", source="artifact")
     MCP->>Sidecar: Atomic state patch (load local .cif)
-    Agent->>MCP: highlight_region(chain="A", start_residue=94, end_residue=292, color="#FF4B4B")
-    MCP->>Sidecar: Update 3D residue selection & camera focus
-    Agent-->>User: Renders [Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html) pill
-    User->>Sidecar: Clicks pill -> Interacts with 3D structure & adds residue annotations
-    User->>Agent: "What is the conservation score of the residue I just annotated?"
+    Agent->>MCP: highlight_region(chain="A", start_residue=245, end_residue=250, color="#FF1744")
+    MCP->>Sidecar: Focus 3D camera & highlight residues
+    Agent-->>User: Emits [Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html) pill
+    User->>Sidecar: Clicks pill -> Rotates 3D model & pins custom annotation on Zinc finger
+    User->>Agent: "Check conservation for the residue I just annotated in 3D"
     Agent->>MCP: get_state()
     MCP-->>Agent: Returns activeSelection & user 3D annotations
 ```
 
-**1. `mcp_config.json` (at the plugin root)** registers the MCP server using Antigravity's bundled Node runtime (`agy-node`):
+Here are the exact two config files that wire this up:
 
-```json
-{
-  "mcpServers": {
-    "biomolecular_structure_viewer_mcp": {
-      "command": "agy-node",
-      "args": ["sidecars/biomolecular_structure_viewer/dist/mcp_entry.cjs"]
+* **`mcp_config.json` (at the plugin root):**
+  ```json
+  {
+    "mcpServers": {
+      "biomolecular_structure_viewer_mcp": {
+        "command": "agy-node",
+        "args": ["sidecars/biomolecular_structure_viewer/dist/mcp_entry.cjs"]
+      }
     }
   }
-}
-```
-
-When loaded by the `science` plugin, Antigravity namespaces the server as `science_biomolecular_structure_viewer_mcp` and exposes 9 atomic tools to the agent:
-* `get_state` — Reads the currently loaded structure, highlighted selections, and user-created 3D annotations.
-* `load_structure` — Loads a local `.cif`, `.mmcif`, or `.pdb` file from the workspace or artifact directory.
-* `set_representation` — Switches between cartoon, ball-and-stick, surface, or spacefill views and color schemes (e.g., `plddt`, `chain-id`, `hydrophobicity`).
-* `highlight_region` / `clear_highlights` — Highlights specific chains and residue ranges in 3D space.
-* `annotate_region` / `remove_annotation` / `clear_annotations` — Pins 3D text labels to functional domains, active sites, or variants.
-* `set_overlays` — Toggles water molecules, ions, and bound ligands.
-
-**2. `sidecars/biomolecular_structure_viewer/sidecar.json`** mounts the interactive Mol\* frontend into the Auxiliary Pane:
-
-```json
-{
-  "args": [
-    "dist/server.cjs"
-  ],
-  "command": "node",
-  "description": "Interactive 3D biomolecular structure viewer via Mol*",
-  "display_name": "Biomolecular Structure Viewer",
-  "has_web_ui": true,
-  "restart_policy": "always",
-  "ui_config": {
+  ```
+* **`sidecars/biomolecular_structure_viewer/sidecar.json`:**
+  ```json
+  {
+    "args": ["dist/server.cjs"],
+    "command": "node",
+    "description": "Interactive 3D biomolecular structure viewer via Mol*",
     "display_name": "Biomolecular Structure Viewer",
-    "views": [
-      {
-        "entrypoint": "SIDECAR_UI_ENTRYPOINT_AUX_PANE",
-        "path": "/ui.html",
-        "title": "Biomolecular Structure Viewer"
-      }
-    ]
+    "has_web_ui": true,
+    "restart_policy": "always",
+    "ui_config": {
+      "display_name": "Biomolecular Structure Viewer",
+      "views": [
+        {
+          "entrypoint": "SIDECAR_UI_ENTRYPOINT_AUX_PANE",
+          "path": "/ui.html",
+          "title": "Biomolecular Structure Viewer"
+        }
+      ]
+    }
   }
-}
-```
-
-And whenever the agent updates the 3D scene, it outputs a native `sidecar://` link in Markdown:
-
-```markdown
-[Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html)
-```
-
-Clicking that pill in the chat canvas immediately toggles the live 3D Mol\* viewer in the side pane!
+  ```
 
 ---
 
-## 4. Hands-On Cookbook: Build Your Own `bio-structural-qc` Plugin
+### Pattern 5: Domain-Specific Guardrails — From Clinical Genetics (`AlphaGenome`) to Ancient Epigraphy (`Aeneas` & `Ithaca`)
 
-Now let's apply these exact patterns to build a brand-new, production-grade Antigravity plugin from scratch.
+Two of the most fascinating skills in the bundle demonstrate how `SKILL.md` enforces domain-specific scientific rigor:
 
- Suppose your structural biology or ML team frequently downloads `.cif` and `.pdb` structures and wants an automated **Biomolecular Structure Quality Control (`bio-structural-qc`)** plugin that:
-1. Enforces a **Rule** requiring every downloaded structure to pass a resolution/pLDDT & missing-atom QC check before downstream docking or variant modeling.
-2. Provides a **Skill (`structure-qc-audit`)** backed by a zero-dependency **PEP 723 Python script** that parses `.pdb` / `.cif` files and outputs a structured JSON quality report + Markdown summary.
-3. Registers a **Lifecycle Hook (`hooks.json`)** that automatically logs every `run_command` execution for reproducibility auditing.
+1. **`alphagenome-variant-impact-score` (Strict Molecular Framing + Context-Overflow Protection):**
+   * **Clinical Safety Gate:** Explicitly forbids extrapolating high AlphaGenome Variant Impact (AVI) scores into clinical diagnoses or patient prognosis, restricting outputs to molecular mechanisms (splicing disruption, chromatin accessibility, TF binding, or GENCODE v46 transcript coordinates).
+   * **Stdout Overflow Guard:** Warns the agent that `--include_track_info --format json` emits `~3.9 KB` per variant, requiring direct file redirection (`-o query_results.json`) whenever querying $>3$ variants so stdout never floods the context window.
+2. **`predictingthepast` (Ancient Latin & Greek Epigraphy with DeepMind's Aeneas & Ithaca):**
+   * Restores damaged ancient inscriptions, attributes geographical province + chronological date ranges, and finds parallel inscriptions using special gap syntax (`?` for a single missing character, `#` for an unknown-length damaged gap):
+     ```bash
+     uv run scripts/preprocess.py --language=latin --input="imp caesar divi f ???????? cos xi"
+     ```
+   * Enforces a **Self-Contained Epigraphy Rule**: forbids the agent from using web search to "cheat" or override the neural restoration probabilities returned by Aeneas/Ithaca.
 
-> **Important Best Practice:** Never edit files directly inside `~/.gemini/config/plugins/science/`, because Marketplace updates will overwrite your changes. Always create custom extensions in their own plugin directory (`~/.gemini/config/plugins/<your-plugin>/`) or workspace `.agents/plugins/<your-plugin>/`.
+---
 
-### Step 1: Create the Plugin Directory Tree
+## 4. End-to-End Multi-Skill Pipeline: From Genomic Variant to 3D Drug Pocket
+
+Because all 33 skills share the conversation's artifact directory, Antigravity can chain **6 skills + the 3D MCP Sidecar** in a single research session:
+
+| Step | Skill / MCP Tool Invoked | Input | Deterministic Artifact Output |
+| :--- | :--- | :--- | :--- |
+| **1. Variant Resolution** | `dbsnp-database` + `clinvar-database` | `rs28934576` / `TP53` | Resolves to GRCh38 coordinate & ClinVar pathogenic review status |
+| **2. Non-Coding & Splicing Impact** | `alphagenome-variant-impact-score` | `chr17:7674220:C>T` | Computes 18 feature attribution weights + GENCODE v46 exon junctions |
+| **3. Canonical Accession Lookup** | `uniprot-database` | Gene symbol `TP53` | Resolves human canonical accession `P04637` |
+| **4. 3D Structure & PAE Domains** | `alphafold-database-fetch-and-analyze` | `P04637` | Downloads `AF-P04637-F1-model_v6.cif` + runs `analyze_plddt.py` & `analyze_pae.py` |
+| **5. Bioactive Compound Screen** | `chembl-database` | Target search (`CHEMBL203` / `TP53`) | Exports nanomolar `IC50`/`Ki` inhibitors and `.sdf` structures via `chembl_api.py` |
+| **6. Interactive 3D Sidecar** | `science_biomolecular_structure_viewer_mcp` | `load_structure` + `highlight_region` | Renders interactive Mol\* 3D structure & surfaces `sidecar://` pill in chat |
+
+---
+
+## 5. Hands-On Cookbook: Build & Run the Custom `bio-structural-qc` Plugin
+
+In the companion repository (**[RobinaMirbahar/antigravity-science-plugin-cookbook](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)**), I built a complete, installable custom plugin called **`bio-structural-qc`** plus a zero-dependency **3D Protein + PAE Generator & SVG Dashboard (`examples/generate_3d_protein_pae_demo.py`)**.
+
+![AlphaFold pLDDT Profile & PAE Domain Matrix](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_p53_demo/p53_plddt_pae_dashboard.svg)
+
+### Directory Structure of `bio-structural-qc`
 
 ```text
-~/.gemini/config/plugins/bio-structural-qc/
-├── plugin.json
-├── hooks.json
+plugins/bio-structural-qc/
+├── plugin.json                                    # Manifest & 3 starter prompts
+├── hooks.json                                     # PostToolUse command reproducibility logger
+├── assets/
+│   └── logo.svg                                   # 128x128 high-contrast SVG icon
 ├── rules/
-│   └── AGENTS.md
+│   └── AGENTS.md                                  # Mandatory QC gate before docking/Foldseek
 └── skills/
     └── structure-qc-audit/
-        ├── SKILL.md
+        ├── SKILL.md                               # Progressive-disclosure instructions
         └── scripts/
-            └── audit_structure.py
+            └── audit_structure.py                 # PEP 723 C-alpha B-factor/pLDDT auditor
 ```
 
-### Step 2: Author `plugin.json`
-
-Create `~/.gemini/config/plugins/bio-structural-qc/plugin.json`:
-
-```json
-{
-  "name": "bio-structural-qc",
-  "displayName": "Bio Structural QC",
-  "version": "0.1.0",
-  "description": "Automated quality control, B-factor/pLDDT auditing, and chain completeness checks for PDB and AlphaFold mmCIF structures.",
-  "suggestedPrompts": [
-    "Audit all .cif and .pdb structures in my workspace for low-confidence regions",
-    "Compare pLDDT confidence across chains before running Foldseek",
-    "Generate a QC readiness table for our protein-ligand docking input files"
-  ]
-}
-```
-
-### Step 3: Author the Always-On Rule (`rules/AGENTS.md`)
-
-Create `~/.gemini/config/plugins/bio-structural-qc/rules/AGENTS.md`:
+### 1. The Always-On QC Gate (`plugins/bio-structural-qc/rules/AGENTS.md`)
 
 ```markdown
 # Biomolecular Structure QC Gate
@@ -416,9 +363,7 @@ Whenever a workflow downloads or modifies a 3D coordinate file (`.pdb`, `.cif`, 
 2. **Disorder Warning**: If more than 30% of alpha-carbon (`CA`) atoms have a B-factor / pLDDT score below `50.0`, explicitly warn the user about disordered or low-confidence regions and highlight the high-confidence domain boundaries in the [Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html).
 ```
 
-### Step 4: Author the PEP 723 Python Helper (`skills/structure-qc-audit/scripts/audit_structure.py`)
-
-Create `~/.gemini/config/plugins/bio-structural-qc/skills/structure-qc-audit/scripts/audit_structure.py`. Using PEP 723 inline metadata, this script runs reproducibly via `uv run` across any workspace:
+### 2. The Zero-Dependency PEP 723 Structure Auditor (`audit_structure.py`)
 
 ```python
 #!/usr/bin/env python3
@@ -429,138 +374,66 @@ Create `~/.gemini/config/plugins/bio-structural-qc/skills/structure-qc-audit/scr
 # dependencies = []
 # ///
 
-import argparse
-import json
+import argparse, json, statistics
 from pathlib import Path
-import statistics
-import sys
-
 
 def parse_ca_bfactors(filepath: Path) -> dict:
-    """Extracts C-alpha (CA) residue numbers and B-factor/pLDDT values per chain."""
     chains: dict[str, list[tuple[int, float]]] = {}
     ext = filepath.suffix.lower()
-
     with filepath.open("r", encoding="utf-8", errors="replace") as f:
         for line in f:
-            if ext == ".pdb" and line.startswith("ATOM  "):
-                atom_name = line[12:16].strip()
-                if atom_name != "CA":
-                    continue
+            if ext == ".pdb" and line.startswith("ATOM  ") and line[12:16].strip() == "CA":
                 chain_id = line[21].strip() or "A"
-                try:
-                    res_seq = int(line[22:26].strip())
-                    b_factor = float(line[60:66].strip())
-                except ValueError:
-                    continue
-                chains.setdefault(chain_id, []).append((res_seq, b_factor))
-
+                chains.setdefault(chain_id, []).append((int(line[22:26]), float(line[60:66])))
             elif ext in {".cif", ".mmcif"} and line.startswith("ATOM "):
                 parts = line.split()
-                # Standard AFDB / PDBx _atom_site layout: ATOM id symbol atom_id . comp_id asym_id entity_id seq_id ... B_iso_or_equiv
                 if len(parts) >= 15 and parts[3] == "CA":
-                    chain_id = parts[6]
-                    try:
-                        res_seq = int(parts[8])
-                        b_factor = float(parts[14])
-                    except ValueError:
-                        continue
-                    chains.setdefault(chain_id, []).append((res_seq, b_factor))
-
+                    chains.setdefault(parts[6], []).append((int(parts[8]), float(parts[14])))
     return chains
-
-
-def audit_file(filepath: Path) -> dict:
-    chains = parse_ca_bfactors(filepath)
-    if not chains:
-        return {"file": str(filepath), "status": "ERROR", "reason": "No CA atoms found"}
-
-    chain_reports = {}
-    all_scores: list[float] = []
-
-    for chain_id, residues in sorted(chains.items()):
-        scores = [b for _, b in residues]
-        all_scores.extend(scores)
-        low_conf = [res for res, b in residues if b < 50.0]
-        high_conf = [res for res, b in residues if b >= 70.0]
-
-        chain_reports[chain_id] = {
-            "residue_count": len(residues),
-            "mean_score": round(statistics.fmean(scores), 2),
-            "median_score": round(statistics.median(scores), 2),
-            "pct_high_confidence_ge_70": round(100.0 * len(high_conf) / len(residues), 1),
-            "pct_low_confidence_lt_50": round(100.0 * len(low_conf) / len(residues), 1),
-            "high_confidence_span": [min(high_conf), max(high_conf)] if high_conf else None,
-        }
-
-    overall_low_pct = round(
-        100.0 * sum(1 for s in all_scores if s < 50.0) / len(all_scores), 1
-    )
-    return {
-        "file": filepath.name,
-        "status": "WARN_HIGH_DISORDER" if overall_low_pct > 30.0 else "PASS",
-        "total_ca_residues": len(all_scores),
-        "overall_mean_score": round(statistics.fmean(all_scores), 2),
-        "overall_pct_low_lt_50": overall_low_pct,
-        "chains": chain_reports,
-    }
-
-
-def main():
-    parser = argparse.ArgumentParser(description="Audit PDB/mmCIF structure confidence.")
-    parser.add_argument("files", nargs="+", type=Path, help="Paths to .pdb or .cif files")
-    parser.add_argument("-o", "--output", type=Path, help="Optional JSON output file path")
-    args = parser.parse_args()
-
-    results = [audit_file(p) for p in args.files]
-    payload = json.dumps(results, indent=2)
-
-    if args.output:
-        args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(payload, encoding="utf-8")
-        print(f"[*] Saved QC report to {args.output}")
-    else:
-        print(payload)
-
-
-if __name__ == "__main__":
-    main()
 ```
 
-### Step 5: Author the Progressive-Disclosure Skill (`skills/structure-qc-audit/SKILL.md`)
-
-Create `~/.gemini/config/plugins/bio-structural-qc/skills/structure-qc-audit/SKILL.md`:
-
-```markdown
----
-name: structure-qc-audit
-description: >-
-  Audits 3D protein coordinate files (.pdb, .cif, .mmcif) for C-alpha chain
-  completeness, mean/median pLDDT or B-factor distribution, and disordered
-  regions (< 50.0). Use whenever validating downloaded PDB or AlphaFold
-  structures before docking, alignment, or 3D visualization.
----
-
-# Structure QC Audit Skill
-
-## Execution
-
-Run the helper script via `uv run` and pass `--output` when auditing multiple structures:
+Test both the 3D generator and the QC auditor in two commands using `uv run`:
 
 ```bash
-uv run scripts/audit_structure.py /path/to/structure.cif -o ./qc_report.json
+git clone https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook.git
+cd antigravity-science-plugin-cookbook
+
+# 1. Generate a 56-residue 3-domain 3D .pdb structure, PAE matrix JSON, and SVG dashboard
+uv run examples/generate_3d_protein_pae_demo.py
+
+# 2. Audit both the synthetic multi-domain protein and the Crambin structure
+uv run plugins/bio-structural-qc/skills/structure-qc-audit/scripts/audit_structure.py \
+  examples/generated_p53_demo/synthetic_p53_multidomain.pdb \
+  examples/sample_crambin_fragment.pdb
 ```
 
-## Interpreting Results
+Output:
 
-1. **`status == "PASS"`**: Less than 30% of C-alpha residues fall below 50.0. Safe to proceed.
-2. **`status == "WARN_HIGH_DISORDER"`**: More than 30% of residues have scores `< 50.0`.
-   - Use the `high_confidence_span` coordinates from the JSON output to call `highlight_region` in `science_biomolecular_structure_viewer_mcp` so the user can visually distinguish rigid domains from disordered tails.
+```json
+[
+  {
+    "file": "synthetic_p53_multidomain.pdb",
+    "status": "PASS",
+    "total_ca_residues": 56,
+    "overall_mean_score": 82.11,
+    "overall_pct_low_lt_50": 17.9,
+    "chains": {
+      "A": {
+        "residue_count": 56,
+        "mean_score": 82.11,
+        "median_score": 90.26,
+        "pct_high_confidence_ge_70": 82.1,
+        "pct_low_confidence_lt_50": 17.9,
+        "high_confidence_span": [11, 56]
+      }
+    }
+  }
+]
 ```
 
-### Step 6: Add a Reproducibility Lifecycle Hook (`hooks.json`)
+### 3. Reproducibility Lifecycle Hook (`hooks.json`)
 
-Create `~/.gemini/config/plugins/bio-structural-qc/hooks.json` at the **root** of the plugin directory (remember: native Antigravity plugins load `hooks.json` strictly from `<plugin_dir>/hooks.json`):
+Placed directly at `plugins/bio-structural-qc/hooks.json`, this `PostToolUse` hook automatically records an ISO-8601 audit trail whenever the agent runs a shell command:
 
 ```json
 {
@@ -584,31 +457,20 @@ Create `~/.gemini/config/plugins/bio-structural-qc/hooks.json` at the **root** o
 
 ---
 
-## 5. Pro Tip: Turning Any Live Chat Session into a Skill Automatically
+## 6. Bonus: Distilling Live Chat Sessions into Skills & Language Server RPC Debugging
 
-What if you just spent 20 minutes interactively combining **ClinVar**, **AlphaGenome Variant Impact (`alphagenome-variant-impact-score`)**, **UniProt**, and **AlphaFold** in chat, and you want to turn that multi-step pipeline into a reusable skill without writing `SKILL.md` by hand?
+### A. Automatic Skill Distillation with `workflow-skill-creator`
+Don't want to write `SKILL.md` files from scratch? After completing any multi-step scientific workflow in chat, trigger the Science plugin's **`workflow-skill-creator`** skill:
+> *"Package the workflow we just ran into a reusable skill."*
 
-The Science plugin ships with a meta-skill called **`workflow-skill-creator`**. Just say:
+It walks you through a mandatory **4-round brainstorming protocol** (confirming inputs/outputs, error-handling rigidity, composing existing Science skills without duplicating code, and generating a CLI helper script) before writing the new skill to `~/.gemini/config/skills/<name>/`.
 
-> *"Turn the variant-to-3D-structure workflow we just ran into a reusable skill."*
-
-Behind the scenes, `workflow-skill-creator` enforces a **4-Round Interactive Brainstorming Protocol** before writing a single line of markdown or code:
-1. **Round 1 (Workflow Confirmation):** Summarizes the observed steps, expected inputs (e.g., rsID or VCF file), and outputs.
-2. **Round 2 (Rigidity & Error Handling):** Asks which steps must fail loudly vs. try fallback databases automatically.
-3. **Round 3 (Skill Composition):** Automatically detects overlap with installed Science skills (e.g., referencing `clinvar-database` and `alphafold-database-fetch-and-analyze` rather than reimplementing their API calls) and checks rate limits.
-4. **Round 4 (CLI Script Packaging):** Generates a self-contained CLI script in `scripts/` plus the `SKILL.md` frontmatter and installs it into `~/.gemini/config/skills/<new-skill-name>/`.
-
----
-
-## 6. Managing & Troubleshooting Plugins via the Language Server RPC
-
-Under the hood, Antigravity's plugin manager communicates with the local Language Server over its Connect RPC endpoint (`ANTIGRAVITY_LS_ADDRESS`). Knowing two rules will save you hours of debugging:
-
-### Rule #1: Always Key Mutations on the Install `dir`, Never `plugin.json`'s `name`
-Marketplace plugins are sometimes installed into directories named after a hash or slug, and `config.json` keys plugin enablement strictly by **directory name**. Also, **never print `GetAllPlugins` unfiltered**—it inlines the full text of every `SKILL.md` across all installed plugins! Always filter with `jq` or PowerShell:
+### B. Querying & Toggling Plugins via the Language Server Connect RPC
+Antigravity manages plugins live through its local Connect RPC server (`ANTIGRAVITY_LS_ADDRESS`).
+* **Golden Rule #1:** Always key mutations on the install directory (`dir`), never `plugin.json`'s `name`.
+* **Golden Rule #2:** Never read `GetAllPlugins` unfiltered—it inlines the full text of every `SKILL.md` across all installed plugins! Pipe it through `jq` (see [`examples/inspect_plugins_rpc.sh`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/examples/inspect_plugins_rpc.sh)):
 
 ```bash
-# Bash: Inspect all installed plugins safely with jq
 : "${ANTIGRAVITY_LS_ADDRESS:=localhost:5387}"
 curl -sS -X POST \
   "http://${ANTIGRAVITY_LS_ADDRESS}/exa.language_server_pb.LanguageServerService/GetAllPlugins" \
@@ -623,46 +485,19 @@ curl -sS -X POST \
   }]'
 ```
 
-To toggle a plugin live without restarting (and without hand-editing `~/.gemini/config/config.json`, which would miss live reload):
-
-```bash
-# Enable or disable a plugin live via JetboxWriteState
-curl -sS -X POST \
-  "http://${ANTIGRAVITY_LS_ADDRESS}/exa.language_server_pb.LanguageServerService/JetboxWriteState" \
-  -H "Content-Type: application/json" \
-  -H "x-codeium-csrf-token: ${ANTIGRAVITY_CSRF_TOKEN}" \
-  -d '{"userConfig":{"plugins":{"bio-structural-qc":{"enabled":true}}}}'
-```
-
-### Rule #2: Fixing Windows `unlinkat` Sidecar Locks During Reinstalls
-If you ever reinstall or upgrade a plugin that runs a persistent Node/WebGL sidecar (like `science/sidecars/biomolecular_structure_viewer`) on Windows and see:
-
+### C. Fixing Windows `unlinkat` Sidecar Locks During Plugin Upgrades
+If you upgrade or reinstall a plugin with an active sidecar (`"restart_policy": "always"`) on Windows and hit:
 ```text
 Failed to install marketplace customization "science": failed to remove existing plugin:
 unlinkat ...\science\sidecars\biomolecular_structure_viewer: The process cannot access the file because it is being used by another process.
 ```
-
-Here is why it happens and the 30-second fix:
-1. Because `sidecar.json` sets `"restart_policy": "always"`, the sidecar process or directory watcher holds an open Windows handle (`FILE_SHARE_DELETE` lock) on the `sidecars/biomolecular_structure_viewer` folder.
-2. Close the sidecar panel in Antigravity, quit Antigravity completely (checking the system tray), and remove the leftover skeleton directory in PowerShell:
-   ```powershell
-   Remove-Item -Recurse -Force "$HOME\.gemini\config\plugins\science"
-   ```
-3. Reopen Antigravity and click **Install** on the **Science** plugin in the Marketplace tab—it will cleanly unpack `v1.3.1` along with all 33 skills and the Mol\* 3D sidecar.
+Simply close the sidecar pane, quit Antigravity completely (checking the system tray so the directory handle is released), run `Remove-Item -Recurse -Force "$HOME\.gemini\config\plugins\science"` in PowerShell, and click **Install** in the Marketplace tab.
 
 ---
 
-## Key Takeaways for Agentic System Builders
+## What Custom Plugin Are You Building First?
 
-* **Keep System Prompts Lean with Progressive Disclosure:** Put only crisp activation triggers (plus explicit *"Do not use when..."* boundaries) in `SKILL.md` YAML frontmatter. Let the agent load bulky runbooks and `references/` only when needed.
-* **Isolate Tool Dependencies with `uv` + PEP 723:** Embed `# /// script` headers directly inside `scripts/*.py` so every skill executes deterministically with its own rate limiter (`polite-http`) and zero workspace dependency conflicts.
-* **Never Let Secrets Touch the Context Window:** Use a dedicated `credentials` skill with `grep -sq` exit-code checks and `read -s` terminal prompts so API keys go straight to `~/.env` and are loaded internally via `dotenv`.
-* **Pair MCP Servers with Auxiliary Pane Sidecars:** For spatial, 3D, or data-heavy domains, expose atomic state-mutation tools via MCP (`mcp_config.json`) and render the interactive canvas in a sidecar (`sidecar.json` + `sidecar://` pills).
+* **[Play with the Live 3D Biomolecular & Variant WebGL Studio](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)**
+* **[Star & Fork the Cookbook Repository on GitHub (`RobinaMirbahar/antigravity-science-plugin-cookbook`)](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)**
 
----
-
-### What Custom Plugin Are You Building Next?
-
-Check out the full open-source repository and runnable `bio-structural-qc` starter plugin at **[github.com/RobinaMirbahar/antigravity-science-plugin-cookbook](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)** (`git clone https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook.git`)!
-
-Have you tried the **Science Plugin (`v1.3.1`)** or built your own custom skills, hooks, or MCP sidecars in **Google Antigravity**? Drop a comment below with the workflows you're automating—whether it's structural bioinformatics, cloud infrastructure SRE, or multi-agent evaluation pipelines!
+Let me know in the comments what domain you're packaging into an Antigravity plugin next—whether it's **3D structural biology**, **genomic variant scoring**, **ancient epigraphy**, or **autonomous cloud SRE**!
