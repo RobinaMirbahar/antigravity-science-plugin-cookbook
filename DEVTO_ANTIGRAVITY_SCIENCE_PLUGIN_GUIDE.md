@@ -615,3 +615,11 @@ Simply close the sidecar pane, quit Antigravity completely (checking the system 
 * **[Star & Fork the Cookbook Repository on GitHub (`RobinaMirbahar/antigravity-science-plugin-cookbook`)](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)**
 
 Let me know in the comments what domain you're packaging into an Antigravity plugin next—whether it's **3D structural biology**, **genomic variant scoring**, **ancient epigraphy**, or **autonomous cloud SRE**!
+
+---
+
+## About the Author
+
+![Robina Mirbahar — Women Techmakers & #BuildWithAI Gemini Organizer](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/robina_mirbahar_buildwithai.jpg)
+
+**Robina Mirbahar** — AI & Cloud Builder, Women Techmakers (`#BuildWithAI` / Gemini) Organizer, and creator of open-source engineering cookbooks for Google Gemini, Antigravity, and 3D WebGL agent systems. Connect with me on **[GitHub (`@RobinaMirbahar`)](https://github.com/RobinaMirbahar)**!

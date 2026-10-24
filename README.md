@@ -63,6 +63,14 @@ uv run plugins/bio-structural-qc/skills/structure-qc-audit/scripts/audit_structu
 
 ---
 
+## Author
+
+![Robina Mirbahar — Women Techmakers & #BuildWithAI Gemini Organizer](./assets/robina_mirbahar_buildwithai.jpg)
+
+**Robina Mirbahar** — AI & Cloud Builder, Women Techmakers (`#BuildWithAI` / Gemini) Organizer.
+
+---
+
 ## License
 
 Apache License 2.0
