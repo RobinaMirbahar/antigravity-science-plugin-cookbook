@@ -1,0 +1,12 @@
+{
+  "name": "epigraphy-citation-kit",
+  "displayName": "Ancient Epigraphy & Citation Graph Kit",
+  "version": "0.1.0",
+  "description": "Latin & Ancient Greek epigraphic gap pre-flight normalization (Aeneas & Ithaca markup rules) paired with BibTeX/DOI citation verification.",
+  "logo": "assets/logo.svg",
+  "suggestedPrompts": [
+    "Validate my damaged Latin inscription markup before running Aeneas inference",
+    "Check whether 'imp caesar divi f ???????? cos xi' obeys the 25-char & gap rules",
+    "Audit our paper's BibTeX citations alongside OpenAlex and Europe PMC"
+  ]
+}

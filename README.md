@@ -103,17 +103,126 @@ uv run plugins/my-genomics-qc/skills/vcf-filter-audit/scripts/run_tool.py \
 ```
 
 ### Step 4: Install into Antigravity & Toggle Live via Connect RPC
-Copy your plugin into `~/.gemini/config/plugins/` (or `.agents/plugins/` inside any project repository):
+Copy any of the 3 starter plugins into `~/.gemini/config/plugins/` (or `.agents/plugins/` inside any project repository):
 
 ```bash
 # Linux / macOS
 cp -r plugins/bio-structural-qc ~/.gemini/config/plugins/bio-structural-qc
+cp -r plugins/genomics-variant-mcp ~/.gemini/config/plugins/genomics-variant-mcp
+cp -r plugins/epigraphy-citation-kit ~/.gemini/config/plugins/epigraphy-citation-kit
 
 # Windows PowerShell
 Copy-Item -Recurse -Force .\plugins\bio-structural-qc "$HOME\.gemini\config\plugins\bio-structural-qc"
+Copy-Item -Recurse -Force .\plugins\genomics-variant-mcp "$HOME\.gemini\config\plugins\genomics-variant-mcp"
+Copy-Item -Recurse -Force .\plugins\epigraphy-citation-kit "$HOME\.gemini\config\plugins\epigraphy-citation-kit"
 ```
 
-After restarting Antigravity once so the new plugin directory is discovered, you can inspect or toggle it live at any time via the Language Server Connect RPC ([`examples/inspect_plugins_rpc.sh`](./examples/inspect_plugins_rpc.sh)).
+After restarting Antigravity once so the new plugin directories are discovered, you can inspect or toggle them live at any time via the Language Server Connect RPC ([`examples/inspect_plugins_rpc.sh`](./examples/inspect_plugins_rpc.sh)).
+
+---
+
+## 3 Starter Plugins & Custom MCP Server Included in `plugins/`
+
+This repository ships with **three complete, runnable Antigravity plugin bundles** demonstrating every customization primitive (`plugin.json`, `mcp_config.json`, `agents/*.md`, `rules/AGENTS.md`, `hooks.json`, `SKILL.md`, and PEP 723 `uv` scripts):
+
+| Plugin Bundle | Primitives Included | Test Command (`uv run`) |
+| :--- | :--- | :--- |
+| **[`plugins/bio-structural-qc`](./plugins/bio-structural-qc)** | `plugin.json`, `rules/AGENTS.md`, `hooks.json` (`PostToolUse`), `skills/structure-qc-audit/SKILL.md` + `audit_structure.py` | `uv run plugins/bio-structural-qc/skills/structure-qc-audit/scripts/audit_structure.py --input examples/sample_crambin_fragment.pdb --output examples/generated_use_cases/sample_qc.json` |
+| **[`plugins/genomics-variant-mcp`](./plugins/genomics-variant-mcp)** | `plugin.json`, **`mcp_config.json`**, **Custom Python JSON-RPC 2.0 Stdio MCP Server (`mcp/variant_mcp_server.py`)** with `eager: true` tools (`score_variant_impact`, `evaluate_lipinski_ro5`), **Specialist Subagent (`agents/clinical-variant-curator.md`)**, `rules/AGENTS.md`, `skills/variant-druggability-triage/SKILL.md` | `uv run plugins/genomics-variant-mcp/mcp/variant_mcp_server.py --self-test` |
+| **[`plugins/epigraphy-citation-kit`](./plugins/epigraphy-citation-kit)** | `plugin.json`, `hooks.json` (`PreToolUse`), `rules/AGENTS.md`, `skills/epigraphy-gap-validator/SKILL.md` + `validate_epigraphy.py` (converts Leiden `[---]` and `[...]` brackets to Aeneas/Ithaca `#` and `?` tokens) | `uv run plugins/epigraphy-citation-kit/skills/epigraphy-gap-validator/scripts/validate_epigraphy.py --text "IMP CAESAR DIVI F [---] COS [...] III" --language latin` |
+
+Validate all three plugin bundles in one command:
+```bash
+uv run examples/scaffold_custom_plugin.py
+```
+
+---
+
+## Official Antigravity MCP Server Architecture Patterns & Plugin Catalog
+
+Across Google Antigravity's official marketplace plugins (`~/.gemini/config/plugins/`), `mcp_config.json` uses **4 distinct MCP server architecture patterns**:
+
+### 1. Local Stdio Process (`agy-node` / `node` / `dart` / `uv`)
+Used by **`science`** (`biomolecular_structure_viewer_mcp`), **`flutter`** (`dart-mcp-server`), **`data-agent-kit-plugin`** (`dak-notebook`, `dak-viz`), and our cookbook's **`genomics-variant-mcp`**:
+```json
+{
+  "mcpServers": {
+    "biomolecular_structure_viewer_mcp": {
+      "command": "agy-node",
+      "args": ["sidecars/biomolecular_structure_viewer/dist/mcp_entry.cjs"]
+    },
+    "genomics_variant_mcp": {
+      "command": "uv",
+      "args": ["run", "mcp/variant_mcp_server.py"],
+      "tools": [
+        { "name": "score_variant_impact", "eager": true },
+        { "name": "evaluate_lipinski_ro5", "eager": true }
+      ]
+    }
+  }
+}
+```
+
+### 2. Cloud Proxy Stdio (`mcp_proxy_bundle.cjs` + `X_GOOG_PROXY_HEADERS`)
+Used by **`data-agent-kit-plugin`** (`v1.1.0`) to bridge 9 managed Google Cloud MCP endpoints (BigQuery, Dataproc Spark, Spanner, AlloyDB, Cloud SQL, Bigtable, GCS, Dataplex Knowledge Catalog):
+```json
+{
+  "mcpServers": {
+    "dak-bigquery": {
+      "command": "node",
+      "args": ["mcp/bin/mcp_proxy_bundle.cjs", "https://bigquery.googleapis.com/mcp"],
+      "env": {
+        "X_GOOG_PROXY_HEADERS": "x-goog-Api-Client=GOOGLE_CLOUD_DATA_AGENT_KIT_PLUGIN/20260403"
+      }
+    }
+  }
+}
+```
+
+### 3. Remote Streamable HTTP with Eager Tools (`serverUrl` + `eager: true`)
+Used by **`gemini-api`** (`v2.3.0`) so `gemini_search_docs` and `gemini_get_doc` are registered as native eager tools (`mcp_gemini-api_gemini-api-docs_*`) without spawning a local subprocess:
+```json
+{
+  "mcpServers": {
+    "gemini-api-docs": {
+      "serverUrl": "https://gemini-api-docs-mcp.dev",
+      "tools": [
+        { "name": "gemini_search_docs", "eager": true },
+        { "name": "gemini_get_doc", "eager": true }
+      ]
+    }
+  }
+}
+```
+
+### 4. Google-Credentials Authenticated Remote HTTP (`authProviderType: "google_credentials"`)
+Used by **`google-cloud-developer`** (`v1.1.13`) and **`google-developer-knowledge`** (`v1.0.1`) to authenticate directly with Application Default Credentials (ADC):
+```json
+{
+  "mcpServers": {
+    "developer-knowledge": {
+      "serverUrl": "https://developerknowledge.googleapis.com/mcp",
+      "authProviderType": "google_credentials"
+    }
+  }
+}
+```
+
+### Reference Catalog of Official Antigravity Plugins (`~/.gemini/config/plugins/`)
+
+| Official Plugin | Version | Skills | MCP Servers (`mcp_config.json`) | Subagents / Sidecars / Rules |
+| :--- | :--- | :--- | :--- | :--- |
+| **`science`** | `1.3.1` | 41 | `biomolecular_structure_viewer_mcp` (9 lazy 3D Mol\* tools) | `sidecars/biomolecular_structure_viewer` + `rules/AGENTS.md` |
+| **`data-agent-kit-plugin`** | `1.1.0` | 37 | 11 servers: `dak-notebook`, `dak-viz`, `dak-bigquery`, `dak-spark`, `dak-spanner`, `dak-alloydb`, `dak-cloudsql`, `dak-bigtable`, `dak-bigtable-data`, `dak-gcs`, `dak-kc` | `rules/` (ADC pre-flight, ML best practices, data-loss prevention) |
+| **`flutter`** | `1.0.6` | 25 | `dart-mcp-server` (`dart mcp-server`) | `flutter_a11y_agent` accessibility auditor subagent |
+| **`firebase`** | `1.0.3` | 13 | — | `agents/firestore-rules-author.md` mandatory security rules subagent |
+| **`chrome-devtools-plugin`** | `1.10.1` | 6 | Works with Chrome DevTools MCP | Web Vitals (LCP), heap memory leaks, cookies, a11y debugging |
+| **`google-cloud-developer`** | `1.1.13` | 5 | `developer-knowledge` (`google_credentials`) | `rules/google-cloud-discovery.md` (`finding-google-skills`) |
+| **`gemini-api`** | `2.3.0` | 3 | `gemini-api-docs` (`eager: true` search & doc fetch) | Gemini API, Gemini Live API (3.8), Gemini Omni 1.1 Flash video |
+| **`modern-web-guidance-plugin`** | `0.1.0` | 2 | — | Baseline web features + interactive web apps |
+| **`android-cli-plugin`** | `0.1.0` | 1 | — | Android SDK, AVD emulator inspection, & `android` CLI |
+| **`google-antigravity-sdk`** | `0.1.0` | 1 | — | Multi-agent orchestration with the Python `agy` SDK |
+| **`gcalendar` / `gdocs` / `gdrive` / `gsheets` / `gslides`** | `0.1.0` | 5 | — | Google Workspace productivity skills via `gws` CLI |
 
 ---
 
@@ -122,7 +231,7 @@ After restarting Antigravity once so the new plugin directory is discovered, you
 ```text
 antigravity-science-plugin-cookbook/
 ├── index.html                                             # Interactive 3D Biomolecular & Variant WebGL Studio
-├── README.md                                              # Visual showcase, 5 use cases & hands-on plugin codelab
+├── README.md                                              # Visual showcase, 5 use cases, MCP patterns & plugin codelab
 ├── DEVTO_ANTIGRAVITY_SCIENCE_PLUGIN_GUIDE.md              # Full Dev.to engineering deep-dive article
 ├── assets/
 │   └── devto_cover_banner.jpg                             # Custom 16:9 editorial comic cover illustration
@@ -145,18 +254,30 @@ antigravity-science-plugin-cookbook/
 │       ├── uc4_clinical_trials_openfda.svg                # UC4 ClinicalTrials.gov projection & FAERS ROR forest plot
 │       └── uc5_aeneas_latin_epigraphy.svg                 # UC5 DeepMind Aeneas restoration & 23 BCE dating curve
 └── plugins/
-    └── bio-structural-qc/                                 # Production example plugin bundle
-        ├── plugin.json                                    # Manifest & suggested starter prompts
-        ├── hooks.json                                     # PostToolUse command audit hook
-        ├── assets/
-        │   └── logo.svg                                   # High-contrast 128x128 SVG icon
-        ├── rules/
-        │   └── AGENTS.md                                  # Always-on QC gate & Mol* 3D sidecar routing rule
-        └── skills/
-            └── structure-qc-audit/
-                ├── SKILL.md                               # Progressive-disclosure skill definition
-                └── scripts/
-                    └── audit_structure.py                 # PEP 723 zero-dependency C-alpha pLDDT/B-factor auditor
+    ├── bio-structural-qc/                                 # Plugin #1: 3D Protein pLDDT/B-Factor QC + PostToolUse Hook
+    │   ├── plugin.json
+    │   ├── hooks.json
+    │   ├── assets/logo.svg
+    │   ├── rules/AGENTS.md
+    │   └── skills/structure-qc-audit/
+    │       ├── SKILL.md
+    │       └── scripts/audit_structure.py
+    ├── genomics-variant-mcp/                              # Plugin #2: Custom Python Stdio MCP Server + Subagent
+    │   ├── plugin.json
+    │   ├── mcp_config.json                                # Registers eager MCP tools (score_variant_impact, evaluate_lipinski_ro5)
+    │   ├── mcp/variant_mcp_server.py                      # Zero-dependency JSON-RPC 2.0 Stdio MCP server
+    │   ├── agents/clinical-variant-curator.md             # Specialist subagent definition with YAML frontmatter
+    │   ├── assets/logo.svg
+    │   ├── rules/AGENTS.md
+    │   └── skills/variant-druggability-triage/SKILL.md
+    └── epigraphy-citation-kit/                            # Plugin #3: Aeneas/Ithaca Epigraphy Validator + PreToolUse Hook
+        ├── plugin.json
+        ├── hooks.json
+        ├── assets/logo.svg
+        ├── rules/AGENTS.md
+        └── skills/epigraphy-gap-validator/
+            ├── SKILL.md
+            └── scripts/validate_epigraphy.py
 ```
 
 ---

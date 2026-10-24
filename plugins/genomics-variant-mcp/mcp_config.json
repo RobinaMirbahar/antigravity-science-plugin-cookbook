@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "genomics_variant_mcp": {
+      "command": "uv",
+      "args": [
+        "run",
+        "plugins/genomics-variant-mcp/mcp/variant_mcp_server.py"
+      ],
+      "tools": {
+        "score_variant_impact": {
+          "eager": true
+        },
+        "evaluate_lipinski_ro5": {
+          "eager": true
+        }
+      }
+    }
+  }
+}

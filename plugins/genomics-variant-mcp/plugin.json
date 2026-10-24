@@ -1,0 +1,12 @@
+{
+  "name": "genomics-variant-mcp",
+  "displayName": "Genomics Variant & Specialist Subagent Kit",
+  "version": "0.1.0",
+  "description": "Custom Python JSON-RPC 2.0 Stdio MCP server for variant impact scoring & Lipinski druggability, paired with a dedicated clinical-variant-curator subagent.",
+  "logo": "assets/logo.svg",
+  "suggestedPrompts": [
+    "Call the genomics_variant_mcp server to score chr17:7674220:C>T and check Lipinski Ro5",
+    "Delegate VCF variant triage to the clinical-variant-curator subagent",
+    "Audit small-molecule SMILES properties alongside AlphaGenome AVI thresholds"
+  ]
+}

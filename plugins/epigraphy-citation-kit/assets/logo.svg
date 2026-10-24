@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <rect x="12" y="12" width="104" height="104" rx="24" fill="#070B19" stroke="#FFB300" stroke-width="4"/>
+  <rect x="30" y="32" width="68" height="64" rx="8" fill="#1E293B" stroke="#FFB300" stroke-width="3"/>
+  <text x="64" y="72" fill="#00E676" font-family="Georgia, serif" font-size="24" font-weight="bold" text-anchor="middle">SPQR</text>
+</svg>

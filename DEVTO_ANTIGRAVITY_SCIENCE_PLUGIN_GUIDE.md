@@ -586,8 +586,8 @@ To make authoring and testing your own plugins effortless, I also included an in
 2. **Scaffolds** a complete new plugin bundle (`plugin.json`, `assets/logo.svg`, `rules/AGENTS.md`, `hooks.json`, `SKILL.md`, and a PEP 723 `scripts/run_tool.py` CLI script) in a single command:
 
 ```bash
-# 1. Validate the included bio-structural-qc reference plugin
-uv run examples/scaffold_custom_plugin.py --validate plugins/bio-structural-qc
+# 1. Validate all 3 starter plugins in the cookbook repository
+uv run examples/scaffold_custom_plugin.py
 
 # 2. Scaffold a brand-new custom plugin bundle from scratch
 uv run examples/scaffold_custom_plugin.py \
@@ -597,11 +597,68 @@ uv run examples/scaffold_custom_plugin.py \
 
 # 3. Install into your global Antigravity plugins directory
 cp -r plugins/bio-structural-qc ~/.gemini/config/plugins/bio-structural-qc
+cp -r plugins/genomics-variant-mcp ~/.gemini/config/plugins/genomics-variant-mcp
+cp -r plugins/epigraphy-citation-kit ~/.gemini/config/plugins/epigraphy-citation-kit
 ```
 
 ---
 
-## 6. Bonus: Distilling Live Chat Sessions into Skills & Language Server RPC Debugging
+## 6. Deep Dive: The 4 Antigravity MCP Server Patterns + 2 More Starter Plugins (`genomics-variant-mcp` & `epigraphy-citation-kit`)
+
+Inspecting all official Google Antigravity plugins installed in `~/.gemini/config/plugins/` reveals **four distinct `mcp_config.json` server architectures**:
+
+### A. The 4 Official `mcp_config.json` Patterns
+
+1. **Pattern 1 — Local Stdio Subprocess (`agy-node` / `node` / `dart` / `uv`):**
+   Used by **`science`** (`biomolecular_structure_viewer_mcp`), **`flutter`** (`dart-mcp-server`), and **`data-agent-kit-plugin`** (`dak-notebook`, `dak-viz`).
+2. **Pattern 2 — Cloud Proxy Stdio (`mcp_proxy_bundle.cjs` + `X_GOOG_PROXY_HEADERS`):**
+   Used by **`data-agent-kit-plugin`** (`v1.1.0`) to bridge **9 managed Google Cloud MCP endpoints** (`https://bigquery.googleapis.com/mcp`, `https://dataproc-$GCP_REGION.googleapis.com/mcp`, `https://spanner.googleapis.com/mcp`, `https://alloydb.googleapis.com/mcp`, `https://sqladmin.googleapis.com/mcp`, `https://bigtableadmin.googleapis.com/mcp`, `https://bigtable.googleapis.com/mcp`, `https://storage.googleapis.com/mcp`, and `https://dataplex.googleapis.com/mcp`).
+3. **Pattern 3 — Remote Streamable HTTP with Eager Tools (`serverUrl` + `"eager": true`):**
+   Used by **`gemini-api`** (`v2.3.0`) to expose `gemini_search_docs` and `gemini_get_doc` from `https://gemini-api-docs-mcp.dev` as native first-class tools without spawning a local process.
+4. **Pattern 4 — Google-Credentials Authenticated HTTP (`authProviderType: "google_credentials"`):**
+   Used by **`google-cloud-developer`** (`v1.1.13`) and **`google-developer-knowledge`** (`v1.0.1`) to connect directly to `https://developerknowledge.googleapis.com/mcp` using Application Default Credentials (ADC).
+
+### B. Starter Plugin #2: `plugins/genomics-variant-mcp` (Custom Python Stdio MCP Server + Specialist Subagent)
+
+To show how to package your own **MCP server** and **Specialist Subagent** inside an Antigravity plugin, the cookbook includes **[`plugins/genomics-variant-mcp`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/tree/main/plugins/genomics-variant-mcp)**:
+
+* **[`mcp_config.json`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/plugins/genomics-variant-mcp/mcp_config.json)** — Registers `genomics_variant_mcp` via `uv run mcp/variant_mcp_server.py` and marks both tools as `"eager": true` so they load directly into the agent's native tool declarations:
+  ```json
+  {
+    "mcpServers": {
+      "genomics_variant_mcp": {
+        "command": "uv",
+        "args": ["run", "mcp/variant_mcp_server.py"],
+        "tools": [
+          { "name": "score_variant_impact", "eager": true },
+          { "name": "evaluate_lipinski_ro5", "eager": true }
+        ]
+      }
+    }
+  }
+  ```
+* **[`mcp/variant_mcp_server.py`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/plugins/genomics-variant-mcp/mcp/variant_mcp_server.py)** — A zero-dependency PEP 723 JSON-RPC 2.0 Stdio MCP server implementing `initialize`, `tools/list`, and `tools/call` for:
+  * `score_variant_impact`: Scores 1-based `chr:pos:ref>alt` SNVs (transition/transversion class, predicted AlphaGenome AVI impact score, PhyloP 100-way conservation, and molecular priority).
+  * `evaluate_lipinski_ro5`: Evaluates small-molecule leads against Lipinski's Rule of Five ($\text{MW} \le 500$, $\text{LogP} \le 5$, $\text{HBD} \le 5$, $\text{HBA} \le 10$) and Veber's polar surface area rule ($\text{PSA} \le 140\text{ \AA}^2$).
+* **[`agents/clinical-variant-curator.md`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/plugins/genomics-variant-mcp/agents/clinical-variant-curator.md)** — A specialist subagent (modeled on `firebase`'s `agents/firestore-rules-author.md`) with YAML frontmatter (`mainAgent: true`, `subagent: true`, `commandExecutionPolicy: auto`) that enforces research-only molecular framing.
+
+Run its built-in self-test with `uv`:
+```bash
+uv run plugins/genomics-variant-mcp/mcp/variant_mcp_server.py --self-test
+```
+
+### C. Starter Plugin #3: `plugins/epigraphy-citation-kit` (Ancient Epigraphy Validator + `PreToolUse` Hook)
+
+The third starter plugin, **[`plugins/epigraphy-citation-kit`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/tree/main/plugins/epigraphy-citation-kit)**, pairs a `PreToolUse` lifecycle hook (`hooks.json`) with a PEP 723 Leiden bracket normalizer ([`validate_epigraphy.py`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/plugins/epigraphy-citation-kit/skills/epigraphy-gap-validator/scripts/validate_epigraphy.py)) that automatically converts standard Leiden epigraphic brackets (`[---]` and `[...]`) into DeepMind Aeneas/Ithaca `#` and `?` tokens, checks for forbidden `##` or `?#` sequences, and pads short inscriptions to the 25-character minimum:
+
+```bash
+uv run plugins/epigraphy-citation-kit/skills/epigraphy-gap-validator/scripts/validate_epigraphy.py \
+  --text "IMP CAESAR DIVI F [---] COS [...] III" --language latin
+```
+
+---
+
+## 7. Bonus: Distilling Live Chat Sessions into Skills & Language Server RPC Debugging
 
 ### A. Automatic Skill Distillation with `workflow-skill-creator`
 Don't want to write `SKILL.md` files from scratch? After completing any multi-step scientific workflow in chat, trigger the Science plugin's **`workflow-skill-creator`** skill:

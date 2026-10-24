@@ -82,6 +82,29 @@ def validate_plugin_bundle(plugin_dir: Path) -> bool:
             else:
                 print(f"  [OK] Rule File: `rules/{rule_file.name}` ({size} bytes <= 24,000-byte cap)")
 
+    # Check MCP Server config (mcp_config.json at root)
+    mcp_path = plugin_dir / "mcp_config.json"
+    if mcp_path.exists():
+        try:
+            mcp_data = json.loads(mcp_path.read_text(encoding="utf-8"))
+            servers = mcp_data.get("mcpServers", {})
+            if not isinstance(servers, dict) or not servers:
+                errors.append("`mcp_config.json` must contain a non-empty `mcpServers` object.")
+            else:
+                print(f"  [OK] MCP Config: `mcp_config.json` defines {len(servers)} MCP server(s): {list(servers.keys())}")
+        except json.JSONDecodeError as exc:
+            errors.append(f"Invalid JSON in `mcp_config.json`: {exc}")
+
+    # Check Specialist Subagents (agents/*.md)
+    agents_dir = plugin_dir / "agents"
+    if agents_dir.exists():
+        for agent_md in agents_dir.glob("*.md"):
+            text = agent_md.read_text(encoding="utf-8")
+            if not text.startswith("---"):
+                errors.append(f"`{agent_md.relative_to(plugin_dir)}` is missing YAML frontmatter (`---`).")
+            else:
+                print(f"  [OK] Specialist Subagent: `{agent_md.relative_to(plugin_dir)}`")
+
     # Check skills frontmatter
     skills_dir = plugin_dir / "skills"
     if skills_dir.exists():
@@ -233,10 +256,14 @@ def main() -> None:
         validate_plugin_bundle(created)
         sys.exit(0)
 
-    # Default demo: validate the repository's bio-structural-qc plugin
-    default_plugin = Path("plugins/bio-structural-qc")
-    if default_plugin.exists():
-        validate_plugin_bundle(default_plugin)
+    # Default demo: validate all plugins in the repository's plugins/ folder
+    plugins_root = Path("plugins")
+    if plugins_root.exists():
+        all_ok = True
+        for pdir in sorted(p for p in plugins_root.iterdir() if p.is_dir()):
+            if not validate_plugin_bundle(pdir):
+                all_ok = False
+        sys.exit(0 if all_ok else 1)
     else:
         parser.print_help()
 
