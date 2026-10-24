@@ -642,12 +642,12 @@ Verified `--self-test` output:
 
 ```json
 {
-  "timestamp_utc": "2026-10-24T19:18:15.389869+00:00",
+  "timestamp_utc": "2026-10-24T19:18:16.178211+00:00",
   "event": "PostToolUse",
   "tool": "run_command",
   "conversation_id": "conv-repro-demo-01",
   "step_idx": 7,
-  "git_revision": "37d46a9",
+  "git_revision": "0a4d32f",
   "redacted_command": "ALPHAGENOME_API_KEY=[REDACTED] uv run plugins/bio-structural-qc/skills/structure-qc-audit/scripts/audit_structure.py examples/generated_p53_demo/synthetic_p53_multidomain.pdb examples/sample_crambin_fragment.pdb",
   "script_versions": {
     "plugins/bio-structural-qc/skills/structure-qc-audit/scripts/audit_structure.py": "sha256:b305f0ca720d7673"
