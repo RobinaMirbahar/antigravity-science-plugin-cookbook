@@ -1,0 +1,12 @@
+{
+  "name": "bio-structural-qc",
+  "displayName": "Bio Structural QC",
+  "version": "0.1.0",
+  "description": "Automated quality control, B-factor/pLDDT auditing, and chain completeness checks for PDB and AlphaFold mmCIF structures.",
+  "logo": "assets/logo.svg",
+  "suggestedPrompts": [
+    "Audit all .cif and .pdb structures in my workspace for low-confidence regions",
+    "Compare pLDDT confidence across chains before running Foldseek",
+    "Generate a QC readiness table for our protein-ligand docking input files"
+  ]
+}

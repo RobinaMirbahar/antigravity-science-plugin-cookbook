@@ -1,0 +1,17 @@
+{
+  "qc-command-audit-log": {
+    "enabled": true,
+    "PostToolUse": [
+      {
+        "matcher": "run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c \"import datetime, pathlib; p = pathlib.Path.home() / '.gemini' / 'qc_command_audit.log'; p.open('a').write(f'{datetime.datetime.now(datetime.timezone.utc).isoformat()} | PostToolUse:run_command\\n')\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
