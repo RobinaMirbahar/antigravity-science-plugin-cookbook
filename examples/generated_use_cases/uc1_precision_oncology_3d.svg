@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 310" width="860" height="310">
+<rect width="860" height="310" rx="16" fill="#070B19" stroke="#00E5FF" stroke-opacity="0.4"/>
+<text x="26" y="34" fill="#00E5FF" font-family="sans-serif" font-size="15" font-weight="bold">USE CASE 1 • Precision Oncology &amp; 3D Kinase Pocket Triage (EGFR p.Leu858Arg / CHEMBL203)</text>
+<text x="26" y="54" fill="#94A3B8" font-family="monospace" font-size="11.5">Chain: clinvar-database → gnomad-database (LOEUF=0.24) → alphafold (P00533) → chembl-database → Mol* 3D Sidecar</text>
+<rect x="26" y="70" width="440" height="216" rx="10" fill="#0F172A" stroke="#1E293B"/>
+<text x="42" y="94" fill="#F8FAFC" font-family="sans-serif" font-size="12.5" font-weight="bold">ChEMBL Kinase Inhibitor Receptor Occupancy vs. Log[Drug] (nM)</text>
+<line x1="65" y1="245" x2="440" y2="245" stroke="#475569" stroke-width="1.5"/>
+<line x1="65" y1="110" x2="65" y2="245" stroke="#475569" stroke-width="1.5"/>
+<line x1="65" y1="177" x2="440" y2="177" stroke="#334155" stroke-dasharray="4,4"/>
+<text x="58" y="181" fill="#94A3B8" font-family="monospace" font-size="10" text-anchor="end">50%</text>
+<text x="58" y="116" fill="#94A3B8" font-family="monospace" font-size="10" text-anchor="end">100%</text>
+<polyline fill="none" stroke="#00E676" stroke-width="2.6" points="65.0,227.3 74.5,223.8 84.0,219.9 93.5,215.5 102.9,210.5 112.4,205.0 121.9,199.1 131.4,192.8 140.9,186.2 150.4,179.5 159.9,172.8 169.4,166.3 178.8,160.0 188.3,154.1 197.8,148.7 207.3,143.8 216.8,139.5 226.3,135.6 235.8,132.3 245.3,129.4 254.7,127.0 264.2,124.9 273.7,123.2 283.2,121.7 292.7,120.5 302.2,119.5 311.7,118.7 321.2,118.0 330.6,117.5 340.1,117.0 349.6,116.6 359.1,116.3 368.6,116.1 378.1,115.9 387.6,115.7 397.1,115.6 406.5,115.5 416.0,115.4 425.5,115.3 435.0,115.3"/>
+<circle cx="240" cy="118" r="4.5" fill="#00E676"/>
+<text x="250" y="122" fill="#00E676" font-family="monospace" font-size="10.5">Erlotinib (CHEMBL553, IC50=2nM)</text>
+<polyline fill="none" stroke="#00E5FF" stroke-width="2.6" points="65.0,241.7 74.5,240.9 84.0,240.0 93.5,238.9 102.9,237.6 112.4,236.0 121.9,234.2 131.4,231.9 140.9,229.3 150.4,226.2 159.9,222.6 169.4,218.5 178.8,213.9 188.3,208.7 197.8,203.1 207.3,197.0 216.8,190.6 226.3,184.0 235.8,177.3 245.3,170.6 254.7,164.2 264.2,158.0 273.7,152.3 283.2,147.1 292.7,142.3 302.2,138.1 311.7,134.5 321.2,131.3 330.6,128.6 340.1,126.3 349.6,124.3 359.1,122.7 368.6,121.3 378.1,120.2 387.6,119.2 397.1,118.5 406.5,117.8 416.0,117.3 425.5,116.9 435.0,116.5"/>
+<circle cx="240" cy="136" r="4.5" fill="#00E5FF"/>
+<text x="250" y="140" fill="#00E5FF" font-family="monospace" font-size="10.5">Osimertinib (CHEMBL3353410, IC50=12nM)</text>
+<polyline fill="none" stroke="#FFB300" stroke-width="2.6" points="65.0,243.8 74.5,243.5 84.0,243.1 93.5,242.7 102.9,242.2 112.4,241.6 121.9,240.8 131.4,239.9 140.9,238.8 150.4,237.5 159.9,235.9 169.4,233.9 178.8,231.7 188.3,229.0 197.8,225.8 207.3,222.2 216.8,218.1 226.3,213.4 235.8,208.2 245.3,202.5 254.7,196.4 264.2,189.9 273.7,183.3 283.2,176.6 292.7,170.0 302.2,163.5 311.7,157.4 321.2,151.7 330.6,146.5 340.1,141.9 349.6,137.7 359.1,134.1 368.6,131.0 378.1,128.3 387.6,126.0 397.1,124.1 406.5,122.5 416.0,121.2 425.5,120.1 435.0,119.2"/>
+<circle cx="240" cy="154" r="4.5" fill="#FFB300"/>
+<text x="250" y="158" fill="#FFB300" font-family="monospace" font-size="10.5">Gefitinib (CHEMBL939, IC50=33nM)</text>
+<rect x="486" y="70" width="348" height="216" rx="10" fill="#0F172A" stroke="#1E293B"/>
+<text x="504" y="94" fill="#FF4081" font-family="sans-serif" font-size="12.5" font-weight="bold">3D Mol* Sidecar State &amp; Structural Metrics</text>
+<rect x="504" y="108" width="312" height="36" rx="6" fill="#1E293B"/>
+<text x="516" y="130" fill="#F8FAFC" font-family="monospace" font-size="11.5">Driver: <tspan fill="#FF4081" font-weight="bold">L858R (chr7:55191822:T&gt;G)</tspan></text>
+<rect x="504" y="152" width="150" height="52" rx="6" fill="#1E293B"/>
+<text x="516" y="172" fill="#94A3B8" font-family="sans-serif" font-size="10.5">Active-Site pLDDT</text>
+<text x="516" y="194" fill="#00E5FF" font-family="monospace" font-size="16" font-weight="bold">93.8 (Very High)</text>
+<rect x="666" y="152" width="150" height="52" rx="6" fill="#1E293B"/>
+<text x="678" y="172" fill="#94A3B8" font-family="sans-serif" font-size="10.5">gnomAD Constraint</text>
+<text x="678" y="194" fill="#00E676" font-family="monospace" font-size="16" font-weight="bold">LOEUF = 0.24</text>
+<rect x="504" y="214" width="312" height="54" rx="6" fill="#040711" stroke="#00E5FF" stroke-opacity="0.35"/>
+<text x="514" y="234" fill="#00E676" font-family="monospace" font-size="10.5">mcp: highlight_region(chain="A", 855..862)</text>
+<text x="514" y="254" fill="#A5F3FC" font-family="monospace" font-size="10.5">pill: sidecar://science/biomolecular_.../ui.html</text>
+</svg>

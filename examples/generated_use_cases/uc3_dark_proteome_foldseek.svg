@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 310" width="860" height="310">
+<rect width="860" height="310" rx="16" fill="#070B19" stroke="#7C4DFF" stroke-opacity="0.45"/>
+<text x="26" y="34" fill="#A78BFA" font-family="sans-serif" font-size="15" font-weight="bold">USE CASE 3 • Dark-Proteome Enzyme Discovery in the Sequence "Twilight Zone" (Foldseek 3D Search)</text>
+<text x="26" y="54" fill="#94A3B8" font-family="monospace" font-size="11.5">Chain: alphafold (PETase .cif) → foldseek (afdb50, mgnify_esm30) → interpro → clustal-omega-msa → headless pymol</text>
+<rect x="26" y="70" width="440" height="216" rx="10" fill="#0F172A" stroke="#1E293B"/>
+<text x="42" y="94" fill="#F8FAFC" font-family="sans-serif" font-size="12.5" font-weight="bold">Foldseek Structural Probability vs. Sequence Identity (%)</text>
+<rect x="42" y="114" width="408" height="36" rx="6" fill="#1E293B"/>
+<text x="52" y="136" fill="#F8FAFC" font-family="monospace" font-size="11">MGYP001498210482 (mgnify_esm30)</text>
+<text x="310" y="136" fill="#00E676" font-family="monospace" font-size="11" font-weight="bold">Prob:99.8%</text>
+<text x="392" y="136" fill="#94A3B8" font-family="monospace" font-size="11">SeqID:21.4%</text>
+<rect x="42" y="156" width="408" height="36" rx="6" fill="#1E293B"/>
+<text x="52" y="178" fill="#F8FAFC" font-family="monospace" font-size="11">AF-A0A8J6H219-F1 (afdb50)</text>
+<text x="310" y="178" fill="#00E5FF" font-family="monospace" font-size="11" font-weight="bold">Prob:99.5%</text>
+<text x="392" y="178" fill="#94A3B8" font-family="monospace" font-size="11">SeqID:24.8%</text>
+<rect x="42" y="198" width="408" height="36" rx="6" fill="#1E293B"/>
+<text x="52" y="220" fill="#F8FAFC" font-family="monospace" font-size="11">AF-Q8P8Y1-F1 (afdb-swissprot)</text>
+<text x="310" y="220" fill="#7C4DFF" font-family="monospace" font-size="11" font-weight="bold">Prob:98.9%</text>
+<text x="392" y="220" fill="#94A3B8" font-family="monospace" font-size="11">SeqID:28.1%</text>
+<rect x="42" y="240" width="408" height="36" rx="6" fill="#1E293B"/>
+<text x="52" y="262" fill="#F8FAFC" font-family="monospace" font-size="11">5XJH_A (pdb100 Crystal Ref)</text>
+<text x="310" y="262" fill="#FFB300" font-family="monospace" font-size="11" font-weight="bold">Prob:100.0%</text>
+<text x="392" y="262" fill="#94A3B8" font-family="monospace" font-size="11">SeqID:100.0%</text>
+<rect x="484" y="70" width="350" height="216" rx="10" fill="#0F172A" stroke="#1E293B"/>
+<text x="500" y="94" fill="#00E676" font-family="sans-serif" font-size="12.5" font-weight="bold">Clustal Omega MSA: Conserved Catalytic Triad</text>
+<rect x="500" y="108" width="318" height="104" rx="8" fill="#040711" stroke="#334155"/>
+<text x="512" y="130" fill="#94A3B8" font-family="monospace" font-size="11"> Pos:          160       206       237</text>
+<text x="512" y="152" fill="#E2E8F0" font-family="monospace" font-size="11">Query_PETase   GWS<tspan fill="#FF4081" font-weight="bold">S</tspan>MG   CTGG<tspan fill="#00E5FF" font-weight="bold">D</tspan>S   AG<tspan fill="#00E676" font-weight="bold">H</tspan>SW</text>
+<text x="512" y="172" fill="#E2E8F0" font-family="monospace" font-size="11">MGYP_Marine    GWS<tspan fill="#FF4081" font-weight="bold">S</tspan>LG   CVAG<tspan fill="#00E5FF" font-weight="bold">D</tspan>S   SG<tspan fill="#00E676" font-weight="bold">H</tspan>SF</text>
+<text x="512" y="192" fill="#E2E8F0" font-family="monospace" font-size="11">AFDB_Thermoph  GYS<tspan fill="#FF4081" font-weight="bold">S</tspan>MG   CTGG<tspan fill="#00E5FF" font-weight="bold">D</tspan>A   AG<tspan fill="#00E676" font-weight="bold">H</tspan>GW</text>
+<rect x="500" y="222" width="318" height="48" rx="6" fill="#1E293B"/>
+<text x="512" y="242" fill="#FFB300" font-family="monospace" font-size="10.5">Headless PyMOL: PYOPENGL_PLATFORM=osmesa</text>
+<text x="512" y="259" fill="#94A3B8" font-family="monospace" font-size="10.5">Outputs: superposition.png + session.pse</text>
+</svg>

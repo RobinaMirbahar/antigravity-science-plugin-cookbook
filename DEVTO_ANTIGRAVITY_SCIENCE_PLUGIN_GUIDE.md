@@ -346,7 +346,9 @@ uv run ~/.gemini/config/plugins/science/skills/chembl_database/scripts/chembl_ap
   molecule --id CHEMBL939 --dl_format sdf --output ./artifacts/gefitinib.sdf
 ```
 
-Finally, the agent invokes `science_biomolecular_structure_viewer_mcp` (`load_structure` + `highlight_region(chain="A", start_residue=855, end_residue=862, color="#FF1744")`) and surfaces `[Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html)`.
+Finally, the agent invokes `science_biomolecular_structure_viewer_mcp` (`load_structure` + `highlight_region(chain="A", start_residue=855, end_residue=862, color="#FF1744")`) and surfaces `[Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html)`:
+
+![Use Case 1 — Precision Oncology & 3D Kinase Pocket Triage](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc1_precision_oncology_3d.svg)
 
 ---
 
@@ -368,7 +370,9 @@ uv run ~/.gemini/config/plugins/science/skills/jaspar_database/scripts/jaspar_cl
   search --query "CEBPA" --output ./artifacts/cebpa_jaspar.json
 ```
 
-* **Engineering Guardrail in Action:** The `alphagenome-variant-impact-score` skill enforces that `--include_track_info` outputs (`~3.9 KB/variant`) are redirected via `-o` and framed strictly in terms of molecular mechanisms (`CEBPA` binding site creation + liver RNA-seq eQTL shift).
+* **Engineering Guardrail in Action:** The `alphagenome-variant-impact-score` skill enforces that `--include_track_info` outputs (`~3.9 KB/variant`) are redirected via `-o` and framed strictly in terms of molecular mechanisms (`CEBPA` binding site creation + liver RNA-seq eQTL shift):
+
+![Use Case 2 — Non-Coding GWAS Enhancer Variant Triage](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc2_noncoding_alphagenome.svg)
 
 ---
 
@@ -392,6 +396,8 @@ uv run ~/.gemini/config/plugins/science/skills/protein_sequence_msa/scripts/clus
   1. **Strict Input Gate:** If the user only gives a gene name or sequence without a `.pdb`/`.cif` file, the skill **halts immediately** and instructs the agent to fetch the 3D structure first.
   2. **Database Allowlist:** Enforces validation against the exact 9 supported Foldseek databases (`afdb50`, `afdb-swissprot`, `pdb100`, `BFVD`, `mgnify_esm30`, `cath50`, `gmgcl_id`, `bfmd`, `afdb-proteome`).
   3. **Headless OSMesa PyMOL Superposition (`pymol` skill):** When generating static publication figures alongside `.pse` session files, the `pymol` skill runs headless via `PYOPENGL_PLATFORM=osmesa` and automatically checks `cmd.count_atoms("name CA") == cmd.count_atoms("all")` so C-alpha-only traces still render as smooth cartoons!
+
+![Use Case 3 — Dark-Proteome Enzyme Discovery with Foldseek](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc3_dark_proteome_foldseek.svg)
 
 ---
 
@@ -420,8 +426,10 @@ uv run ~/.gemini/config/plugins/science/skills/openfda_database/scripts/openfda_
 ```
 
 * **Engineering Guardrails in Action:**
-  * **ClinicalTrials.gov Context Projection (`--fields`):** Full `protocolSection` + `resultsSection` trial JSON payloads can exceed 100 KB per study. `clinical-trials-database` requires `--count-total` first and shorthand `--fields` projection (`NCTId,BriefTitle,OverallStatus`).
-  * **openFDA Quota Escalation (`1,000` $\rightarrow$ `120,000` req/day):** `openfda-database` warns that an autonomous agent can burn through the 1,000 keyless daily quota in a single session, triggering the **`credentials`** skill (`grep -sq "^FDA_API_KEY=" ~/.env`) before running multi-query workflows.
+  * **ClinicalTrials.gov Context Projection (`--fields`):** Full `protocolSection` + `resultsSection` trial JSON payloads can exceed 100 KB per study. `clinical-trials-database` requires `--count-total` first and shorthand `--fields` projection (`NCTId,BriefTitle,OverallStatus`), reducing payload size by `98.7%`.
+  * **openFDA Quota Escalation (`1,000` $\rightarrow$ `120,000` req/day):** `openfda-database` warns that an autonomous agent can burn through the 1,000 keyless daily quota in a single session, triggering the **`credentials`** skill (`grep -sq "^FDA_API_KEY=" ~/.env`) before running multi-query workflows:
+
+![Use Case 4 — Clinical Trial Portfolio & openFDA FAERS Safety Audit](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc4_clinical_trials_openfda.svg)
 
 ---
 
@@ -439,7 +447,9 @@ Two more specialized workflows show how the Science plugin handles **ambiguous b
        --language=latin \
        --input="imp caesar divi f ???????? cos xi trib potest"
      ```
-   * Returns ranked character restorations (`augustus`, `96.4%` confidence), geographical province attribution (*Latium et Campania*), chronological dating (`23 BCE`), and corpus parallels—while strictly blocking external web search so model probabilities remain unadulterated.
+   * Returns ranked character restorations (`augustus`, `96.4%` confidence), geographical province attribution (*Latium et Campania*), chronological dating (`23 BCE`), and corpus parallels—while strictly blocking external web search so model probabilities remain unadulterated:
+
+![Use Case 5 — Ancient Roman & Greek Epigraphy Restoration](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc5_aeneas_latin_epigraphy.svg)
 
 ---
 
@@ -569,6 +579,26 @@ Placed directly at `plugins/bio-structural-qc/hooks.json`, this `PostToolUse` ho
 }
 ```
 
+### 4. Interactive 1-Command Plugin Scaffolder & Loader Validator (`scaffold_custom_plugin.py`)
+
+To make authoring and testing your own plugins effortless, I also included an interactive **1-Command Plugin Scaffolder & Loader Validator** ([`examples/scaffold_custom_plugin.py`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/examples/scaffold_custom_plugin.py)) that:
+1. **Validates** any plugin directory against Antigravity's loader rules (`plugin.json` allowed keys, relative logo path, `<= 24,000`-byte per-file rule cap, root `hooks.json` placement, and `SKILL.md` YAML frontmatter).
+2. **Scaffolds** a complete new plugin bundle (`plugin.json`, `assets/logo.svg`, `rules/AGENTS.md`, `hooks.json`, `SKILL.md`, and a PEP 723 `scripts/run_tool.py` CLI script) in a single command:
+
+```bash
+# 1. Validate the included bio-structural-qc reference plugin
+uv run examples/scaffold_custom_plugin.py --validate plugins/bio-structural-qc
+
+# 2. Scaffold a brand-new custom plugin bundle from scratch
+uv run examples/scaffold_custom_plugin.py \
+  --scaffold my-genomics-qc \
+  --skill vcf-filter-audit \
+  --description "Deterministic VCF quality filtering and AlphaGenome coordinate readiness checks."
+
+# 3. Install into your global Antigravity plugins directory
+cp -r plugins/bio-structural-qc ~/.gemini/config/plugins/bio-structural-qc
+```
+
 ---
 
 ## 6. Bonus: Distilling Live Chat Sessions into Skills & Language Server RPC Debugging
@@ -615,11 +645,3 @@ Simply close the sidecar pane, quit Antigravity completely (checking the system 
 * **[Star & Fork the Cookbook Repository on GitHub (`RobinaMirbahar/antigravity-science-plugin-cookbook`)](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)**
 
 Let me know in the comments what domain you're packaging into an Antigravity plugin next—whether it's **3D structural biology**, **genomic variant scoring**, **ancient epigraphy**, or **autonomous cloud SRE**!
-
----
-
-## About the Author
-
-![Robina Mirbahar — Women Techmakers & #BuildWithAI Gemini Organizer](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/robina_mirbahar_buildwithai.jpg)
-
-**Robina Mirbahar** — AI & Cloud Builder, Women Techmakers (`#BuildWithAI` / Gemini) Organizer, and creator of open-source engineering cookbooks for Google Gemini, Antigravity, and 3D WebGL agent systems. Connect with me on **[GitHub (`@RobinaMirbahar`)](https://github.com/RobinaMirbahar)**!

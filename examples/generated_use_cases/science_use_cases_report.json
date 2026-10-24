@@ -14,18 +14,18 @@
     "alphafold_active_site_plddt": 93.8,
     "top_inhibitors": [
       {
-        "chembl_id": "CHEMBL939",
-        "name": "Gefitinib",
-        "ic50_nm": 33.0,
-        "mw": 446.9,
-        "occupancy_at_100nm_pct": 75.2
-      },
-      {
         "chembl_id": "CHEMBL3353410",
         "name": "Osimertinib",
         "ic50_nm": 12.0,
         "mw": 499.6,
         "occupancy_at_100nm_pct": 89.3
+      },
+      {
+        "chembl_id": "CHEMBL939",
+        "name": "Gefitinib",
+        "ic50_nm": 33.0,
+        "mw": 446.9,
+        "occupancy_at_100nm_pct": 75.2
       },
       {
         "chembl_id": "CHEMBL553",
