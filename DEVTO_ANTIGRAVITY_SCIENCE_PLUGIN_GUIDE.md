@@ -795,9 +795,13 @@ Simply close the sidecar pane, quit Antigravity completely (checking the system 
 
 ---
 
-## What Custom Plugin Are You Building First?
+## Support, Star, Fork & Contribute on GitHub
 
-* **[Play with the Live 3D Biomolecular & Variant WebGL Studio](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)**
-* **[Star & Fork the Cookbook Repository on GitHub (`RobinaMirbahar/antigravity-science-plugin-cookbook`)](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)**
+If this cookbook and 3D Biomolecular Studio helped you understand Google Antigravity's Plugin, Skill, Hook, and MCP Sidecar architecture, here is how you can explore, build on, and support the project:
+
+* **Star the Repository:** [**Star `RobinaMirbahar/antigravity-science-plugin-cookbook` on GitHub**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook) to bookmark the 3 starter plugins and help other developers discover the cookbook.
+* **Fork & Build Your Own Plugin:** [**Fork `RobinaMirbahar/antigravity-science-plugin-cookbook`**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/fork) and run `uv run examples/scaffold_custom_plugin.py --scaffold <your-plugin-name>` to ship your own scientific or engineering plugin in under 5 minutes.
+* **Sponsor Open-Source AI & Science Engineering:** [**Sponsor `@RobinaMirbahar` on GitHub Sponsors (`github.com/sponsors/RobinaMirbahar`)**](https://github.com/sponsors/RobinaMirbahar) to support more open-source 3D WebGL studios, DeepMind & Gemini cookbooks, and hands-on agentic engineering guides!
+* **Play Live in Your Browser:** [**Launch the Interactive 3D Biomolecular & Variant WebGL Studio**](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)
 
 Let me know in the comments what domain you're packaging into an Antigravity plugin next - whether it's **3D structural biology**, **genomic variant scoring**, **ancient epigraphy**, or **autonomous cloud SRE**!

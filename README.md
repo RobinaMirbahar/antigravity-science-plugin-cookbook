@@ -307,6 +307,16 @@ antigravity-science-plugin-cookbook/
 
 ---
 
+## Star, Fork & Sponsor This Project
+
+If you find the **Antigravity Science Plugin Cookbook & Interactive 3D WebGL Studio** useful for your research or engineering workflows:
+
+* **Star this Repository:** [**Star `RobinaMirbahar/antigravity-science-plugin-cookbook` on GitHub**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)
+* **Fork & Customize:** [**Fork `RobinaMirbahar/antigravity-science-plugin-cookbook`**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/fork) to scaffold and publish your own custom Antigravity plugins, skills, and MCP servers.
+* **Sponsor on GitHub:** [**Sponsor `@RobinaMirbahar` on GitHub Sponsors (`github.com/sponsors/RobinaMirbahar`)**](https://github.com/sponsors/RobinaMirbahar) to support future open-source Gemini, DeepMind, and Google Cloud cookbooks!
+
+---
+
 ## License
 
 Apache License 2.0
