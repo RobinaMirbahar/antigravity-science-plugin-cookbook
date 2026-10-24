@@ -1,6 +1,6 @@
 # Google Antigravity Science Plugin & Custom Plugin Engineering Cookbook
 
-[![Science Plugin Banner](https://www.gstatic.com/antigravity/buildWithGoogle/science/banner.png)](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)
+[![Building 3D MCP Sidecars & Agent Plugins in Google Antigravity](./assets/devto_cover_banner.jpg)](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)
 
 * **[Launch the Interactive 3D Biomolecular & Variant WebGL Studio (`index.html`)](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)**
 * **[Read the Full Dev.to Engineering Deep-Dive Article (`DEVTO_ANTIGRAVITY_SCIENCE_PLUGIN_GUIDE.md`)](./DEVTO_ANTIGRAVITY_SCIENCE_PLUGIN_GUIDE.md)**

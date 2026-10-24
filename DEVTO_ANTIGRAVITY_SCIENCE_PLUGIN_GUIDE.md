@@ -3,10 +3,10 @@ title: "From Ancient Latin Epigraphy to 3D Protein Folding: Engineering Custom P
 published: false
 description: "I reverse-engineered Google Antigravity's 33-skill Science Plugin (v1.3.1) and built an open-source interactive 3D Biomolecular & Variant Studio, a zero-dependency PEP 723 C-alpha QC auditor, and a full custom plugin cookbook."
 tags: ai, gemini, bioinformatics, opensource
-cover_image: https://www.gstatic.com/antigravity/buildWithGoogle/science/banner.png
+cover_image: https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/devto_cover_banner.jpg
 ---
 
-![Science Plugin: scientific tools for your agent](https://www.gstatic.com/antigravity/buildWithGoogle/science/banner.png)
+![Building 3D MCP Sidecars & Agent Plugins in Google Antigravity — Science Plugin v1.3.1](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/devto_cover_banner.jpg)
 
 What happens when you ask an AI coding agent to **score a non-coding human genomic variant with AlphaGenome**, **map a missense mutation onto an AlphaFold 3D protein structure**, **screen ChEMBL for nanomolar small-molecule inhibitors**, or **restore a damaged 2,000-year-old Roman inscription using Google DeepMind's Aeneas model**?
 
