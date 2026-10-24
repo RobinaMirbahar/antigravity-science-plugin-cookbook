@@ -165,7 +165,7 @@ def scaffold_plugin(output_root: Path, plugin_name: str, skill_name: str, descri
     )
 
     (plugin_dir / "rules" / "AGENTS.md").write_text(
-        f"# {manifest['displayName']} — Always-On Routing Rules\n\n"
+        f"# {manifest['displayName']} - Always-On Routing Rules\n\n"
         f"- Whenever the user's task involves `{skill_name}`, always execute the helper CLI script via `uv run` "
         "rather than writing ad-hoc shell one-liners.\n"
         "- Always save structured outputs to a JSON file (`--output`) so large payloads never flood the context window.\n",

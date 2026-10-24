@@ -8,26 +8,26 @@ cover_image: https://raw.githubusercontent.com/RobinaMirbahar/antigravity-scienc
 
 What happens when you ask an AI coding agent to **score a non-coding human genomic variant with AlphaGenome**, **map a missense mutation onto an AlphaFold 3D protein structure**, **screen ChEMBL for nanomolar small-molecule inhibitors**, or **restore a damaged 2,000-year-old Roman inscription using Google DeepMind's Aeneas model**?
 
-If you try to stuff 33 scientific APIs, rate limiters, clinical safety guardrails, and 3D WebGL visualizers into a single mega-prompt, the agent collapses under context bloat and hallucinated parameters.
+If you try to stuff 41 scientific APIs, rate limiters, clinical safety guardrails, and 3D WebGL visualizers into a single mega-prompt, the agent collapses under context bloat and hallucinated parameters.
 
-**Google Antigravity** solves this at the runtime level with its **Plugin & Customization Architecture**—combining **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Dual-Process 3D MCP Sidecars (`mcp_config.json` + `sidecar.json`)**.
+**Google Antigravity** solves this at the runtime level with its **Plugin & Customization Architecture** - combining **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Dual-Process 3D MCP Sidecars (`mcp_config.json` + `sidecar.json`)**.
 
-Instead of just reading the docs, I reverse-engineered the newly released **Google Antigravity Science Plugin (`v1.3.1`)** and built the open-source **[Antigravity Science Plugin Cookbook & Interactive 3D Studio](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)**—complete with a **live browser-based 3D Biomolecular & Variant WebGL Sandbox**, a **zero-dependency PEP 723 3D protein + PAE generator**, and a production **`bio-structural-qc` custom plugin**.
+Instead of just reading the docs, I reverse-engineered the newly released **Google Antigravity Science Plugin (`v1.3.1`)** and built the open-source **[Antigravity Science Plugin Cookbook & Interactive 3D Studio](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)** - complete with a **live browser-based 3D Biomolecular & Variant WebGL Sandbox**, a **zero-dependency PEP 723 3D protein + PAE generator**, and a production **`bio-structural-qc` custom plugin**.
 
 ---
 
 ## Try the Live 3D Biomolecular & MCP Sidecar Studio in Your Browser
 
 * **[Launch the Interactive 3D Biomolecular & Variant WebGL Studio (`index.html`)](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)**
-  * *Explore 3D C-alpha backbones & non-covalent contact networks for **TP53 (`AF-P04637`)**, **Crambin (`1CRN`)**, and **EGFR Kinase + Gefitinib (`CHEMBL203`)**.*
-  * *Click any 3D residue sphere via raycasting to trigger live **`annotate_region`** MCP tool calls, inspect **AlphaFold pLDDT** & **AlphaGenome Variant Impact (AVI)** scores, upload your own `.pdb`/`.cif` files, or run the interactive **Aeneas Latin Epigraphy** restoration demo!*
+  * Explore 3D C-alpha backbones & non-covalent contact networks for **TP53 (`AF-P04637`)**, **Crambin (`1CRN`)**, and **EGFR Kinase + Gefitinib (`CHEMBL203`)**.
+  * Click any 3D residue sphere via raycasting to trigger live **`annotate_region`** MCP tool calls, inspect **AlphaFold pLDDT** & **AlphaGenome Variant Impact (AVI)** scores, upload your own `.pdb`/`.cif` files, or run the interactive **Aeneas Latin Epigraphy** restoration demo!
 * **[Full Source Code & `bio-structural-qc` Plugin on GitHub (`RobinaMirbahar/antigravity-science-plugin-cookbook`)](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)**
 
 ---
 
 ## 1. The Antigravity Customization Architecture & Context Economics
 
-Why can the Science plugin bundle **33 complex scientific skills** and a **9-tool 3D WebGL MCP server** without slowing down everyday coding turns? Because Antigravity strictly separates **always-on behavioral guardrails** from **on-demand procedural execution**:
+Why can the Science plugin bundle **41 complex scientific skills** and a **9-tool 3D WebGL MCP server** without slowing down everyday coding turns? Because Antigravity strictly separates **always-on behavioral guardrails** from **on-demand procedural execution**:
 
 ```mermaid
 flowchart TB
@@ -43,7 +43,7 @@ flowchart TB
     subgraph Bundle["2. Plugin Bundle (~/.gemini/config/plugins/science/)"]
         Manifest["plugin.json (Manifest & Metadata)"]
         Rules["rules/AGENTS.md (Always-On Guardrails)"]
-        Skills["skills/*/SKILL.md (33 On-Demand Skills)"]
+        Skills["skills/*/SKILL.md (41 On-Demand Skills)"]
         Hooks["hooks.json (PreToolUse / PostToolUse)"]
         MCP["mcp_config.json (Stdio / Streamable HTTP)"]
         Sidecar["sidecars/*/sidecar.json (Aux Pane Web UI)"]
@@ -73,7 +73,7 @@ flowchart TB
 
 ## 2. Dissecting the Official `science` Plugin (`v1.3.1`)
 
-When installed from the Antigravity Marketplace (`antigravity-plugins-official/plugin/science`), the bundle unpacks into `~/.gemini/config/plugins/science/`. Look at how cleanly the 33 skills, sidecar binaries, and rules are organized:
+When installed from the Antigravity Marketplace (`antigravity-plugins-official/plugin/science`), the bundle unpacks into `~/.gemini/config/plugins/science/`. Look at how cleanly the 41 skills, sidecar binaries, and rules are organized:
 
 ```text
 ~/.gemini/config/plugins/science/
@@ -91,7 +91,7 @@ When installed from the Antigravity Marketplace (`antigravity-plugins-official/p
 │           ├── main.js                          # Bundled Mol* UI overlay frontend (183 KB)
 │           ├── server.cjs                       # Local state & WebSocket/HTTP server (68 KB)
 │           └── mcp_entry.cjs                    # MCP stdio server entrypoint (30 KB)
-└── skills/                                      # 33 Progressive-Disclosure Scientific Skills
+└── skills/                                      # 41 Progressive-Disclosure Scientific Skills
     ├── alphafold_database_fetch_and_analyze/    # pLDDT & sliding-window PAE domain heuristics
     ├── alphagenome_atlas_website_links/         # Deep-links to AlphaGenome Atlas
     ├── alphagenome_single_variant_analysis/     # RNA-seq, DNASE, ChIP & splicing effects
@@ -139,7 +139,7 @@ When installed from the Antigravity Marketplace (`antigravity-plugins-official/p
 
 ## 3. Five Production Engineering Patterns Inside the Science Plugin
 
-While inspecting the source files across all 33 skills, five engineering patterns stood out that every agent builder should steal.
+While inspecting the source files across all 41 skills, five engineering patterns stood out that every agent builder should steal.
 
 ### Pattern 1: Always-On Behavioral Routing via `rules/AGENTS.md`
 
@@ -216,17 +216,21 @@ def find_sub_domains(pae_matrix, distance_cutoff=7.0, min_domain_size=40):
 
 ### Pattern 3: The Zero-Leak Credential Protocol (`skills/credentials/SKILL.md`)
 
-Genomic and literature APIs like **AlphaGenome** (`ALPHAGENOME_API_KEY`) require secret keys. If an agent asks a user to paste their API key into the chat—or runs `cat ~/.env`—that secret is permanently recorded in the conversation transcript and model context.
+Genomic and literature APIs like **AlphaGenome** (`ALPHAGENOME_API_KEY`) require secret keys. If an agent asks a user to paste their API key into the chat - or runs `cat ~/.env` - that secret is permanently recorded in the conversation transcript and model context.
 
 The `credentials` skill solves this with a strict **Zero-Leak Protocol**:
 1. **Silent Exit-Code Verification:** The agent checks whether the variable exists in `~/.env` using `grep -sq` (quiet + suppress errors), reading *only* the `0` vs. non-zero exit code:
-   ```bash
-   grep -sq "^ALPHAGENOME_API_KEY=" ~/.env
-   ```
+
+    ```bash
+    grep -sq "^ALPHAGENOME_API_KEY=" ~/.env
+    ```
+
 2. **Hidden Terminal Prompting (`read -s`):** If missing, the agent stops immediately and outputs a terminal command for the user to run locally where keystrokes are hidden (`read -s`):
-   ```bash
-   printf "Enter ALPHAGENOME_API_KEY (typing hidden): " && read -s val && echo && echo "ALPHAGENOME_API_KEY=$val" >> "$HOME/.env" && echo "Saved."
-   ```
+
+    ```bash
+    printf "Enter ALPHAGENOME_API_KEY (typing hidden): " && read -s val && echo && echo "ALPHAGENOME_API_KEY=$val" >> "$HOME/.env" && echo "Saved."
+    ```
+
 3. **Internal `dotenv` Ingestion:** Helper scripts load `~/.env` internally via `dotenv`, so the key never appears in command-line flags or stdout.
 
 ---
@@ -250,7 +254,7 @@ sequenceDiagram
     AF-->>Agent: Saved AF-P04637-F1-model_v6.cif + PAE JSON
     Agent->>MCP: load_structure(id="AF-P04637-F1-model_v6.cif", source="artifact")
     MCP->>Sidecar: Atomic state patch (load local .cif)
-    Agent->>MCP: highlight_region(chain="A", start_residue=245, end_residue=250, color="#FF1744")
+    Agent->>MCP: highlight_region(auth_asym_id="A", start_auth_seq_id=245, end_auth_seq_id=250, color="#FF1744")
     MCP->>Sidecar: Focus 3D camera & highlight residues
     Agent-->>User: Emits [Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html) pill
     User->>Sidecar: Clicks pill -> Rotates 3D model & pins custom annotation on Zinc finger
@@ -296,7 +300,7 @@ Here are the exact two config files that wire this up:
 
 ---
 
-### Pattern 5: Domain-Specific Guardrails — From Clinical Genetics (`AlphaGenome`) to Ancient Epigraphy (`Aeneas` & `Ithaca`)
+### Pattern 5: Domain-Specific Guardrails - From Clinical Genetics (`AlphaGenome`) to Ancient Epigraphy (`Aeneas` & `Ithaca`)
 
 Two of the most fascinating skills in the bundle demonstrate how `SKILL.md` enforces domain-specific scientific rigor:
 
@@ -312,13 +316,13 @@ Two of the most fascinating skills in the bundle demonstrate how `SKILL.md` enfo
 
 ---
 
-## 4. Five End-to-End Multi-Skill Use Cases Across the 33 Science Skills
+## 4. Five End-to-End Multi-Skill Use Cases Across the 41 Science Skills
 
-Because all 33 skills share the conversation's artifact directory, Antigravity can chain multiple domain-specific CLI scripts and MCP sidecars in a single research session.
+Because all 41 skills share the conversation's artifact directory, Antigravity can chain multiple domain-specific CLI scripts and MCP sidecars in a single research session.
 
 I included a runnable benchmark suite in [`examples/multi_domain_science_use_cases.py`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/examples/multi_domain_science_use_cases.py) (`uv run examples/multi_domain_science_use_cases.py`) that executes and scores all five multi-skill pipelines below:
 
-![5 End-to-End Multi-Skill Pipelines Scorecard](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/science_use_cases_scorecard.svg)
+![5 End-to-End Multi-Skill Pipelines Scorecard](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/science_use_cases_scorecard.png)
 
 ---
 
@@ -344,9 +348,9 @@ uv run ~/.gemini/config/plugins/science/skills/chembl_database/scripts/chembl_ap
   molecule --id CHEMBL939 --dl_format sdf --output ./artifacts/gefitinib.sdf
 ```
 
-Finally, the agent invokes `science_biomolecular_structure_viewer_mcp` (`load_structure` + `highlight_region(chain="A", start_residue=855, end_residue=862, color="#FF1744")`) and surfaces `[Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html)`:
+Finally, the agent invokes `science_biomolecular_structure_viewer_mcp` (`load_structure` + `highlight_region(auth_asym_id="A", start_auth_seq_id=855, end_auth_seq_id=862, color="#FF1744")`) and surfaces `[Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html)`:
 
-![Use Case 1 — Precision Oncology & 3D Kinase Pocket Triage](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc1_precision_oncology_3d.svg)
+![Use Case 1 - Precision Oncology & 3D Kinase Pocket Triage](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc1_precision_oncology_3d.png)
 
 ---
 
@@ -370,7 +374,7 @@ uv run ~/.gemini/config/plugins/science/skills/jaspar_database/scripts/jaspar_cl
 
 * **Engineering Guardrail in Action:** The `alphagenome-variant-impact-score` skill enforces that `--include_track_info` outputs (`~3.9 KB/variant`) are redirected via `-o` and framed strictly in terms of molecular mechanisms (`CEBPA` binding site creation + liver RNA-seq eQTL shift):
 
-![Use Case 2 — Non-Coding GWAS Enhancer Variant Triage](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc2_noncoding_alphagenome.svg)
+![Use Case 2 - Non-Coding GWAS Enhancer Variant Triage](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc2_noncoding_alphagenome.png)
 
 ---
 
@@ -395,7 +399,7 @@ uv run ~/.gemini/config/plugins/science/skills/protein_sequence_msa/scripts/clus
   2. **Database Allowlist:** Enforces validation against the exact 9 supported Foldseek databases (`afdb50`, `afdb-swissprot`, `pdb100`, `BFVD`, `mgnify_esm30`, `cath50`, `gmgcl_id`, `bfmd`, `afdb-proteome`).
   3. **Headless OSMesa PyMOL Superposition (`pymol` skill):** When generating static publication figures alongside `.pse` session files, the `pymol` skill runs headless via `PYOPENGL_PLATFORM=osmesa` and automatically checks `cmd.count_atoms("name CA") == cmd.count_atoms("all")` so C-alpha-only traces still render as smooth cartoons!
 
-![Use Case 3 — Dark-Proteome Enzyme Discovery with Foldseek](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc3_dark_proteome_foldseek.svg)
+![Use Case 3 - Dark-Proteome Enzyme Discovery with Foldseek](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc3_dark_proteome_foldseek.png)
 
 ---
 
@@ -427,7 +431,7 @@ uv run ~/.gemini/config/plugins/science/skills/openfda_database/scripts/openfda_
   * **ClinicalTrials.gov Context Projection (`--fields`):** Full `protocolSection` + `resultsSection` trial JSON payloads can exceed 100 KB per study. `clinical-trials-database` requires `--count-total` first and shorthand `--fields` projection (`NCTId,BriefTitle,OverallStatus`), reducing payload size by `98.7%`.
   * **openFDA Quota Escalation (`1,000` → `120,000` req/day):** `openfda-database` warns that an autonomous agent can burn through the 1,000 keyless daily quota in a single session, triggering the **`credentials`** skill (`grep -sq "^FDA_API_KEY=" ~/.env`) before running multi-query workflows:
 
-![Use Case 4 — Clinical Trial Portfolio & openFDA FAERS Safety Audit](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc4_clinical_trials_openfda.svg)
+![Use Case 4 - Clinical Trial Portfolio & openFDA FAERS Safety Audit](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc4_clinical_trials_openfda.png)
 
 ---
 
@@ -436,7 +440,7 @@ uv run ~/.gemini/config/plugins/science/skills/openfda_database/scripts/openfda_
 Two more specialized workflows show how the Science plugin handles **ambiguous biological identifiers** and **digital humanities**:
 
 1. **Systems Biology Pathway Enrichment (`STRING` + `Reactome`):**
-   * **The `STRING` "Never Assume Human" Rule:** Even if a user asks for `TP53` or `BRCA1` interaction partners, `string-database/SKILL.md` strictly forbids defaulting to *Homo sapiens* (`9606`) if the species wasn't stated—requiring the agent to ask for the NCBI Taxon ID first, map symbols via `string_cli.py map`, and then export pathway diagrams in `reactome-database` (preferring specific sub-pathways like **Cell Cycle, Mitotic** `R-HSA-69278` over broad top-level nodes).
+   * **The `STRING` "Never Assume Human" Rule:** Even if a user asks for `TP53` or `BRCA1` interaction partners, `string-database/SKILL.md` strictly forbids defaulting to *Homo sapiens* (`9606`) if the species wasn't stated - requiring the agent to ask for the NCBI Taxon ID first, map symbols via `string_cli.py map`, and then export pathway diagrams in `reactome-database` (preferring specific sub-pathways like **Cell Cycle, Mitotic** (`R-HSA-69278`) over broad top-level nodes).
 2. **Restoring Damaged Roman & Greek Stone Inscriptions (`predictingthepast`):**
    * Powered by Google DeepMind's **Aeneas** (Latin) and **Ithaca** (Ancient Greek) models:
      ```bash
@@ -445,9 +449,9 @@ Two more specialized workflows show how the Science plugin handles **ambiguous b
        --language=latin \
        --input="imp caesar divi f ???????? cos xi trib potest"
      ```
-   * Returns ranked character restorations (`augustus`, `96.4%` confidence), geographical province attribution (*Latium et Campania*), chronological dating (`23 BCE`), and corpus parallels—while strictly blocking external web search so model probabilities remain unadulterated:
+   * Returns ranked character restorations (`augustus`, `96.4%` confidence), geographical province attribution (*Latium et Campania*), chronological dating (`23 BCE`), and corpus parallels - while strictly blocking external web search so model probabilities remain unadulterated:
 
-![Use Case 5 — Ancient Roman & Greek Epigraphy Restoration](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc5_aeneas_latin_epigraphy.svg)
+![Use Case 5 - Ancient Roman & Greek Epigraphy Restoration](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc5_aeneas_latin_epigraphy.png)
 
 ---
 
@@ -455,18 +459,20 @@ Two more specialized workflows show how the Science plugin handles **ambiguous b
 
 In the companion repository (**[RobinaMirbahar/antigravity-science-plugin-cookbook](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)**), I built a complete, installable custom plugin called **`bio-structural-qc`** plus a zero-dependency **3D Protein + PAE Generator & SVG Dashboard (`examples/generate_3d_protein_pae_demo.py`)**.
 
-![AlphaFold pLDDT Profile & PAE Domain Matrix](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_p53_demo/p53_plddt_pae_dashboard.svg)
+![AlphaFold pLDDT Profile & PAE Domain Matrix](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_p53_demo/p53_plddt_pae_dashboard.png)
 
 ### Directory Structure of `bio-structural-qc`
 
 ```text
 plugins/bio-structural-qc/
 ├── plugin.json                                    # Manifest & 3 starter prompts
-├── hooks.json                                     # PostToolUse command reproducibility logger
+├── hooks.json                                     # PostToolUse command reproducibility hook
 ├── assets/
 │   └── logo.svg                                   # 128x128 high-contrast SVG icon
 ├── rules/
 │   └── AGENTS.md                                  # Mandatory QC gate before docking/Foldseek
+├── scripts/
+│   └── log_reproducibility_audit.py               # Redacts secrets + hashes scripts & input files
 └── skills/
     └── structure-qc-audit/
         ├── SKILL.md                               # Progressive-disclosure instructions
@@ -553,9 +559,17 @@ Output:
 ]
 ```
 
-### 3. Reproducibility Lifecycle Hook (`hooks.json`)
+### 3. Reproducibility Lifecycle Hook (`hooks.json` & `log_reproducibility_audit.py`)
 
-Placed directly at `plugins/bio-structural-qc/hooks.json`, this `PostToolUse` hook automatically records an ISO-8601 audit trail whenever the agent runs a shell command:
+A bare timestamp log only tells you *when* `run_command` fired, not *what* actually executed or which version of a script and input `.pdb`/`.cif` coordinates produced a scientific result. At the same time, logging raw shell commands is dangerous if an inline environment variable or `--api-key` flag is present.
+
+Because Antigravity passes a structured JSON payload to every `PostToolUse` hook over `stdin` (`toolCall.args.CommandLine`, `workspacePaths`, `conversationId`, `stepIdx`), we can wire `plugins/bio-structural-qc/hooks.json` to a zero-dependency PEP 723 audit script (`plugins/bio-structural-qc/scripts/log_reproducibility_audit.py`) that:
+1. **Redacts Secrets Before Logging:** Strips any environment variables matching `*KEY*`, `*TOKEN*`, `*SECRET*`, `*PASS*`, `*CRED*`, or `*AUTH*`, plus `Bearer`/`Basic` headers and `--api-key`/`--token` CLI flags.
+2. **Records Exact Script Versions & Git State:** Captures `git rev-parse --short HEAD` (`+dirty` if uncommitted changes exist) and computes a 16-character SHA-256 digest (`script_versions`) for every executed `.py` or `.sh` script.
+3. **Hashes All Referenced Input & Output Files:** Tokenizes the command line and computes SHA-256 digests (`file_hashes`) for every referenced `.pdb`, `.cif`, `.mmcif`, `.vcf`, `.json`, `.fasta`, or `.sdf` file.
+4. **Honors the `PostToolUse` Stdout Contract:** Appends the JSONL record to `~/.gemini/qc_command_audit.jsonl` and emits `{}` on `stdout`.
+
+* **`plugins/bio-structural-qc/hooks.json`:**
 
 ```json
 {
@@ -567,7 +581,7 @@ Placed directly at `plugins/bio-structural-qc/hooks.json`, this `PostToolUse` ho
         "hooks": [
           {
             "type": "command",
-            "command": "python3 -c \"import datetime, pathlib; p = pathlib.Path.home() / '.gemini' / 'qc_command_audit.log'; p.open('a').write(f'{datetime.datetime.now(datetime.timezone.utc).isoformat()} | PostToolUse:run_command\\n')\"",
+            "command": "uv run plugins/bio-structural-qc/scripts/log_reproducibility_audit.py",
             "timeout": 5
           }
         ]
@@ -576,6 +590,76 @@ Placed directly at `plugins/bio-structural-qc/hooks.json`, this `PostToolUse` ho
   }
 }
 ```
+
+* **`plugins/bio-structural-qc/scripts/log_reproducibility_audit.py` (Core Redaction & Hashing Logic):**
+
+```python
+#!/usr/bin/env python3
+"""PostToolUse reproducibility hook: logs redacted commands, script SHA-256 versions, and input file hashes."""
+
+# /// script
+# requires-python = ">=3.10"
+# dependencies = []
+# ///
+
+import datetime, hashlib, json, pathlib, re, shlex, subprocess, sys
+
+SECRET_PATTERNS = [
+    (re.compile(r"\b([A-Za-z0-9_]*(?:KEY|TOKEN|SECRET|PASS|PASSWORD|CRED|AUTH)[A-Za-z0-9_]*)\s*=\s*('[^']*'|\"[^\"]*\"|\S+)", re.I), r"\1=[REDACTED]"),
+    (re.compile(r"(Bearer|Basic)\s+[A-Za-z0-9._\-+/=]+", re.I), r"\1 [REDACTED]"),
+    (re.compile(r"(--(?:api[-_]?key|token|secret|password)|x-goog-api-key:|api-key:)\s*([=:]?\s*)('[^']*'|\"[^\"]*\"|\S+)", re.I), r"\1\2[REDACTED]"),
+]
+TRACKED_EXTENSIONS = {".py", ".sh", ".pdb", ".cif", ".mmcif", ".json", ".fasta", ".fa", ".aln", ".sdf", ".vcf", ".gtf", ".tsv", ".csv"}
+
+def redact_secrets(cmd: str) -> str:
+    for pattern, repl in SECRET_PATTERNS:
+        cmd = pattern.sub(repl, cmd)
+    return cmd
+
+def sha256_file(path: pathlib.Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(65536), b""):
+            h.update(chunk)
+    return f"sha256:{h.hexdigest()[:16]}"
+```
+
+#### Verified Commands: Test Secret Redaction & Input File Hashing Locally
+
+You can verify both the built-in `--self-test` mode and the live `stdin` hook contract in two commands:
+
+```bash
+# 1. Run the built-in self-test (simulates an inline ALPHAGENOME_API_KEY + 2 PDB input files)
+uv run plugins/bio-structural-qc/scripts/log_reproducibility_audit.py --self-test
+
+# 2. Simulate Antigravity's PostToolUse stdin payload and inspect ~/.gemini/qc_command_audit.jsonl
+printf '{"conversationId":"conv-demo","stepIdx":1,"toolCall":{"name":"run_command","args":{"CommandLine":"FDA_API_KEY=secret123 uv run plugins/bio-structural-qc/skills/structure-qc-audit/scripts/audit_structure.py examples/sample_crambin_fragment.pdb"}}}' \
+  | uv run plugins/bio-structural-qc/scripts/log_reproducibility_audit.py
+tail -n 1 ~/.gemini/qc_command_audit.jsonl
+```
+
+Verified `--self-test` output:
+
+```json
+{
+  "timestamp_utc": "2026-10-24T19:18:15.389869+00:00",
+  "event": "PostToolUse",
+  "tool": "run_command",
+  "conversation_id": "conv-repro-demo-01",
+  "step_idx": 7,
+  "git_revision": "37d46a9",
+  "redacted_command": "ALPHAGENOME_API_KEY=[REDACTED] uv run plugins/bio-structural-qc/skills/structure-qc-audit/scripts/audit_structure.py examples/generated_p53_demo/synthetic_p53_multidomain.pdb examples/sample_crambin_fragment.pdb",
+  "script_versions": {
+    "plugins/bio-structural-qc/skills/structure-qc-audit/scripts/audit_structure.py": "sha256:b305f0ca720d7673"
+  },
+  "file_hashes": {
+    "examples/generated_p53_demo/synthetic_p53_multidomain.pdb": "sha256:f929c693e8e2fbfa",
+    "examples/sample_crambin_fragment.pdb": "sha256:5ddc4bb4a2f0e889"
+  },
+  "status": "OK"
+}
+```
+
 
 ### 4. Interactive 1-Command Plugin Scaffolder & Loader Validator (`scaffold_custom_plugin.py`)
 
@@ -607,20 +691,20 @@ Inspecting all official Google Antigravity plugins installed in `~/.gemini/confi
 
 ### A. The 4 Official `mcp_config.json` Patterns
 
-1. **Pattern 1 — Local Stdio Subprocess (`agy-node` / `node` / `dart` / `uv`):**
+1. **Pattern 1 - Local Stdio Subprocess (`agy-node` / `node` / `dart` / `uv`):**
    Used by **`science`** (`biomolecular_structure_viewer_mcp`), **`flutter`** (`dart-mcp-server`), and **`data-agent-kit-plugin`** (`dak-notebook`, `dak-viz`).
-2. **Pattern 2 — Cloud Proxy Stdio (`mcp_proxy_bundle.cjs` + `X_GOOG_PROXY_HEADERS`):**
+2. **Pattern 2 - Cloud Proxy Stdio (`mcp_proxy_bundle.cjs` + `X_GOOG_PROXY_HEADERS`):**
    Used by **`data-agent-kit-plugin`** (`v1.1.0`) to bridge **9 managed Google Cloud MCP endpoints** (`https://bigquery.googleapis.com/mcp`, `https://dataproc-$GCP_REGION.googleapis.com/mcp`, `https://spanner.googleapis.com/mcp`, `https://alloydb.googleapis.com/mcp`, `https://sqladmin.googleapis.com/mcp`, `https://bigtableadmin.googleapis.com/mcp`, `https://bigtable.googleapis.com/mcp`, `https://storage.googleapis.com/mcp`, and `https://dataplex.googleapis.com/mcp`).
-3. **Pattern 3 — Remote Streamable HTTP with Eager Tools (`serverUrl` + `"eager": true`):**
+3. **Pattern 3 - Remote Streamable HTTP with Eager Tools (`serverUrl` + `"eager": true`):**
    Used by **`gemini-api`** (`v2.3.0`) to expose `gemini_search_docs` and `gemini_get_doc` from `https://gemini-api-docs-mcp.dev` as native first-class tools without spawning a local process.
-4. **Pattern 4 — Google-Credentials Authenticated HTTP (`authProviderType: "google_credentials"`):**
+4. **Pattern 4 - Google-Credentials Authenticated HTTP (`authProviderType: "google_credentials"`):**
    Used by **`google-cloud-developer`** (`v1.1.13`) and **`google-developer-knowledge`** (`v1.0.1`) to connect directly to `https://developerknowledge.googleapis.com/mcp` using Application Default Credentials (ADC).
 
 ### B. Starter Plugin #2: `plugins/genomics-variant-mcp` (Custom Python Stdio MCP Server + Specialist Subagent)
 
 To show how to package your own **MCP server** and **Specialist Subagent** inside an Antigravity plugin, the cookbook includes **[`plugins/genomics-variant-mcp`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/tree/main/plugins/genomics-variant-mcp)**:
 
-* **[`mcp_config.json`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/plugins/genomics-variant-mcp/mcp_config.json)** — Registers `genomics_variant_mcp` via `uv run mcp/variant_mcp_server.py` and marks both tools as `"eager": true` so they load directly into the agent's native tool declarations:
+* **[`mcp_config.json`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/plugins/genomics-variant-mcp/mcp_config.json)** - Registers `genomics_variant_mcp` via `uv run mcp/variant_mcp_server.py` and marks both tools as `"eager": true` so they load directly into the agent's native tool declarations:
   ```json
   {
     "mcpServers": {
@@ -635,10 +719,10 @@ To show how to package your own **MCP server** and **Specialist Subagent** insid
     }
   }
   ```
-* **[`mcp/variant_mcp_server.py`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/plugins/genomics-variant-mcp/mcp/variant_mcp_server.py)** — A zero-dependency PEP 723 JSON-RPC 2.0 Stdio MCP server implementing `initialize`, `tools/list`, and `tools/call` for:
+* **[`mcp/variant_mcp_server.py`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/plugins/genomics-variant-mcp/mcp/variant_mcp_server.py)** - A zero-dependency PEP 723 JSON-RPC 2.0 Stdio MCP server implementing `initialize`, `tools/list`, and `tools/call` for:
   * `score_variant_impact`: Scores 1-based `chr:pos:ref>alt` SNVs (transition/transversion class, predicted AlphaGenome AVI impact score, PhyloP 100-way conservation, and molecular priority).
   * `evaluate_lipinski_ro5`: Evaluates small-molecule leads against Lipinski's Rule of Five (`MW ≤ 500`, `LogP ≤ 5`, `HBD ≤ 5`, `HBA ≤ 10`) and Veber's polar surface area rule (`PSA ≤ 140 Å²`).
-* **[`agents/clinical-variant-curator.md`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/plugins/genomics-variant-mcp/agents/clinical-variant-curator.md)** — A specialist subagent (modeled on `firebase`'s `agents/firestore-rules-author.md`) with YAML frontmatter (`mainAgent: true`, `subagent: true`, `commandExecutionPolicy: auto`) that enforces research-only molecular framing.
+* **[`agents/clinical-variant-curator.md`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/plugins/genomics-variant-mcp/agents/clinical-variant-curator.md)** - A specialist subagent (modeled on `firebase`'s `agents/firestore-rules-author.md`) with YAML frontmatter (`mainAgent: true`, `subagent: true`, `commandExecutionPolicy: auto`) that enforces research-only molecular framing.
 
 Run its built-in self-test with `uv`:
 ```bash
@@ -667,7 +751,7 @@ It walks you through a mandatory **4-round brainstorming protocol** (confirming 
 ### B. Querying & Toggling Plugins via the Language Server Connect RPC
 Antigravity manages plugins live through its local Connect RPC server (`ANTIGRAVITY_LS_ADDRESS`).
 * **Golden Rule #1:** Always key mutations on the install directory (`dir`), never `plugin.json`'s `name`.
-* **Golden Rule #2:** Never read `GetAllPlugins` unfiltered—it inlines the full text of every `SKILL.md` across all installed plugins! Pipe it through `jq` (see [`examples/inspect_plugins_rpc.sh`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/examples/inspect_plugins_rpc.sh)):
+* **Golden Rule #2:** Never read `GetAllPlugins` unfiltered - it inlines the full text of every `SKILL.md` across all installed plugins! Pipe it through `jq` (see [`examples/inspect_plugins_rpc.sh`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/examples/inspect_plugins_rpc.sh)):
 
 ```bash
 : "${ANTIGRAVITY_LS_ADDRESS:=localhost:5387}"
@@ -699,4 +783,4 @@ Simply close the sidecar pane, quit Antigravity completely (checking the system 
 * **[Play with the Live 3D Biomolecular & Variant WebGL Studio](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)**
 * **[Star & Fork the Cookbook Repository on GitHub (`RobinaMirbahar/antigravity-science-plugin-cookbook`)](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)**
 
-Let me know in the comments what domain you're packaging into an Antigravity plugin next—whether it's **3D structural biology**, **genomic variant scoring**, **ancient epigraphy**, or **autonomous cloud SRE**!
+Let me know in the comments what domain you're packaging into an Antigravity plugin next - whether it's **3D structural biology**, **genomic variant scoring**, **ancient epigraphy**, or **autonomous cloud SRE**!

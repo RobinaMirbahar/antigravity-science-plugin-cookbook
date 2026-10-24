@@ -105,7 +105,7 @@ def run_use_cases() -> list[dict]:
             "pubmed-database",
             "literature-search-openalex",
         ],
-        "target_indication": "MONDO_0005090 (Non-Small Cell Lung Cancer — Phase 3 Recruiting)",
+        "target_indication": "MONDO_0005090 (Non-Small Cell Lung Cancer - Phase 3 Recruiting)",
         "clinical_trials_query": "clinical_trials_api.py --fields NCTId,BriefTitle,OverallStatus,EligibilityCriteria --count-total",
         "openfda_faers_signal": {
             "reporting_odds_ratio_ror": round(ror, 2),
@@ -139,7 +139,7 @@ def write_scorecard_svg(cases: list[dict], out_svg: Path) -> None:
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 390" width="880" height="390">',
         '<rect width="880" height="390" rx="16" fill="#070B19" stroke="#00E5FF" stroke-opacity="0.35"/>',
         '<text x="28" y="36" fill="#F8FAFC" font-family="sans-serif" font-size="16" font-weight="bold">'
-        'Google Antigravity Science Plugin (v1.3.1) — 5 End-to-End Multi-Skill Pipelines</text>',
+        'Google Antigravity Science Plugin (v1.3.1) - 5 End-to-End Multi-Skill Pipelines</text>',
         '<text x="28" y="56" fill="#94A3B8" font-family="sans-serif" font-size="12">'
         'Generated deterministically via uv run examples/multi_domain_science_use_cases.py</text>',
     ]

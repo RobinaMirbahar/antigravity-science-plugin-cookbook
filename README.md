@@ -7,7 +7,7 @@
 * **[Read the Full Dev.to Engineering Deep-Dive Source (`DEVTO_ANTIGRAVITY_SCIENCE_PLUGIN_GUIDE.md`)](./DEVTO_ANTIGRAVITY_SCIENCE_PLUGIN_GUIDE.md)**
 * **[Jump to the Hands-On Plugin Authoring Codelab & 1-Command Scaffolder](#hands-on-plugin-authoring-codelab-build-validate--deploy-in-5-minutes)**
 
-A hands-on engineering cookbook and starter kit for building **Google Antigravity Customizations**—including **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Interactive 3D MCP Sidecars (`sidecar.json`)**—modeled on the official **Google Antigravity Science Plugin (`v1.3.1`)**.
+A hands-on engineering cookbook and starter kit for building **Google Antigravity Customizations** - including **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Interactive 3D MCP Sidecars (`sidecar.json`)** - modeled on the official **Google Antigravity Science Plugin (`v1.3.1`)**.
 
 ---
 
@@ -15,40 +15,40 @@ A hands-on engineering cookbook and starter kit for building **Google Antigravit
 
 Run `uv run examples/multi_domain_science_use_cases.py` to execute all 5 multi-skill pipelines deterministically and generate the JSON benchmark report ([`examples/generated_use_cases/science_use_cases_report.json`](./examples/generated_use_cases/science_use_cases_report.json)) and vector visual dashboards below:
 
-![Google Antigravity Science Plugin — 5 End-to-End Multi-Skill Pipelines Scorecard](./examples/generated_use_cases/science_use_cases_scorecard.svg)
+![Google Antigravity Science Plugin - 5 End-to-End Multi-Skill Pipelines Scorecard](./examples/generated_use_cases/science_use_cases_scorecard.svg)
 
 ### Use Case 1: Precision Oncology & 3D Kinase Pocket Triage (`EGFR L858R` / `CHEMBL203`)
 **Skills Chained:** `clinvar-database` $\rightarrow$ `gnomad-database` (`LOEUF = 0.24`) $\rightarrow$ `alphafold-database-fetch-and-analyze` (`P00533`) $\rightarrow$ `chembl-database` (`Erlotinib`, `Osimertinib`, `Gefitinib`) $\rightarrow$ `biomolecular-structure-viewer` (`highlight_region` in 3D Mol\* Sidecar).
 
-![Use Case 1 — Precision Oncology & 3D Kinase Pocket Triage](./examples/generated_use_cases/uc1_precision_oncology_3d.svg)
+![Use Case 1 - Precision Oncology & 3D Kinase Pocket Triage](./examples/generated_use_cases/uc1_precision_oncology_3d.svg)
 
 ---
 
 ### Use Case 2: Non-Coding GWAS Enhancer Variant Triage (`SORT1` 1p13 Locus `rs12740374`)
 **Skills Chained:** `alphagenome-variant-impact-score` (`AVI = 0.94`) $\rightarrow$ `alphagenome-single-variant-analysis` $\rightarrow$ `ucsc-conservation-and-tfbs` (`phyloP100way = +4.82`) $\rightarrow$ `encode-ccres-database` (`dELS`) $\rightarrow$ `jaspar-database` (`MA0102.4 CEBPA` de novo binding site gain) $\rightarrow$ `gtex-database` (Liver eQTL `NES = +1.42`).
 
-![Use Case 2 — Non-Coding GWAS Enhancer Variant Triage](./examples/generated_use_cases/uc2_noncoding_alphagenome.svg)
+![Use Case 2 - Non-Coding GWAS Enhancer Variant Triage](./examples/generated_use_cases/uc2_noncoding_alphagenome.svg)
 
 ---
 
 ### Use Case 3: Dark-Proteome Enzyme Discovery in the Sequence "Twilight Zone" (`Foldseek 3D Search`)
 **Skills Chained:** `ncbi-sequence-fetch` $\rightarrow$ `alphafold-database-fetch-and-analyze` $\rightarrow$ `foldseek-structural-search` (`afdb50`, `mgnify_esm30`, `pdb100`, `cath50`) $\rightarrow$ `interpro-database` $\rightarrow$ `protein-sequence-msa` (`Clustal Omega` conserving the `Ser160-Asp206-His237` catalytic triad at `21.4%` sequence identity) $\rightarrow$ `pymol` (headless OSMesa rendering).
 
-![Use Case 3 — Dark-Proteome Enzyme Discovery with Foldseek](./examples/generated_use_cases/uc3_dark_proteome_foldseek.svg)
+![Use Case 3 - Dark-Proteome Enzyme Discovery with Foldseek](./examples/generated_use_cases/uc3_dark_proteome_foldseek.svg)
 
 ---
 
 ### Use Case 4: Clinical Trial Portfolio & openFDA FAERS Disproportionality Audit (`MONDO_0005090` NSCLC)
 **Skills Chained:** `opentargets-database` $\rightarrow$ `clinical-trials-database` (`--count-total` + `--fields` context-saving projection cutting payload size by `98.7%`) $\rightarrow$ `openfda-database` (FAERS Reporting Odds Ratio $ROR$ forest plot with `FDA_API_KEY` zero-leak `.env` verification raising quota from `1,000` $\rightarrow$ `120,000` req/day).
 
-![Use Case 4 — Clinical Trial Portfolio & openFDA FAERS Safety Audit](./examples/generated_use_cases/uc4_clinical_trials_openfda.svg)
+![Use Case 4 - Clinical Trial Portfolio & openFDA FAERS Safety Audit](./examples/generated_use_cases/uc4_clinical_trials_openfda.svg)
 
 ---
 
 ### Use Case 5: Ancient Roman & Greek Epigraphy Restoration (`Google DeepMind Aeneas & Ithaca`)
 **Skills Chained:** `predictingthepast` (`preprocess.py` $\rightarrow$ `run_inference.py` $\rightarrow$ `visualize_results.py` restoring `imp caesar divi f ???????? cos xi` $\rightarrow$ `augustus` at `96.4%` confidence, attributed to *Latium et Campania*, `23 BCE`) $\rightarrow$ `literature-search-openalex`.
 
-![Use Case 5 — Ancient Roman & Greek Epigraphy Restoration](./examples/generated_use_cases/uc5_aeneas_latin_epigraphy.svg)
+![Use Case 5 - Ancient Roman & Greek Epigraphy Restoration](./examples/generated_use_cases/uc5_aeneas_latin_epigraphy.svg)
 
 ---
 
@@ -216,14 +216,14 @@ Used by **`google-cloud-developer`** (`v1.1.13`) and **`google-developer-knowled
 | **`science`** | `1.3.1` | 41 | `biomolecular_structure_viewer_mcp` (9 lazy 3D Mol\* tools) | `sidecars/biomolecular_structure_viewer` + `rules/AGENTS.md` |
 | **`data-agent-kit-plugin`** | `1.1.0` | 37 | 11 servers: `dak-notebook`, `dak-viz`, `dak-bigquery`, `dak-spark`, `dak-spanner`, `dak-alloydb`, `dak-cloudsql`, `dak-bigtable`, `dak-bigtable-data`, `dak-gcs`, `dak-kc` | `rules/` (ADC pre-flight, ML best practices, data-loss prevention) |
 | **`flutter`** | `1.0.6` | 25 | `dart-mcp-server` (`dart mcp-server`) | `flutter_a11y_agent` accessibility auditor subagent |
-| **`firebase`** | `1.0.3` | 13 | — | `agents/firestore-rules-author.md` mandatory security rules subagent |
+| **`firebase`** | `1.0.3` | 13 | - | `agents/firestore-rules-author.md` mandatory security rules subagent |
 | **`chrome-devtools-plugin`** | `1.10.1` | 6 | Works with Chrome DevTools MCP | Web Vitals (LCP), heap memory leaks, cookies, a11y debugging |
 | **`google-cloud-developer`** | `1.1.13` | 5 | `developer-knowledge` (`google_credentials`) | `rules/google-cloud-discovery.md` (`finding-google-skills`) |
 | **`gemini-api`** | `2.3.0` | 3 | `gemini-api-docs` (`eager: true` search & doc fetch) | Gemini API, Gemini Live API (3.8), Gemini Omni 1.1 Flash video |
-| **`modern-web-guidance-plugin`** | `0.1.0` | 2 | — | Baseline web features + interactive web apps |
-| **`android-cli-plugin`** | `0.1.0` | 1 | — | Android SDK, AVD emulator inspection, & `android` CLI |
-| **`google-antigravity-sdk`** | `0.1.0` | 1 | — | Multi-agent orchestration with the Python `agy` SDK |
-| **`gcalendar` / `gdocs` / `gdrive` / `gsheets` / `gslides`** | `0.1.0` | 5 | — | Google Workspace productivity skills via `gws` CLI |
+| **`modern-web-guidance-plugin`** | `0.1.0` | 2 | - | Baseline web features + interactive web apps |
+| **`android-cli-plugin`** | `0.1.0` | 1 | - | Android SDK, AVD emulator inspection, & `android` CLI |
+| **`google-antigravity-sdk`** | `0.1.0` | 1 | - | Multi-agent orchestration with the Python `agy` SDK |
+| **`gcalendar` / `gdocs` / `gdrive` / `gsheets` / `gslides`** | `0.1.0` | 5 | - | Google Workspace productivity skills via `gws` CLI |
 
 ---
 

@@ -2,9 +2,9 @@
 """Zero-Dependency JSON-RPC 2.0 Stdio MCP Server for Genomics & Cheminformatics.
 
 Exposes two eager MCP tools to Google Antigravity:
-1. `score_variant_impact` — Parses `chr:pos:ref>alt`, classifies transition vs.
+1. `score_variant_impact` - Parses `chr:pos:ref>alt`, classifies transition vs.
    transversion, and returns synthetic AlphaGenome AVI + phyloP conservation metrics.
-2. `evaluate_lipinski_ro5` — Evaluates small-molecule physicochemical descriptors
+2. `evaluate_lipinski_ro5` - Evaluates small-molecule physicochemical descriptors
    (MW, LogP, HBD, HBA, PSA) against Lipinski's Rule of 5 and Veber's oral
    bioavailability criteria.
 
@@ -88,7 +88,7 @@ def handle_score_variant(args: dict) -> dict:
         "predicted_avi_score": avi,
         "phylop_100way": phylop,
         "molecular_priority": "HIGH_IMPACT_CANDIDATE" if avi >= 0.75 else "MODERATE_IMPACT",
-        "clinical_disclaimer": "Research Use Only — molecular framing only, not a clinical diagnosis.",
+        "clinical_disclaimer": "Research Use Only - molecular framing only, not a clinical diagnosis.",
     }
 
 

@@ -104,7 +104,7 @@ def write_svg_dashboard(residues: list[dict], pae: list[list[float]], out_svg: P
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" width="820" height="340">',
         '<rect width="820" height="340" rx="16" fill="#070B19" stroke="#00E5FF" stroke-opacity="0.35"/>',
         '<text x="28" y="36" fill="#F8FAFC" font-family="sans-serif" font-size="16" font-weight="bold">'
-        'Antigravity Science Plugin — AlphaFold pLDDT Profile &amp; PAE Domain Matrix</text>',
+        'Antigravity Science Plugin - AlphaFold pLDDT Profile &amp; PAE Domain Matrix</text>',
         '<text x="28" y="56" fill="#94A3B8" font-family="sans-serif" font-size="12">'
         'Generated via zero-dependency PEP 723 uv script (examples/generate_3d_protein_pae_demo.py)</text>',
         # Left Panel: pLDDT Bar Profile

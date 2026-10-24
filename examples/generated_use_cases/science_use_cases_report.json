@@ -94,7 +94,7 @@
       "pubmed-database",
       "literature-search-openalex"
     ],
-    "target_indication": "MONDO_0005090 (Non-Small Cell Lung Cancer \u2014 Phase 3 Recruiting)",
+    "target_indication": "MONDO_0005090 (Non-Small Cell Lung Cancer - Phase 3 Recruiting)",
     "clinical_trials_query": "clinical_trials_api.py --fields NCTId,BriefTitle,OverallStatus,EligibilityCriteria --count-total",
     "openfda_faers_signal": {
       "reporting_odds_ratio_ror": 6.0,
