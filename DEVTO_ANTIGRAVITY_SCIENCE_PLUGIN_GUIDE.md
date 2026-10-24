@@ -314,18 +314,132 @@ Two of the most fascinating skills in the bundle demonstrate how `SKILL.md` enfo
 
 ---
 
-## 4. End-to-End Multi-Skill Pipeline: From Genomic Variant to 3D Drug Pocket
+## 4. Five End-to-End Multi-Skill Use Cases Across the 33 Science Skills
 
-Because all 33 skills share the conversation's artifact directory, Antigravity can chain **6 skills + the 3D MCP Sidecar** in a single research session:
+Because all 33 skills share the conversation's artifact directory, Antigravity can chain multiple domain-specific CLI scripts and MCP sidecars in a single research session.
 
-| Step | Skill / MCP Tool Invoked | Input | Deterministic Artifact Output |
-| :--- | :--- | :--- | :--- |
-| **1. Variant Resolution** | `dbsnp-database` + `clinvar-database` | `rs28934576` / `TP53` | Resolves to GRCh38 coordinate & ClinVar pathogenic review status |
-| **2. Non-Coding & Splicing Impact** | `alphagenome-variant-impact-score` | `chr17:7674220:C>T` | Computes 18 feature attribution weights + GENCODE v46 exon junctions |
-| **3. Canonical Accession Lookup** | `uniprot-database` | Gene symbol `TP53` | Resolves human canonical accession `P04637` |
-| **4. 3D Structure & PAE Domains** | `alphafold-database-fetch-and-analyze` | `P04637` | Downloads `AF-P04637-F1-model_v6.cif` + runs `analyze_plddt.py` & `analyze_pae.py` |
-| **5. Bioactive Compound Screen** | `chembl-database` | Target search (`CHEMBL203` / `TP53`) | Exports nanomolar `IC50`/`Ki` inhibitors and `.sdf` structures via `chembl_api.py` |
-| **6. Interactive 3D Sidecar** | `science_biomolecular_structure_viewer_mcp` | `load_structure` + `highlight_region` | Renders interactive Mol\* 3D structure & surfaces `sidecar://` pill in chat |
+I included a runnable benchmark suite in [`examples/multi_domain_science_use_cases.py`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/examples/multi_domain_science_use_cases.py) (`uv run examples/multi_domain_science_use_cases.py`) that executes and scores all five multi-skill pipelines below:
+
+![5 End-to-End Multi-Skill Pipelines Scorecard](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/science_use_cases_scorecard.svg)
+
+---
+
+### Use Case 1: Precision Oncology & 3D Pocket Triage (`ClinVar` $\rightarrow$ `gnomAD` $\rightarrow$ `AlphaFold` $\rightarrow$ `ChEMBL` $\rightarrow$ `3D Mol* Sidecar`)
+
+**Scenario:** A translational oncology team wants to evaluate an **EGFR L858R** (`rs121434568`, `chr7:55191822:T>G`) driver mutation, verify gene loss-of-function constraint, inspect 3D active-site confidence, rank nanomolar kinase inhibitors, and highlight the pocket in 3D.
+
+```bash
+# 1. Check allele rarity & gene constraint (pLI / LOEUF) in gnomAD
+uv run ~/.gemini/config/plugins/science/skills/gnomad_database/scripts/get_gene_constraint.py \
+  --gene EGFR --output ./artifacts/egfr_constraint.json
+
+# 2. Fetch AlphaFold 3D structure (P00533) & audit pLDDT + PAE domains
+uv run ~/.gemini/config/plugins/science/skills/alphafold_database_fetch_and_analyze/scripts/fetch_structure.py \
+  P00533 -o ./artifacts/P00533/
+uv run ~/.gemini/config/plugins/science/skills/alphafold_database_fetch_and_analyze/scripts/analyze_pae.py \
+  ./artifacts/P00533/AF-P00533-F1-predicted_aligned_error_v6.json
+
+# 3. Screen ChEMBL for EGFR (CHEMBL203) bioactivities & download 3D SDF ligands
+uv run ~/.gemini/config/plugins/science/skills/chembl_database/scripts/chembl_api.py \
+  activity --search "EGFR" --limit 10 --output ./artifacts/egfr_chembl_ic50.json
+uv run ~/.gemini/config/plugins/science/skills/chembl_database/scripts/chembl_api.py \
+  molecule --id CHEMBL939 --dl_format sdf --output ./artifacts/gefitinib.sdf
+```
+
+Finally, the agent invokes `science_biomolecular_structure_viewer_mcp` (`load_structure` + `highlight_region(chain="A", start_residue=855, end_residue=862, color="#FF1744")`) and surfaces `[Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html)`.
+
+---
+
+### Use Case 2: Non-Coding GWAS Enhancer Variant Triage (`AlphaGenome` $\rightarrow$ `UCSC phyloP` $\rightarrow$ `ENCODE cCRE` $\rightarrow$ `JASPAR` $\rightarrow$ `GTEx`)
+
+**Scenario:** Over 90% of GWAS risk loci fall in non-coding DNA. Suppose you are investigating `chr1:109274968:G>T` (`rs12740374` at the *SORT1* 1p13 locus) and want to know *how* it alters gene regulation across human tissues without hallucinating clinical diagnoses:
+
+```bash
+# 1. Score variant impact across 18 biological modalities + GENCODE v46 coordinates
+uv run ~/.gemini/config/plugins/science/skills/alphagenome_variant_impact_score/scripts/alphagenome_atlas_avi.py \
+  query "chr1:109274968:G>T" --include_track_info --format json -o ./artifacts/sort1_avi.json
+
+# 2. Check 100-vertebrate evolutionary constraint (phyloP100way & phastCons100way)
+uv run ~/.gemini/config/plugins/science/skills/ucsc_conservation_and_tfbs/scripts/get_conservation.py \
+  --coordinates "chr1:109274968" --output ./artifacts/sort1_phylop.json
+
+# 3. Fetch Transcription Factor Position Weight Matrices (PWMs) from JASPAR (CEBPA)
+uv run ~/.gemini/config/plugins/science/skills/jaspar_database/scripts/jaspar_cli.py \
+  search --query "CEBPA" --output ./artifacts/cebpa_jaspar.json
+```
+
+* **Engineering Guardrail in Action:** The `alphagenome-variant-impact-score` skill enforces that `--include_track_info` outputs (`~3.9 KB/variant`) are redirected via `-o` and framed strictly in terms of molecular mechanisms (`CEBPA` binding site creation + liver RNA-seq eQTL shift).
+
+---
+
+### Use Case 3: Dark-Proteome Enzyme Discovery (`AlphaFold` $\rightarrow$ `Foldseek 3D Search` $\rightarrow$ `InterPro` $\rightarrow$ `Clustal Omega MSA` $\rightarrow$ `Headless PyMOL`)
+
+**Scenario:** A protein engineering group wants to discover novel thermostable plastic-degrading **PETase** homologs hidden in environmental metagenomes where sequence identity is below 25% (the "twilight zone" where BLAST fails, but 3D fold geometry is conserved):
+
+```bash
+# 1. Search the 3D coordinate file against Foldseek's metagenomic & AlphaFold databases
+uv run ~/.gemini/config/plugins/science/skills/foldseek_structural_search/scripts/search.py \
+  ./artifacts/PETase_AF.cif \
+  --databases afdb50,mgnify_esm30,pdb100,cath50 \
+  -o ./artifacts/petase_foldseek.json > ./artifacts/petase_foldseek_summary.md
+
+# 2. Align the top structural hits with EBI Clustal Omega to verify the Ser-Asp-His catalytic triad
+uv run ~/.gemini/config/plugins/science/skills/protein_sequence_msa/scripts/clustalo.py \
+  --input ./artifacts/petase_homologs.fasta --output ./artifacts/petase_msa.aln
+```
+
+* **Engineering Guardrail in Action:** Look at `foldseek-structural-search/SKILL.md`:
+  1. **Strict Input Gate:** If the user only gives a gene name or sequence without a `.pdb`/`.cif` file, the skill **halts immediately** and instructs the agent to fetch the 3D structure first.
+  2. **Database Allowlist:** Enforces validation against the exact 9 supported Foldseek databases (`afdb50`, `afdb-swissprot`, `pdb100`, `BFVD`, `mgnify_esm30`, `cath50`, `gmgcl_id`, `bfmd`, `afdb-proteome`).
+  3. **Headless OSMesa PyMOL Superposition (`pymol` skill):** When generating static publication figures alongside `.pse` session files, the `pymol` skill runs headless via `PYOPENGL_PLATFORM=osmesa` and automatically checks `cmd.count_atoms("name CA") == cmd.count_atoms("all")` so C-alpha-only traces still render as smooth cartoons!
+
+---
+
+### Use Case 4: Clinical Trial Intelligence & Pharmacovigilance Audit (`OpenTargets` $\rightarrow$ `ClinicalTrials.gov` $\rightarrow$ `openFDA` $\rightarrow$ `OpenAlex`)
+
+**Scenario:** A clinical data science team wants to map all recruiting **Phase 3 trials** for a target indication, inspect inclusion/exclusion criteria without overflowing the LLM context window, and audit real-world post-market adverse events across **28 FDA endpoints**:
+
+```bash
+# 1. Query Open Targets for Phase 3+ candidates and target tractability
+uv run ~/.gemini/config/plugins/science/skills/opentargets_database/scripts/query_opentargets.py \
+  --output ./artifacts/nsclc_drugs.json --limit 15 \
+  get-disease-drugs MONDO_0005090 --min-stage PHASE_3
+
+# 2. Check total trial volume first, then fetch ONLY slimmed fields from ClinicalTrials.gov APIv2
+uv run ~/.gemini/config/plugins/science/skills/clinical_trials_database/scripts/clinical_trials_api.py \
+  search --condition "Non-Small Cell Lung Cancer" --status RECRUITING --phase PHASE3 \
+  --count-total --fields NCTId,BriefTitle,OverallStatus,EligibilityCriteria \
+  --limit 10 --output ./artifacts/nsclc_phase3_trials.json
+
+# 3. Query openFDA Drug Adverse Events (FAERS) with automatic rate-limit protection
+uv run ~/.gemini/config/plugins/science/skills/openfda_database/scripts/openfda_query.py \
+  count --category drug --endpoint event \
+  --search "patient.drug.medicinalproduct:osimertinib" \
+  --count "patient.reaction.reactionmeddrapt.exact" \
+  --limit 10 --output ./artifacts/osimertinib_faers_counts.json
+```
+
+* **Engineering Guardrails in Action:**
+  * **ClinicalTrials.gov Context Projection (`--fields`):** Full `protocolSection` + `resultsSection` trial JSON payloads can exceed 100 KB per study. `clinical-trials-database` requires `--count-total` first and shorthand `--fields` projection (`NCTId,BriefTitle,OverallStatus`).
+  * **openFDA Quota Escalation (`1,000` $\rightarrow$ `120,000` req/day):** `openfda-database` warns that an autonomous agent can burn through the 1,000 keyless daily quota in a single session, triggering the **`credentials`** skill (`grep -sq "^FDA_API_KEY=" ~/.env`) before running multi-query workflows.
+
+---
+
+### Use Case 5: Systems Biology & Ancient Epigraphy (`STRING` $\rightarrow$ `Reactome` & DeepMind's `Aeneas` / `Ithaca`)
+
+Two more specialized workflows show how the Science plugin handles **ambiguous biological identifiers** and **digital humanities**:
+
+1. **Systems Biology Pathway Enrichment (`STRING` + `Reactome`):**
+   * **The `STRING` "Never Assume Human" Rule:** Even if a user asks for `TP53` or `BRCA1` interaction partners, `string-database/SKILL.md` strictly forbids defaulting to *Homo sapiens* (`9606`) if the species wasn't stated—requiring the agent to ask for the NCBI Taxon ID first, map symbols via `string_cli.py map`, and then export pathway diagrams in `reactome-database` (preferring specific sub-pathways like **Cell Cycle, Mitotic** `R-HSA-69278` over broad top-level nodes).
+2. **Restoring Damaged Roman & Greek Stone Inscriptions (`predictingthepast`):**
+   * Powered by Google DeepMind's **Aeneas** (Latin) and **Ithaca** (Ancient Greek) models:
+     ```bash
+     # Preprocess damaged Latin epigraphy (? = single missing character, # = unknown-length gap)
+     uv run ~/.gemini/config/plugins/science/skills/predictingthepast/scripts/preprocess.py \
+       --language=latin \
+       --input="imp caesar divi f ???????? cos xi trib potest"
+     ```
+   * Returns ranked character restorations (`augustus`, `96.4%` confidence), geographical province attribution (*Latium et Campania*), chronological dating (`23 BCE`), and corpus parallels—while strictly blocking external web search so model probabilities remain unadulterated.
 
 ---
 

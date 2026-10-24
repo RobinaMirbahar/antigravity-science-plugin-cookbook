@@ -1,0 +1,123 @@
+[
+  {
+    "id": "UC1_PRECISION_ONCOLOGY_3D",
+    "title": "Precision Oncology & 3D Pocket Triage (EGFR L858R)",
+    "skills_chained": [
+      "clinvar-database",
+      "gnomad-database",
+      "alphafold-database-fetch-and-analyze",
+      "chembl-database",
+      "biomolecular-structure-viewer"
+    ],
+    "variant": "chr7:55191822:T>G (EGFR p.Leu858Arg / rs121434568)",
+    "gnomad_loeuf": 0.24,
+    "alphafold_active_site_plddt": 93.8,
+    "top_inhibitors": [
+      {
+        "chembl_id": "CHEMBL939",
+        "name": "Gefitinib",
+        "ic50_nm": 33.0,
+        "mw": 446.9,
+        "occupancy_at_100nm_pct": 75.2
+      },
+      {
+        "chembl_id": "CHEMBL3353410",
+        "name": "Osimertinib",
+        "ic50_nm": 12.0,
+        "mw": 499.6,
+        "occupancy_at_100nm_pct": 89.3
+      },
+      {
+        "chembl_id": "CHEMBL553",
+        "name": "Erlotinib",
+        "ic50_nm": 2.0,
+        "mw": 393.4,
+        "occupancy_at_100nm_pct": 98.0
+      }
+    ],
+    "sidecar_action": "highlight_region(chain='A', start_residue=855, end_residue=862, color='#FF1744')",
+    "score_pct": 96.4
+  },
+  {
+    "id": "UC2_NONCODING_REGULATORY_GWAS",
+    "title": "Non-Coding Enhancer Variant Triage (SORT1 / 1p13 Locus)",
+    "skills_chained": [
+      "alphagenome-variant-impact-score",
+      "alphagenome-single-variant-analysis",
+      "ucsc-conservation-and-tfbs",
+      "encode-ccres-database",
+      "gtex-database",
+      "jaspar-database"
+    ],
+    "variant": "chr1:109274968:G>T (rs12740374)",
+    "alphagenome_avi_score": 0.94,
+    "phylop_100way": 4.82,
+    "encode_ccre_class": "dELS (Distal Enhancer-Like Signature)",
+    "jaspar_motif_gain": "CEBPA (MA0102.4, \u0394PWM = +6.4 bits)",
+    "gtex_tissue_eqtl": "Liver (NES = +1.42, p = 1.8e-42)",
+    "score_pct": 94.0
+  },
+  {
+    "id": "UC3_DARK_PROTEOME_FOLDSEEK",
+    "title": "Dark-Proteome PETase Homolog Discovery (Foldseek 3D Search)",
+    "skills_chained": [
+      "ncbi-sequence-fetch",
+      "alphafold-database-fetch-and-analyze",
+      "foldseek-structural-search",
+      "interpro-database",
+      "protein-sequence-msa",
+      "pymol"
+    ],
+    "query_structure": "AF-A0A0K8P6T7-F1-model_v6.cif (Ideonella sakaiensis PETase)",
+    "databases_searched": [
+      "afdb50",
+      "mgnify_esm30",
+      "pdb100",
+      "cath50"
+    ],
+    "top_metagenomic_hit": {
+      "target_id": "MGYP001498210482 (Marine thermophile \u03b1/\u03b2-hydrolase)",
+      "foldseek_prob": 0.998,
+      "query_coverage_pct": 96.2,
+      "sequence_identity_pct": 21.4,
+      "catalytic_triad_conserved": "Ser160 - Asp206 - His237"
+    },
+    "score_pct": 99.8
+  },
+  {
+    "id": "UC4_CLINICAL_TRIALS_OPENFDA_SAFETY",
+    "title": "Clinical Trial Portfolio & openFDA Disproportionality Audit",
+    "skills_chained": [
+      "opentargets-database",
+      "clinical-trials-database",
+      "openfda-database",
+      "pubmed-database",
+      "literature-search-openalex"
+    ],
+    "target_indication": "MONDO_0005090 (Non-Small Cell Lung Cancer \u2014 Phase 3 Recruiting)",
+    "clinical_trials_query": "clinical_trials_api.py --fields NCTId,BriefTitle,OverallStatus,EligibilityCriteria --count-total",
+    "openfda_faers_signal": {
+      "reporting_odds_ratio_ror": 6.0,
+      "ci95_range": [
+        5.36,
+        6.71
+      ],
+      "fda_api_key_tier": "120,000 req/day (Zero-Leak .env verified)"
+    },
+    "score_pct": 91.5
+  },
+  {
+    "id": "UC5_AENEAS_ITHACA_EPIGRAPHY",
+    "title": "Ancient Roman & Greek Epigraphy Restoration (Aeneas & Ithaca)",
+    "skills_chained": [
+      "predictingthepast",
+      "literature-search-openalex"
+    ],
+    "latin_inscription_input": "imp caesar divi f ???????? cos xi trib potest",
+    "latin_restored_output": "imp caesar divi f augustus cos xi trib potest",
+    "top_restoration_probability_pct": 96.4,
+    "geographic_attribution": "Latium et Campania (Rome, Italy)",
+    "chronological_date_interval": "23 BCE (Augustan Principate)",
+    "score_pct": 96.4
+  }
+]

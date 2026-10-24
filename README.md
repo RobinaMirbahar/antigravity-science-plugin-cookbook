@@ -52,7 +52,10 @@ cd antigravity-science-plugin-cookbook
 # 1. Generate a 56-residue 3-domain 3D .pdb structure, PAE matrix JSON, and SVG dashboard
 uv run examples/generate_3d_protein_pae_demo.py
 
-# 2. Run the PEP 723 C-alpha pLDDT/B-factor QC auditor on both PDB files
+# 2. Run the 5-Use-Case Multi-Domain Science Plugin Benchmark Suite (JSON + SVG scorecard)
+uv run examples/multi_domain_science_use_cases.py
+
+# 3. Run the PEP 723 C-alpha pLDDT/B-factor QC auditor on both PDB files
 uv run plugins/bio-structural-qc/skills/structure-qc-audit/scripts/audit_structure.py \
   examples/generated_p53_demo/synthetic_p53_multidomain.pdb \
   examples/sample_crambin_fragment.pdb

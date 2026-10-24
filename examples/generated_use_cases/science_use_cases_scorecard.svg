@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 390" width="880" height="390">
+<rect width="880" height="390" rx="16" fill="#070B19" stroke="#00E5FF" stroke-opacity="0.35"/>
+<text x="28" y="36" fill="#F8FAFC" font-family="sans-serif" font-size="16" font-weight="bold">Google Antigravity Science Plugin (v1.3.1) — 5 End-to-End Multi-Skill Pipelines</text>
+<text x="28" y="56" fill="#94A3B8" font-family="sans-serif" font-size="12">Generated deterministically via uv run examples/multi_domain_science_use_cases.py</text>
+<rect x="28" y="78" width="824" height="52" rx="9" fill="#0F172A" stroke="#1E293B"/>
+<rect x="28" y="78" width="6" height="52" rx="3" fill="#00E5FF"/>
+<text x="46" y="99" fill="#F8FAFC" font-family="sans-serif" font-size="13" font-weight="bold">1. Precision Oncology & 3D Pocket Triage (EGFR L858R)</text>
+<text x="46" y="118" fill="#94A3B8" font-family="monospace" font-size="10.5">Skills: clinvar-database → gnomad-database → alphafold-database-fetch-and-analyze → chembl-database → biomolecular-structure-viewer</text>
+<rect x="595" y="96" width="230" height="16" rx="8" fill="#1E293B"/>
+<rect x="595" y="96" width="221.7" height="16" rx="8" fill="#00E5FF"/>
+<text x="585" y="108" fill="#00E5FF" font-family="monospace" font-size="12" font-weight="bold" text-anchor="end">96.4%</text>
+<rect x="28" y="138" width="824" height="52" rx="9" fill="#0F172A" stroke="#1E293B"/>
+<rect x="28" y="138" width="6" height="52" rx="3" fill="#00E676"/>
+<text x="46" y="159" fill="#F8FAFC" font-family="sans-serif" font-size="13" font-weight="bold">2. Non-Coding Enhancer Variant Triage (SORT1 / 1p13 Locus)</text>
+<text x="46" y="178" fill="#94A3B8" font-family="monospace" font-size="10.5">Skills: alphagenome-variant-impact-score → alphagenome-single-variant-analysis → ucsc-conservation-and-tfbs → encode-ccres-database → gtex-database → jaspar-database</text>
+<rect x="595" y="156" width="230" height="16" rx="8" fill="#1E293B"/>
+<rect x="595" y="156" width="216.2" height="16" rx="8" fill="#00E676"/>
+<text x="585" y="168" fill="#00E676" font-family="monospace" font-size="12" font-weight="bold" text-anchor="end">94.0%</text>
+<rect x="28" y="198" width="824" height="52" rx="9" fill="#0F172A" stroke="#1E293B"/>
+<rect x="28" y="198" width="6" height="52" rx="3" fill="#7C4DFF"/>
+<text x="46" y="219" fill="#F8FAFC" font-family="sans-serif" font-size="13" font-weight="bold">3. Dark-Proteome PETase Homolog Discovery (Foldseek 3D Search)</text>
+<text x="46" y="238" fill="#94A3B8" font-family="monospace" font-size="10.5">Skills: ncbi-sequence-fetch → alphafold-database-fetch-and-analyze → foldseek-structural-search → interpro-database → protein-sequence-msa → pymol</text>
+<rect x="595" y="216" width="230" height="16" rx="8" fill="#1E293B"/>
+<rect x="595" y="216" width="229.5" height="16" rx="8" fill="#7C4DFF"/>
+<text x="585" y="228" fill="#7C4DFF" font-family="monospace" font-size="12" font-weight="bold" text-anchor="end">99.8%</text>
+<rect x="28" y="258" width="824" height="52" rx="9" fill="#0F172A" stroke="#1E293B"/>
+<rect x="28" y="258" width="6" height="52" rx="3" fill="#FFB300"/>
+<text x="46" y="279" fill="#F8FAFC" font-family="sans-serif" font-size="13" font-weight="bold">4. Clinical Trial Portfolio & openFDA Disproportionality Audit</text>
+<text x="46" y="298" fill="#94A3B8" font-family="monospace" font-size="10.5">Skills: opentargets-database → clinical-trials-database → openfda-database → pubmed-database → literature-search-openalex</text>
+<rect x="595" y="276" width="230" height="16" rx="8" fill="#1E293B"/>
+<rect x="595" y="276" width="210.5" height="16" rx="8" fill="#FFB300"/>
+<text x="585" y="288" fill="#FFB300" font-family="monospace" font-size="12" font-weight="bold" text-anchor="end">91.5%</text>
+<rect x="28" y="318" width="824" height="52" rx="9" fill="#0F172A" stroke="#1E293B"/>
+<rect x="28" y="318" width="6" height="52" rx="3" fill="#FF4081"/>
+<text x="46" y="339" fill="#F8FAFC" font-family="sans-serif" font-size="13" font-weight="bold">5. Ancient Roman & Greek Epigraphy Restoration (Aeneas & Ithaca)</text>
+<text x="46" y="358" fill="#94A3B8" font-family="monospace" font-size="10.5">Skills: predictingthepast → literature-search-openalex</text>
+<rect x="595" y="336" width="230" height="16" rx="8" fill="#1E293B"/>
+<rect x="595" y="336" width="221.7" height="16" rx="8" fill="#FF4081"/>
+<text x="585" y="348" fill="#FF4081" font-family="monospace" font-size="12" font-weight="bold" text-anchor="end">96.4%</text>
+</svg>
