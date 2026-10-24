@@ -1,12 +1,10 @@
 ---
-title: "From Ancient Latin Epigraphy to 3D Protein Folding: Engineering Custom Plugins, PEP 723 Skills & WebGL MCP Sidecars in Google Antigravity"
-published: false
-description: "I reverse-engineered Google Antigravity's 33-skill Science Plugin (v1.3.1) and built an open-source interactive 3D Biomolecular & Variant Studio, a zero-dependency PEP 723 C-alpha QC auditor, and a full custom plugin cookbook."
+title: "From Ancient Epigraphy to 3D Proteins: Building Plugins, Skills & MCP Sidecars in Google Antigravity"
+published: true
+description: "Reverse-engineering Google Antigravity's Science Plugin (v1.3.1) with an open-source 3D WebGL Biomolecular Studio, 5 multi-skill pipelines, and 3 custom plugins."
 tags: ai, gemini, bioinformatics, opensource
 cover_image: https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/devto_cover_banner.jpg
 ---
-
-![Building 3D MCP Sidecars & Agent Plugins in Google Antigravity — Science Plugin v1.3.1](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/devto_cover_banner.jpg)
 
 What happens when you ask an AI coding agent to **score a non-coding human genomic variant with AlphaGenome**, **map a missense mutation onto an AlphaFold 3D protein structure**, **screen ChEMBL for nanomolar small-molecule inhibitors**, or **restore a damaged 2,000-year-old Roman inscription using Google DeepMind's Aeneas model**?
 
@@ -304,7 +302,7 @@ Two of the most fascinating skills in the bundle demonstrate how `SKILL.md` enfo
 
 1. **`alphagenome-variant-impact-score` (Strict Molecular Framing + Context-Overflow Protection):**
    * **Clinical Safety Gate:** Explicitly forbids extrapolating high AlphaGenome Variant Impact (AVI) scores into clinical diagnoses or patient prognosis, restricting outputs to molecular mechanisms (splicing disruption, chromatin accessibility, TF binding, or GENCODE v46 transcript coordinates).
-   * **Stdout Overflow Guard:** Warns the agent that `--include_track_info --format json` emits `~3.9 KB` per variant, requiring direct file redirection (`-o query_results.json`) whenever querying $>3$ variants so stdout never floods the context window.
+   * **Stdout Overflow Guard:** Warns the agent that `--include_track_info --format json` emits `~3.9 KB` per variant, requiring direct file redirection (`-o query_results.json`) whenever querying `> 3` variants so stdout never floods the context window.
 2. **`predictingthepast` (Ancient Latin & Greek Epigraphy with DeepMind's Aeneas & Ithaca):**
    * Restores damaged ancient inscriptions, attributes geographical province + chronological date ranges, and finds parallel inscriptions using special gap syntax (`?` for a single missing character, `#` for an unknown-length damaged gap):
      ```bash
@@ -324,7 +322,7 @@ I included a runnable benchmark suite in [`examples/multi_domain_science_use_cas
 
 ---
 
-### Use Case 1: Precision Oncology & 3D Pocket Triage (`ClinVar` $\rightarrow$ `gnomAD` $\rightarrow$ `AlphaFold` $\rightarrow$ `ChEMBL` $\rightarrow$ `3D Mol* Sidecar`)
+### Use Case 1: Precision Oncology & 3D Pocket Triage (`ClinVar` → `gnomAD` → `AlphaFold` → `ChEMBL` → `3D Mol* Sidecar`)
 
 **Scenario:** A translational oncology team wants to evaluate an **EGFR L858R** (`rs121434568`, `chr7:55191822:T>G`) driver mutation, verify gene loss-of-function constraint, inspect 3D active-site confidence, rank nanomolar kinase inhibitors, and highlight the pocket in 3D.
 
@@ -352,7 +350,7 @@ Finally, the agent invokes `science_biomolecular_structure_viewer_mcp` (`load_st
 
 ---
 
-### Use Case 2: Non-Coding GWAS Enhancer Variant Triage (`AlphaGenome` $\rightarrow$ `UCSC phyloP` $\rightarrow$ `ENCODE cCRE` $\rightarrow$ `JASPAR` $\rightarrow$ `GTEx`)
+### Use Case 2: Non-Coding GWAS Enhancer Variant Triage (`AlphaGenome` → `UCSC phyloP` → `ENCODE cCRE` → `JASPAR` → `GTEx`)
 
 **Scenario:** Over 90% of GWAS risk loci fall in non-coding DNA. Suppose you are investigating `chr1:109274968:G>T` (`rs12740374` at the *SORT1* 1p13 locus) and want to know *how* it alters gene regulation across human tissues without hallucinating clinical diagnoses:
 
@@ -376,7 +374,7 @@ uv run ~/.gemini/config/plugins/science/skills/jaspar_database/scripts/jaspar_cl
 
 ---
 
-### Use Case 3: Dark-Proteome Enzyme Discovery (`AlphaFold` $\rightarrow$ `Foldseek 3D Search` $\rightarrow$ `InterPro` $\rightarrow$ `Clustal Omega MSA` $\rightarrow$ `Headless PyMOL`)
+### Use Case 3: Dark-Proteome Enzyme Discovery (`AlphaFold` → `Foldseek 3D Search` → `InterPro` → `Clustal Omega MSA` → `Headless PyMOL`)
 
 **Scenario:** A protein engineering group wants to discover novel thermostable plastic-degrading **PETase** homologs hidden in environmental metagenomes where sequence identity is below 25% (the "twilight zone" where BLAST fails, but 3D fold geometry is conserved):
 
@@ -401,7 +399,7 @@ uv run ~/.gemini/config/plugins/science/skills/protein_sequence_msa/scripts/clus
 
 ---
 
-### Use Case 4: Clinical Trial Intelligence & Pharmacovigilance Audit (`OpenTargets` $\rightarrow$ `ClinicalTrials.gov` $\rightarrow$ `openFDA` $\rightarrow$ `OpenAlex`)
+### Use Case 4: Clinical Trial Intelligence & Pharmacovigilance Audit (`OpenTargets` → `ClinicalTrials.gov` → `openFDA` → `OpenAlex`)
 
 **Scenario:** A clinical data science team wants to map all recruiting **Phase 3 trials** for a target indication, inspect inclusion/exclusion criteria without overflowing the LLM context window, and audit real-world post-market adverse events across **28 FDA endpoints**:
 
@@ -427,13 +425,13 @@ uv run ~/.gemini/config/plugins/science/skills/openfda_database/scripts/openfda_
 
 * **Engineering Guardrails in Action:**
   * **ClinicalTrials.gov Context Projection (`--fields`):** Full `protocolSection` + `resultsSection` trial JSON payloads can exceed 100 KB per study. `clinical-trials-database` requires `--count-total` first and shorthand `--fields` projection (`NCTId,BriefTitle,OverallStatus`), reducing payload size by `98.7%`.
-  * **openFDA Quota Escalation (`1,000` $\rightarrow$ `120,000` req/day):** `openfda-database` warns that an autonomous agent can burn through the 1,000 keyless daily quota in a single session, triggering the **`credentials`** skill (`grep -sq "^FDA_API_KEY=" ~/.env`) before running multi-query workflows:
+  * **openFDA Quota Escalation (`1,000` → `120,000` req/day):** `openfda-database` warns that an autonomous agent can burn through the 1,000 keyless daily quota in a single session, triggering the **`credentials`** skill (`grep -sq "^FDA_API_KEY=" ~/.env`) before running multi-query workflows:
 
 ![Use Case 4 — Clinical Trial Portfolio & openFDA FAERS Safety Audit](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc4_clinical_trials_openfda.svg)
 
 ---
 
-### Use Case 5: Systems Biology & Ancient Epigraphy (`STRING` $\rightarrow$ `Reactome` & DeepMind's `Aeneas` / `Ithaca`)
+### Use Case 5: Systems Biology & Ancient Epigraphy (`STRING` → `Reactome` & DeepMind's `Aeneas` / `Ithaca`)
 
 Two more specialized workflows show how the Science plugin handles **ambiguous biological identifiers** and **digital humanities**:
 
@@ -639,7 +637,7 @@ To show how to package your own **MCP server** and **Specialist Subagent** insid
   ```
 * **[`mcp/variant_mcp_server.py`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/plugins/genomics-variant-mcp/mcp/variant_mcp_server.py)** — A zero-dependency PEP 723 JSON-RPC 2.0 Stdio MCP server implementing `initialize`, `tools/list`, and `tools/call` for:
   * `score_variant_impact`: Scores 1-based `chr:pos:ref>alt` SNVs (transition/transversion class, predicted AlphaGenome AVI impact score, PhyloP 100-way conservation, and molecular priority).
-  * `evaluate_lipinski_ro5`: Evaluates small-molecule leads against Lipinski's Rule of Five ($\text{MW} \le 500$, $\text{LogP} \le 5$, $\text{HBD} \le 5$, $\text{HBA} \le 10$) and Veber's polar surface area rule ($\text{PSA} \le 140\text{ \AA}^2$).
+  * `evaluate_lipinski_ro5`: Evaluates small-molecule leads against Lipinski's Rule of Five (`MW ≤ 500`, `LogP ≤ 5`, `HBD ≤ 5`, `HBA ≤ 10`) and Veber's polar surface area rule (`PSA ≤ 140 Å²`).
 * **[`agents/clinical-variant-curator.md`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/plugins/genomics-variant-mcp/agents/clinical-variant-curator.md)** — A specialist subagent (modeled on `firebase`'s `agents/firestore-rules-author.md`) with YAML frontmatter (`mainAgent: true`, `subagent: true`, `commandExecutionPolicy: auto`) that enforces research-only molecular framing.
 
 Run its built-in self-test with `uv`:

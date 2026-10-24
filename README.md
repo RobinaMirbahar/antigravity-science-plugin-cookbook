@@ -2,8 +2,9 @@
 
 [![From Ancient Epigraphy to 3D Proteins: Antigravity Science Plugin!](./assets/devto_cover_banner.jpg)](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)
 
+* **[Read the Live Article on DEV.to (`@robinamirbahar`)](https://dev.to/robinamirbahar/from-ancient-epigraphy-to-3d-proteins-building-plugins-skills-mcp-sidecars-in-google-antigravity-4l1m)**
 * **[Launch the Interactive 3D Biomolecular & Variant WebGL Studio (`index.html`)](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)**
-* **[Read the Full Dev.to Engineering Deep-Dive Article (`DEVTO_ANTIGRAVITY_SCIENCE_PLUGIN_GUIDE.md`)](./DEVTO_ANTIGRAVITY_SCIENCE_PLUGIN_GUIDE.md)**
+* **[Read the Full Dev.to Engineering Deep-Dive Source (`DEVTO_ANTIGRAVITY_SCIENCE_PLUGIN_GUIDE.md`)](./DEVTO_ANTIGRAVITY_SCIENCE_PLUGIN_GUIDE.md)**
 * **[Jump to the Hands-On Plugin Authoring Codelab & 1-Command Scaffolder](#hands-on-plugin-authoring-codelab-build-validate--deploy-in-5-minutes)**
 
 A hands-on engineering cookbook and starter kit for building **Google Antigravity Customizations**—including **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Interactive 3D MCP Sidecars (`sidecar.json`)**—modeled on the official **Google Antigravity Science Plugin (`v1.3.1`)**.
