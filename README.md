@@ -11,7 +11,7 @@ A hands-on engineering cookbook and starter kit for building **Google Antigravit
 
 ---
 
-## Visual Overview: 5 End-to-End Multi-Skill Pipelines Across the 33 Science Skills
+## Visual Overview: 5 End-to-End Multi-Skill Pipelines Across the 41 Science Skills
 
 Run `uv run examples/multi_domain_science_use_cases.py` to execute all 5 multi-skill pipelines deterministically and generate the JSON benchmark report ([`examples/generated_use_cases/science_use_cases_report.json`](./examples/generated_use_cases/science_use_cases_report.json)) and vector visual dashboards below:
 
@@ -103,7 +103,7 @@ uv run plugins/my-genomics-qc/skills/vcf-filter-audit/scripts/run_tool.py \
   --output ./artifacts/vcf_qc_report.json
 ```
 
-### Step 4: Install into Antigravity & Toggle Live via Connect RPC
+### Step 4: Install into Antigravity & Audit with `inspect_installed_plugins.py`
 Copy any of the 3 starter plugins into `~/.gemini/config/plugins/` (or `.agents/plugins/` inside any project repository):
 
 ```bash
@@ -118,7 +118,7 @@ Copy-Item -Recurse -Force .\plugins\genomics-variant-mcp "$HOME\.gemini\config\p
 Copy-Item -Recurse -Force .\plugins\epigraphy-citation-kit "$HOME\.gemini\config\plugins\epigraphy-citation-kit"
 ```
 
-After restarting Antigravity once so the new plugin directories are discovered, you can inspect or toggle them live at any time via the Language Server Connect RPC ([`examples/inspect_plugins_rpc.sh`](./examples/inspect_plugins_rpc.sh)).
+After restarting Antigravity once so the new plugin directories are discovered, you can manage them with the `/plugin` slash command or inspect them locally via [`examples/inspect_installed_plugins.py`](./examples/inspect_installed_plugins.py) (`uv run examples/inspect_installed_plugins.py`).
 
 ---
 
@@ -241,7 +241,7 @@ antigravity-science-plugin-cookbook/
 │   ├── multi_domain_science_use_cases.py                  # PEP 723 5-use-case runner + 6 SVG visual cards generator
 │   ├── scaffold_custom_plugin.py                          # 1-command Antigravity plugin scaffolder & validator
 │   ├── sample_crambin_fragment.pdb                        # Sample PDB structure with disordered linker + rigid core
-│   ├── inspect_plugins_rpc.sh                             # Safe Connect RPC helper for GetAllPlugins / JetboxWriteState
+│   ├── inspect_installed_plugins.py                       # PEP 723 CLI inspector for installed Antigravity plugin bundles
 │   ├── generated_p53_demo/
 │   │   ├── synthetic_p53_multidomain.pdb                  # Generated 56-residue 3-domain 3D coordinate file
 │   │   ├── synthetic_p53_pae.json                         # Generated 56x56 PAE matrix
@@ -280,6 +280,30 @@ antigravity-science-plugin-cookbook/
             ├── SKILL.md
             └── scripts/validate_epigraphy.py
 ```
+
+---
+
+## Official Documentation & Scientific Database References
+
+### Official Google Antigravity Documentation
+* **[Google Antigravity Science Use Cases & Demos (`antigravity.google/use-cases/science`)](https://antigravity.google/use-cases/science)**
+* **[Google Antigravity Documentation Home (`antigravity.google/docs`)](https://antigravity.google/docs)**
+* **[Plugins Guide (`antigravity.google/docs/plugins`)](https://antigravity.google/docs/plugins)**
+* **[Progressive-Disclosure Skills Guide (`antigravity.google/docs/skills`)](https://antigravity.google/docs/skills)**
+* **[Rules & Workflows Guide (`antigravity.google/docs/rules-workflows`)](https://antigravity.google/docs/rules-workflows)**
+* **[Lifecycle Hooks Guide (`antigravity.google/docs/hooks`)](https://antigravity.google/docs/hooks)**
+* **[Auxiliary Pane Sidecars Guide (`antigravity.google/docs/sidecars`)](https://antigravity.google/docs/sidecars)**
+* **[Model Context Protocol (MCP) Guide (`antigravity.google/docs/mcp`)](https://antigravity.google/docs/mcp)**
+* **[Agent Permissions & Security (`antigravity.google/docs/permissions`)](https://antigravity.google/docs/permissions)**
+* **[Google Antigravity Python SDK (`github.com/google-antigravity/antigravity-sdk-python`)](https://github.com/google-antigravity/antigravity-sdk-python)**
+
+### Scientific AI Models, Databases & Open-Source Viewers
+* **[Google DeepMind AlphaGenome (`deepmind.google.com/science/alphagenome`)](https://deepmind.google.com/science/alphagenome/)**
+* **[AlphaFold Protein Structure Database (`alphafold.ebi.ac.uk`)](https://alphafold.ebi.ac.uk/)**
+* **[Google DeepMind Aeneas & Ithaca - Predicting the Past (`predictingthepast.com`)](https://predictingthepast.com/)**
+* **[PDBe Mol\* 3D Biomolecular WebGL Viewer (`github.com/molstar/pdbe-molstar`)](https://github.com/molstar/pdbe-molstar)**
+* **[Foldseek Structural Similarity Search (`search.foldseek.com`)](https://search.foldseek.com/search)**
+* **[EMBL-EBI ChEMBL (`ebi.ac.uk/chembl`)](https://www.ebi.ac.uk/chembl/)**, **[gnomAD (`gnomad.broadinstitute.org`)](https://gnomad.broadinstitute.org/)**, **[NCBI ClinVar (`ncbi.nlm.nih.gov/clinvar`)](https://www.ncbi.nlm.nih.gov/clinvar/)**, **[Open Targets (`platform.opentargets.org`)](https://platform.opentargets.org/)**, **[openFDA (`open.fda.gov/apis`)](https://open.fda.gov/apis/)**, and **[ClinicalTrials.gov APIv2 (`clinicaltrials.gov`)](https://clinicaltrials.gov/)**
 
 ---
 

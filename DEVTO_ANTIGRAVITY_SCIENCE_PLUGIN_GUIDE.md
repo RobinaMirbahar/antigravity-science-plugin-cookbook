@@ -63,7 +63,7 @@ flowchart TB
 
 | Primitive | Config File / Path | Loading Behavior | Token Budget & Engineering Role |
 | :--- | :--- | :--- | :--- |
-| **Rules** | `GEMINI.md`, `AGENTS.md`, `rules/AGENTS.md` | **Always-On** (within directory or active plugin scope) | **24,000 bytes/file cap**; shares a dedicated **20,000-token aggregate rules budget** (`defaultRulesBudget`). Over-budget rules gracefully demote to file path pointers. |
+| **Rules** | `GEMINI.md`, `AGENTS.md`, `rules/AGENTS.md` | **Always-On** (within directory or active plugin scope) | **24,000 bytes/file cap**; shares a dedicated **20,000-token aggregate rules budget** . Over-budget rules gracefully demote to file path pointers. |
 | **Skills** | `skills/<name>/SKILL.md` | **Progressive Disclosure** (On-Demand) | Only the YAML `name` and `description` (~40–80 tokens) are injected into the system prompt. The full `SKILL.md` (up to 32 KB!) and `references/` are read *only* when activated. |
 | **Plugins** | `plugins/<dir>/plugin.json` | **Atomic Bundle** | Namespaces and toggles related `skills/`, `rules/`, `hooks.json`, `mcp_config.json`, and `sidecars/` as a single unit. |
 | **Hooks** | `hooks.json` (at plugin or `.agents/` root) | **Lifecycle Event Triggers** | Intercepts `SessionStart`, `PreInvocation`, `PreToolUse`, `PostToolUse`, `PostInvocation`, and `Stop` to run shell validators, audit loggers, or linters. |
@@ -633,7 +633,7 @@ You can verify both the built-in `--self-test` mode and the live `stdin` hook co
 uv run plugins/bio-structural-qc/scripts/log_reproducibility_audit.py --self-test
 
 # 2. Simulate Antigravity's PostToolUse stdin payload and inspect ~/.gemini/qc_command_audit.jsonl
-printf '{"conversationId":"conv-demo","stepIdx":1,"toolCall":{"name":"run_command","args":{"CommandLine":"FDA_API_KEY=secret123 uv run plugins/bio-structural-qc/skills/structure-qc-audit/scripts/audit_structure.py examples/sample_crambin_fragment.pdb"}}}' \
+printf '{"conversationId":"conv-demo","stepIdx":1,"toolCall":{"name":"run_command","args":{"CommandLine":"FDA_API_KEY=secret123 uv run plugins/bio-structural-qc/skills/structure-qc-audit/scripts/audit_structure.py examples/sample_crambin_fragment.pdb"} } }' \
   | uv run plugins/bio-structural-qc/scripts/log_reproducibility_audit.py
 tail -n 1 ~/.gemini/qc_command_audit.jsonl
 ```
@@ -642,12 +642,12 @@ Verified `--self-test` output:
 
 ```json
 {
-  "timestamp_utc": "2026-10-24T19:18:16.178211+00:00",
+  "timestamp_utc": "2026-10-24T19:27:00.315004+00:00",
   "event": "PostToolUse",
   "tool": "run_command",
   "conversation_id": "conv-repro-demo-01",
   "step_idx": 7,
-  "git_revision": "0a4d32f",
+  "git_revision": "06fd7e9",
   "redacted_command": "ALPHAGENOME_API_KEY=[REDACTED] uv run plugins/bio-structural-qc/skills/structure-qc-audit/scripts/audit_structure.py examples/generated_p53_demo/synthetic_p53_multidomain.pdb examples/sample_crambin_fragment.pdb",
   "script_versions": {
     "plugins/bio-structural-qc/skills/structure-qc-audit/scripts/audit_structure.py": "sha256:b305f0ca720d7673"
@@ -740,7 +740,7 @@ uv run plugins/epigraphy-citation-kit/skills/epigraphy-gap-validator/scripts/val
 
 ---
 
-## 7. Bonus: Distilling Live Chat Sessions into Skills & Language Server RPC Debugging
+## 7. Bonus: Distilling Live Chat Sessions into Skills & Auditing Installed Bundles
 
 ### A. Automatic Skill Distillation with `workflow-skill-creator`
 Don't want to write `SKILL.md` files from scratch? After completing any multi-step scientific workflow in chat, trigger the Science plugin's **`workflow-skill-creator`** skill:
@@ -748,24 +748,17 @@ Don't want to write `SKILL.md` files from scratch? After completing any multi-st
 
 It walks you through a mandatory **4-round brainstorming protocol** (confirming inputs/outputs, error-handling rigidity, composing existing Science skills without duplicating code, and generating a CLI helper script) before writing the new skill to `~/.gemini/config/skills/<name>/`.
 
-### B. Querying & Toggling Plugins via the Language Server Connect RPC
-Antigravity manages plugins live through its local Connect RPC server (`ANTIGRAVITY_LS_ADDRESS`).
-* **Golden Rule #1:** Always key mutations on the install directory (`dir`), never `plugin.json`'s `name`.
-* **Golden Rule #2:** Never read `GetAllPlugins` unfiltered - it inlines the full text of every `SKILL.md` across all installed plugins! Pipe it through `jq` (see [`examples/inspect_plugins_rpc.sh`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/examples/inspect_plugins_rpc.sh)):
+### B. Managing Plugins with `/plugin` & Auditing Installed Bundles (`inspect_installed_plugins.py`)
+In Google Antigravity, you can install, enable, disable, or package plugins interactively using the built-in **`/plugin`** slash command or the **Customizations -> Plugins** panel in the UI.
+* **Directory-Keyed Discovery:** Antigravity resolves each installed bundle by its directory name under `~/.gemini/config/plugins/<dir>/` (or workspace `.agents/plugins/<dir>/`).
+* **Zero-Context-Bloat Inventory:** Never dump raw `SKILL.md` bodies across all installed plugins into your shell prompt. Instead, run [`examples/inspect_installed_plugins.py`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/examples/inspect_installed_plugins.py) to summarize manifest versions, skill counts, active `hooks.json` files, `mcp_config.json` servers, and `sidecar.json` views:
 
 ```bash
-: "${ANTIGRAVITY_LS_ADDRESS:=localhost:5387}"
-curl -sS -X POST \
-  "http://${ANTIGRAVITY_LS_ADDRESS}/exa.language_server_pb.LanguageServerService/GetAllPlugins" \
-  -H "Content-Type: application/json" \
-  -H "x-codeium-csrf-token: ${ANTIGRAVITY_CSRF_TOKEN}" \
-  -d '{}' | jq '[.plugins[] | {
-    name,
-    dir: (.path | split("/") | last),
-    disabled: (.disabled // false),
-    skills: (.skills | length),
-    mcp: [.mcpServers[]?.name]
-  }]'
+# Audit the 3 cookbook plugins in ./plugins
+uv run examples/inspect_installed_plugins.py
+
+# Or audit your global Antigravity plugins directory
+uv run examples/inspect_installed_plugins.py --root ~/.gemini/config/plugins
 ```
 
 ### C. Fixing Windows `unlinkat` Sidecar Locks During Plugin Upgrades
@@ -775,6 +768,30 @@ Failed to install marketplace customization "science": failed to remove existing
 unlinkat ...\science\sidecars\biomolecular_structure_viewer: The process cannot access the file because it is being used by another process.
 ```
 Simply close the sidecar pane, quit Antigravity completely (checking the system tray so the directory handle is released), run `Remove-Item -Recurse -Force "$HOME\.gemini\config\plugins\science"` in PowerShell, and click **Install** in the Marketplace tab.
+
+---
+
+## 8. Official Documentation & Scientific Database References
+
+### A. Official Google Antigravity Documentation
+* **[Google Antigravity Science Use Cases & Demos (`antigravity.google/use-cases/science`)](https://antigravity.google/use-cases/science)**
+* **[Google Antigravity Documentation Home (`antigravity.google/docs`)](https://antigravity.google/docs)**
+* **[Plugins Guide (`antigravity.google/docs/plugins`)](https://antigravity.google/docs/plugins)**
+* **[Progressive-Disclosure Skills Guide (`antigravity.google/docs/skills`)](https://antigravity.google/docs/skills)**
+* **[Rules & Workflows Guide (`antigravity.google/docs/rules-workflows`)](https://antigravity.google/docs/rules-workflows)**
+* **[Lifecycle Hooks Guide (`antigravity.google/docs/hooks`)](https://antigravity.google/docs/hooks)**
+* **[Auxiliary Pane Sidecars Guide (`antigravity.google/docs/sidecars`)](https://antigravity.google/docs/sidecars)**
+* **[Model Context Protocol (MCP) Guide (`antigravity.google/docs/mcp`)](https://antigravity.google/docs/mcp)**
+* **[Agent Permissions & Security (`antigravity.google/docs/permissions`)](https://antigravity.google/docs/permissions)**
+* **[Google Antigravity Python SDK (`github.com/google-antigravity/antigravity-sdk-python`)](https://github.com/google-antigravity/antigravity-sdk-python)**
+
+### B. Scientific AI Models, Databases & Open-Source Viewers
+* **[Google DeepMind AlphaGenome (`deepmind.google.com/science/alphagenome`)](https://deepmind.google.com/science/alphagenome/)**
+* **[AlphaFold Protein Structure Database (`alphafold.ebi.ac.uk`)](https://alphafold.ebi.ac.uk/)**
+* **[Google DeepMind Aeneas & Ithaca - Predicting the Past (`predictingthepast.com`)](https://predictingthepast.com/)**
+* **[PDBe Mol\* 3D Biomolecular WebGL Viewer (`github.com/molstar/pdbe-molstar`)](https://github.com/molstar/pdbe-molstar)**
+* **[Foldseek Structural Similarity Search (`search.foldseek.com`)](https://search.foldseek.com/search)**
+* **[EMBL-EBI ChEMBL Bioactivity Database (`ebi.ac.uk/chembl`)](https://www.ebi.ac.uk/chembl/)**, **[gnomAD (`gnomad.broadinstitute.org`)](https://gnomad.broadinstitute.org/)**, **[NCBI ClinVar (`ncbi.nlm.nih.gov/clinvar`)](https://www.ncbi.nlm.nih.gov/clinvar/)**, **[Open Targets Platform (`platform.opentargets.org`)](https://platform.opentargets.org/)**, **[openFDA API (`open.fda.gov/apis`)](https://open.fda.gov/apis/)**, and **[ClinicalTrials.gov APIv2 (`clinicaltrials.gov`)](https://clinicaltrials.gov/)**
 
 ---
 
