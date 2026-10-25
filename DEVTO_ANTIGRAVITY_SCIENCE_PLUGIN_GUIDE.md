@@ -14,6 +14,8 @@ If you try to stuff 41 scientific APIs, rate limiters, clinical safety guardrail
 
 Instead of just reading the docs, I reverse-engineered the newly released **Google Antigravity Science Plugin (`v1.3.1`)** and built the open-source **[Antigravity Science Plugin Cookbook & Interactive 3D Studio](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)** - complete with a **live browser-based 3D Biomolecular & Variant WebGL Sandbox**, a **zero-dependency PEP 723 3D protein + PAE generator**, and a production **`bio-structural-qc` custom plugin**.
 
+> **Community & GDE Disclaimer:** This article and companion repository are authored by **Robina Mirbahar** (Google Developer Expert in AI & Google Cloud and open-source contributor) as an independent community engineering resource, not an official Google product.
+
 ---
 
 ## Try the Live 3D Biomolecular & MCP Sidecar Studio in Your Browser
@@ -71,9 +73,9 @@ flowchart TB
 
 ---
 
-## 2. Dissecting the Official `science` Plugin (`v1.3.1`)
+## 2. Dissecting the Antigravity `science` Plugin (`v1.3.1`)
 
-When installed from the Antigravity Marketplace (`antigravity-plugins-official/plugin/science`), the bundle unpacks into `~/.gemini/config/plugins/science/`. Look at how cleanly the 41 skills, sidecar binaries, and rules are organized:
+When installed from the Antigravity Marketplace (`plugin/science`), the bundle unpacks into `~/.gemini/config/plugins/science/`. Look at how cleanly the 41 skills, sidecar binaries, and rules are organized:
 
 ```text
 ~/.gemini/config/plugins/science/
@@ -700,9 +702,9 @@ cp -r plugins/epigraphy-citation-kit ~/.gemini/config/plugins/epigraphy-citation
 
 ## 6. Deep Dive: The 4 Antigravity MCP Server Patterns + 2 More Starter Plugins (`genomics-variant-mcp` & `epigraphy-citation-kit`)
 
-Inspecting all official Google Antigravity plugins installed in `~/.gemini/config/plugins/` reveals **four distinct `mcp_config.json` server architectures**:
+Inspecting the Google Antigravity plugins installed in `~/.gemini/config/plugins/` reveals **four distinct `mcp_config.json` server architectures**:
 
-### A. The 4 Official `mcp_config.json` Patterns
+### A. The 4 `mcp_config.json` Server Architecture Patterns
 
 1. **Pattern 1 - Local Stdio Subprocess (`agy-node` / `node` / `dart` / `uv`):**
    Used by **`science`** (`biomolecular_structure_viewer_mcp`), **`flutter`** (`dart-mcp-server`), and **`data-agent-kit-plugin`** (`dak-notebook`, `dak-viz`).
@@ -784,9 +786,9 @@ Simply close the sidecar pane, quit Antigravity completely (checking the system 
 
 ---
 
-## 8. Official Documentation & Scientific Database References
+## 8. Documentation & Scientific Database References
 
-### A. Official Google Antigravity Documentation
+### A. Google Antigravity Documentation
 * **[Google Antigravity Science Use Cases & Demos (`antigravity.google/use-cases/science`)](https://antigravity.google/use-cases/science)**
 * **[Google Antigravity Documentation Home (`antigravity.google/docs`)](https://antigravity.google/docs)**
 * **[Plugins Guide (`antigravity.google/docs/plugins`)](https://antigravity.google/docs/plugins)**
@@ -822,7 +824,7 @@ If you find the **Antigravity Science Plugin Cookbook & Interactive 3D WebGL Stu
 * **Play Live in Your Browser:** [**Launch the Interactive 3D Biomolecular & Variant WebGL Studio**](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)
 * **Collaborate & Submit a Domain Plugin PR (CONTRIBUTING.md):** Want to co-author a scientific or cloud engineering plugin? Follow our [**google-gemini/cookbook-style Contribution Guide (CONTRIBUTING.md)**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/CONTRIBUTING.md), validate your bundle with uv run examples/scaffold_custom_plugin.py, and open a [**Pull Request**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/pulls) or [**Issue**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/issues)!
 
-### Official Ecosystem Links & Tags
+### Ecosystem Links & Tags
 * **Google:** [github.com/google (`@google`)](https://github.com/google) | [about.google](https://about.google/)
 * **Google Gemini API & SDKs:** [github.com/google-gemini (`@google-gemini`)](https://github.com/google-gemini) | [ai.google.dev/gemini-api/docs](https://ai.google.dev/gemini-api/docs)
 * **Google DeepMind Science & Models:** [github.com/google-deepmind (`@google-deepmind`)](https://github.com/google-deepmind) | [deepmind.google](https://deepmind.google/) | [AlphaGenome](https://deepmind.google.com/science/alphagenome/) | [AlphaFold](https://alphafold.ebi.ac.uk/) | [Aeneas & Ithaca](https://predictingthepast.com/)

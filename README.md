@@ -1,6 +1,8 @@
-# Welcome to the Google Antigravity Science Plugin & Custom Plugin Cookbook
+# Antigravity Science Plugin & Custom Plugin Cookbook (Community & GDE Edition)
 
-This cookbook provides a structured learning path and runnable starter kit for building **Google Antigravity Customizations** - including **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Interactive 3D MCP Sidecars (`sidecar.json`)** - modeled on the official **Google Antigravity Science Plugin (`v1.3.1`)**.
+> **Community Disclaimer:** This repository is an independent open-source engineering cookbook authored by **Robina Mirbahar** (Google Developer Expert in AI & Google Cloud and open-source contributor). It is **not** an official Google product.
+
+This cookbook provides a structured learning path and runnable starter kit for building **Google Antigravity Customizations** - including **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Interactive 3D MCP Sidecars (`sidecar.json`)** - inspired by the architecture of the **Google Antigravity Science Plugin (`v1.3.1`)**.
 
 **For comprehensive Antigravity documentation, visit [antigravity.google/docs](https://antigravity.google/docs) and [antigravity.google/use-cases/science](https://antigravity.google/use-cases/science).**
 <br>
@@ -172,9 +174,9 @@ Even when an agent modifies a script multiple times mid-session before committin
 
 ---
 
-## Official Antigravity MCP Server Architecture Patterns & Plugin Catalog
+## Antigravity MCP Server Architecture Patterns & Installed Plugin Catalog (Community Reference)
 
-Across Google Antigravity's official marketplace plugins (`~/.gemini/config/plugins/`), `mcp_config.json` uses **4 distinct MCP server architecture patterns**:
+Across installed Google Antigravity marketplace plugins (`~/.gemini/config/plugins/`), `mcp_config.json` uses **4 distinct MCP server architecture patterns**:
 
 ### 1. Local Stdio Process (`agy-node` / `node` / `dart` / `uv`)
 Used by **`science`** (`biomolecular_structure_viewer_mcp`), **`flutter`** (`dart-mcp-server`), **`data-agent-kit-plugin`** (`dak-notebook`, `dak-viz`), and our cookbook's **`genomics-variant-mcp`**:
@@ -242,9 +244,9 @@ Used by **`google-cloud-developer`** (`v1.1.13`) and **`google-developer-knowled
 }
 ```
 
-### Reference Catalog of Official Antigravity Plugins (`~/.gemini/config/plugins/`)
+### Reference Catalog of Installed Antigravity Plugins (`~/.gemini/config/plugins/`)
 
-| Official Plugin | Version | Skills | MCP Servers (`mcp_config.json`) | Subagents / Sidecars / Rules |
+| Installed Plugin | Version | Skills | MCP Servers (`mcp_config.json`) | Subagents / Sidecars / Rules |
 | :--- | :--- | :--- | :--- | :--- |
 | **`science`** | `1.3.1` | 41 | `biomolecular_structure_viewer_mcp` (9 lazy 3D Mol\* tools) | `sidecars/biomolecular_structure_viewer` + `rules/AGENTS.md` |
 | **`data-agent-kit-plugin`** | `1.1.0` | 37 | 11 servers: `dak-notebook`, `dak-viz`, `dak-bigquery`, `dak-spark`, `dak-spanner`, `dak-alloydb`, `dak-cloudsql`, `dak-bigtable`, `dak-bigtable-data`, `dak-gcs`, `dak-kc` | `rules/` (ADC pre-flight, ML best practices, data-loss prevention) |
@@ -316,9 +318,9 @@ antigravity-science-plugin-cookbook/
 
 ---
 
-## Official Documentation & Scientific Database References
+## Documentation & Scientific Database References
 
-### Official Google Antigravity Documentation
+### Google Antigravity Documentation
 * **[Google Antigravity Science Use Cases & Demos (`antigravity.google/use-cases/science`)](https://antigravity.google/use-cases/science)**
 * **[Google Antigravity Documentation Home (`antigravity.google/docs`)](https://antigravity.google/docs)**
 * **[Plugins Guide (`antigravity.google/docs/plugins`)](https://antigravity.google/docs/plugins)**
@@ -353,7 +355,7 @@ If you find the **Antigravity Science Plugin Cookbook & Interactive 3D WebGL Stu
 * **Sponsor on GitHub:** [**Sponsor `@RobinaMirbahar` on GitHub Sponsors (`github.com/sponsors/RobinaMirbahar`)**](https://github.com/sponsors/RobinaMirbahar) to support future open-source [**Google (`@google`)**](https://github.com/google), [**Google Gemini (`@google-gemini`)**](https://github.com/google-gemini), [**Google DeepMind (`@google-deepmind`)**](https://github.com/google-deepmind), and [**Google Cloud (`@GoogleCloudPlatform`)**](https://github.com/GoogleCloudPlatform) engineering cookbooks!
 * **Play Live in Your Browser:** [**Launch the Interactive 3D Biomolecular & Variant WebGL Studio**](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)
 
-### Official Ecosystem Links & Tags
+### Ecosystem Links & Tags
 * **Google:** [github.com/google (`@google`)](https://github.com/google) | [about.google](https://about.google/)
 * **Google Gemini API & SDKs:** [github.com/google-gemini (`@google-gemini`)](https://github.com/google-gemini) | [ai.google.dev/gemini-api/docs](https://ai.google.dev/gemini-api/docs)
 * **Google DeepMind Science & Models:** [github.com/google-deepmind (`@google-deepmind`)](https://github.com/google-deepmind) | [deepmind.google](https://deepmind.google/) | [AlphaGenome](https://deepmind.google.com/science/alphagenome/) | [AlphaFold](https://alphafold.ebi.ac.uk/) | [Aeneas & Ithaca](https://predictingthepast.com/)
@@ -364,7 +366,7 @@ Let me know in the comments what domain you're packaging into an Antigravity plu
 
 ---
 
-## Official Google Ecosystem, SDKs & Upstream Repositories
+## Upstream Google Ecosystem, SDKs & Reference Repositories
 
 * **Google:** [github.com/google (`@google`)](https://github.com/google) | [about.google](https://about.google/)
 * **Google Gemini API & SDKs:** [github.com/google-gemini (`@google-gemini`)](https://github.com/google-gemini) | [google-gemini/cookbook](https://github.com/google-gemini/cookbook) | [ai.google.dev/gemini-api/docs](https://ai.google.dev/gemini-api/docs) | [googleapis/python-genai](https://github.com/googleapis/python-genai) | [googleapis/js-genai](https://github.com/googleapis/js-genai)

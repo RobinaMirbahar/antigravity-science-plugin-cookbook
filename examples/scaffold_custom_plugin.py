@@ -37,7 +37,7 @@ ALLOWED_PLUGIN_KEYS = {
 
 
 def validate_plugin_bundle(plugin_dir: Path) -> bool:
-    """Validates an Antigravity plugin directory against official loader rules."""
+    """Validates an Antigravity plugin directory against Antigravity loader rules."""
     print(f"\n[*] Auditing Antigravity Plugin Bundle: {plugin_dir}")
     errors: list[str] = []
     warnings: list[str] = []

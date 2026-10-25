@@ -1,6 +1,8 @@
 # Contributing to the Antigravity Science Plugin & Custom Plugin Cookbook
 
-Contributions, new domain skills (`SKILL.md`), custom MCP servers (`mcp_config.json`), and scientific workflow examples are welcome! This guide follows the structure and conventions of the official [Google Gemini API Cookbook (`google-gemini/cookbook`)](https://github.com/google-gemini/cookbook/blob/main/CONTRIBUTING.md).
+> **Community Disclaimer:** This is an independent community & Google Developer Expert (GDE) open-source project, not an official Google repository.
+
+Contributions, new domain skills (`SKILL.md`), custom MCP servers (`mcp_config.json`), and scientific workflow examples are welcome! This guide is inspired by the structure and conventions of the [Google Gemini API Cookbook (`google-gemini/cookbook`)](https://github.com/google-gemini/cookbook/blob/main/CONTRIBUTING.md).
 
 ## Style Guides & Conventions
 
