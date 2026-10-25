@@ -1,6 +1,6 @@
 # Antigravity Science Plugin & Custom Plugin Cookbook (Community & GDE Edition)
 
-> **Community Disclaimer:** This repository is an independent open-source engineering cookbook authored by **Robina Mirbahar** (Google Developer Expert in AI & Google Cloud and open-source contributor). It is **not** an official Google product.
+> **Community Disclaimer:** This repository is an independent open-source engineering cookbook authored by **Robina Mirbahar** (Google Developer Expert in AI & Google Cloud and open-source contributor). 
 
 This cookbook provides a structured learning path and runnable starter kit for building **Google Antigravity Customizations** - including **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Interactive 3D MCP Sidecars (`sidecar.json`)** - inspired by the architecture of the **Google Antigravity Science Plugin (`v1.3.1`)**.
 
