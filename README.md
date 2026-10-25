@@ -1,13 +1,30 @@
-# Google Antigravity Science Plugin & Custom Plugin Engineering Cookbook
+# Welcome to the Google Antigravity Science Plugin & Custom Plugin Cookbook
+
+This cookbook provides a structured learning path and runnable starter kit for building **Google Antigravity Customizations** - including **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Interactive 3D MCP Sidecars (`sidecar.json`)** - modeled on the official **Google Antigravity Science Plugin (`v1.3.1`)**.
+
+**For comprehensive Antigravity documentation, visit [antigravity.google/docs](https://antigravity.google/docs) and [antigravity.google/use-cases/science](https://antigravity.google/use-cases/science).**
+<br>
+**For Gemini API and Gemma quickstarts, check out the [Gemini API Cookbook (`google-gemini/cookbook`)](https://github.com/google-gemini/cookbook) and [Gemma Cookbook (`google-gemma/cookbook`)](https://github.com/google-gemma/cookbook).**
 
 [![From Ancient Epigraphy to 3D Proteins: Antigravity Science Plugin!](./assets/devto_cover_banner.jpg)](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)
 
-* **[Read the Live Article on DEV.to (`@robinamirbahar`)](https://dev.to/robinamirbahar/from-ancient-epigraphy-to-3d-proteins-building-plugins-skills-mcp-sidecars-in-google-antigravity-4l1m)**
-* **[Launch the Interactive 3D Biomolecular & Variant WebGL Studio (`index.html`)](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)**
-* **[Read the Full Dev.to Engineering Deep-Dive Source (`DEVTO_ANTIGRAVITY_SCIENCE_PLUGIN_GUIDE.md`)](./DEVTO_ANTIGRAVITY_SCIENCE_PLUGIN_GUIDE.md)**
-* **[Jump to the Hands-On Plugin Authoring Codelab & 1-Command Scaffolder](#hands-on-plugin-authoring-codelab-build-validate--deploy-in-5-minutes)**
+---
+> **Science Plugin (`v1.3.1`) Deep-Dive**: Orchestrate 41 scientific skills (`AlphaFold`, `AlphaGenome`, `ChEMBL`, `gnomAD`, `ClinVar`, `Foldseek`, `openFDA`, and `Aeneas/Ithaca`) without context bloat. Read the full [Engineering Deep-Dive on DEV (`dev.to/gde`)](https://dev.to/gde/from-ancient-epigraphy-to-3d-proteins-building-plugins-skills-mcp-sidecars-in-google-antigravity-4l1m) or the in-repo [Full Guide (`DEVTO_ANTIGRAVITY_SCIENCE_PLUGIN_GUIDE.md`)](./DEVTO_ANTIGRAVITY_SCIENCE_PLUGIN_GUIDE.md).
+>
+> **Interactive 3D Biomolecular & Variant WebGL Studio**: Explore 3D protein structures, pLDDT confidence bands, and variant annotations directly in your browser at [robinamirbahar.github.io/antigravity-science-plugin-cookbook](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/).
+>
+> **3D Mol* MCP Sidecar & `PostToolUse` Reproducibility Hook**: Verified runtime benchmarks for zero-token coordinate loading, whole-chain culling (`chains=["A"]`), atomic `state.structures` isolation, and secret-redacted SHA-256 execution auditing. Jump to [Verified Runtime Benchmarks](#verified-runtime-benchmarks-3d-mol-mcp-state-isolation--posttooluse-reproducibility-hook).
+>
+> **1-Command Custom Plugin Scaffolder & Validator**: Build and validate your own Antigravity plugin bundle (`plugin.json`, `hooks.json`, `rules/AGENTS.md`, `SKILL.md`, and PEP 723 `uv` scripts) in under 5 minutes. Jump to the [Hands-On Plugin Codelab](#hands-on-plugin-authoring-codelab-build-validate--deploy-in-5-minutes).
+---
 
-A hands-on engineering cookbook and starter kit for building **Google Antigravity Customizations** - including **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Interactive 3D MCP Sidecars (`sidecar.json`)** - modeled on the official **Google Antigravity Science Plugin (`v1.3.1`)**.
+## Navigating the Cookbook
+
+This cookbook is organized into three main categories:
+
+1. **[Starter Plugins (`plugins/`)](./plugins/):** Three complete, installable Antigravity plugin bundles (`bio-structural-qc`, `genomics-variant-mcp` with a zero-dependency Python JSON-RPC 2.0 Stdio MCP server, and `epigraphy-citation-kit`).
+2. **[Runnable Examples & Benchmarks (`examples/`)](./examples/):** Zero-dependency PEP 723 `uv` scripts for generating 3D `.pdb` structures + PAE matrices (`generate_3d_protein_pae_demo.py`), running all 5 multi-skill scientific pipelines (`multi_domain_science_use_cases.py`), and scaffolding custom plugins (`scaffold_custom_plugin.py`).
+3. **[Interactive 3D WebGL Sandbox (`index.html`)](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/):** Browser-based 3D biomolecular structure and variant exploration studio.
 
 ---
 
@@ -344,6 +361,28 @@ If you find the **Antigravity Science Plugin Cookbook & Interactive 3D WebGL Stu
 * **Google Cloud Platform:** [github.com/GoogleCloudPlatform (`@GoogleCloudPlatform`)](https://github.com/GoogleCloudPlatform) | [cloud.google.com](https://cloud.google.com/)
 
 Let me know in the comments what domain you're packaging into an Antigravity plugin next - whether it's **3D structural biology**, **genomic variant scoring**, **ancient epigraphy**, or **autonomous cloud SRE**!
+
+---
+
+## Official Google Ecosystem, SDKs & Upstream Repositories
+
+* **Google:** [github.com/google (`@google`)](https://github.com/google) | [about.google](https://about.google/)
+* **Google Gemini API & SDKs:** [github.com/google-gemini (`@google-gemini`)](https://github.com/google-gemini) | [google-gemini/cookbook](https://github.com/google-gemini/cookbook) | [ai.google.dev/gemini-api/docs](https://ai.google.dev/gemini-api/docs) | [googleapis/python-genai](https://github.com/googleapis/python-genai) | [googleapis/js-genai](https://github.com/googleapis/js-genai)
+* **Google DeepMind Science & Models:** [github.com/google-deepmind (`@google-deepmind`)](https://github.com/google-deepmind) | [deepmind.google](https://deepmind.google/) | [AlphaGenome](https://deepmind.google.com/science/alphagenome/) | [AlphaFold](https://alphafold.ebi.ac.uk/) | [Aeneas & Ithaca](https://predictingthepast.com/)
+* **Google Antigravity Platform:** [antigravity.google/docs](https://antigravity.google/docs) | [antigravity.google/use-cases/science](https://antigravity.google/use-cases/science) | [github.com/google-antigravity (`@google-antigravity`)](https://github.com/google-antigravity/antigravity-sdk-python)
+* **Google Cloud Platform & Vertex AI:** [github.com/GoogleCloudPlatform (`@GoogleCloudPlatform`)](https://github.com/GoogleCloudPlatform) | [GoogleCloudPlatform/generative-ai](https://github.com/GoogleCloudPlatform/generative-ai) | [cloud.google.com](https://cloud.google.com/)
+
+---
+
+## Contributing & Open Collaboration
+
+Contributions, new domain skills (`SKILL.md`), custom MCP servers (`mcp_config.json`), and scientific workflow examples are welcome!
+
+* **Want to collaborate or add a new domain plugin?** Whether you are packaging **3D structural biology**, **clinical genomics**, **earth observation**, **computational chemistry**, or **cloud data engineering** into an Antigravity plugin:
+  1. Read [CONTRIBUTING.md](./CONTRIBUTING.md) for our style guide and automated loader validation checks (`uv run examples/scaffold_custom_plugin.py`).
+  2. Open an [Issue](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/issues) or submit a [Pull Request](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/pulls) to add your plugin or skill to the cookbook!
+
+Thank you for building with Google Antigravity, Gemini, and Open Science AI!
 
 ---
 
