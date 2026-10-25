@@ -1,6 +1,6 @@
 # Contributing to the Antigravity Science Plugin & Custom Plugin Cookbook
 
-> **Community Disclaimer:** This is an independent community & Google Developer Expert (GDE) open-source project, not an official Google repository.
+> **Community Disclaimer:** This repository is an independent open-source engineering cookbook authored by **Robina Mirbahar** (Google Developer Expert in AI & Google Cloud and open-source contributor).
 
 Contributions, new domain skills (`SKILL.md`), custom MCP servers (`mcp_config.json`), and scientific workflow examples are welcome! This guide is inspired by the structure and conventions of the [Google Gemini API Cookbook (`google-gemini/cookbook`)](https://github.com/google-gemini/cookbook/blob/main/CONTRIBUTING.md).
 

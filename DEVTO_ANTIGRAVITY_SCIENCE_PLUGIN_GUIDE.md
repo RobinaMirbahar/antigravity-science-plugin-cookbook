@@ -14,7 +14,7 @@ If you try to stuff 41 scientific APIs, rate limiters, clinical safety guardrail
 
 Instead of just reading the docs, I reverse-engineered the newly released **Google Antigravity Science Plugin (`v1.3.1`)** and built the open-source **[Antigravity Science Plugin Cookbook & Interactive 3D Studio](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)** - complete with a **live browser-based 3D Biomolecular & Variant WebGL Sandbox**, a **zero-dependency PEP 723 3D protein + PAE generator**, and a production **`bio-structural-qc` custom plugin**.
 
-> **Community & GDE Disclaimer:** This article and companion repository are authored by **Robina Mirbahar** (Google Developer Expert in AI & Google Cloud and open-source contributor) as an independent community engineering resource, not an official Google product.
+> **Community Disclaimer:** This repository is an independent open-source engineering cookbook authored by **Robina Mirbahar** (Google Developer Expert in AI & Google Cloud and open-source contributor).
 
 ---
 
