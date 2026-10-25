@@ -367,3 +367,14 @@ Thank you for building with Google Antigravity, Gemini, and Open Science AI!
 ## License
 
 Apache License 2.0
+
+---
+
+### C. Licensing, Academic Citations & Dataset Acknowledgements
+* **Google Antigravity Science Plugin License (`README.md` & `SKILL_LICENSES.md`):** Copyright 2026 Google LLC. All software and helper scripts in the Science Plugin (including `analyze_pae.py`) are licensed under the **[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)**, and all skill definitions and documentation materials (including `SKILL.md` and `rules/AGENTS.md`) are licensed under the **[Creative Commons Attribution 4.0 International License (CC-BY 4.0)](https://creativecommons.org/licenses/by/4.0/legalcode)**. Third-party biological and clinical databases referenced by individual skills are governed by their respective terms listed in `SKILL_LICENSES.md`.
+* **Google DeepMind `predictingthepast` (`Aeneas` & `Ithaca`) Citations:**
+  * **Aeneas (Latin):** Assael, Y., Sommerschield, T., Cooley, A. et al. *Contextualizing ancient texts with generative neural networks.* **Nature** 645, 141-147 (2025). ([github.com/google-deepmind/predictingthepast](https://github.com/google-deepmind/predictingthepast))
+  * **Ithaca (Ancient Greek):** Assael, Y., Sommerschield, T., Shillingford, B. et al. *Restoring and attributing ancient texts using deep neural networks.* **Nature** 603, 280-283 (2022).
+* **Epigraphic Dataset Acknowledgements (`predictingthepast`):**
+  * **Ithaca (Ancient Greek):** Draws on the 2019 version of the *Searchable Greek Inscriptions* database made available under Fair Use license by the **Packard Humanities Institute**, generously supported by David Packard ([inscriptions.packhum.org](https://inscriptions.packhum.org)).
+  * **Aeneas (Latin):** Trained on data from the **Epigraphic Database Roma (EDR)** ([edr-edr.it](http://www.edr-edr.it/), CC-BY 4.0 on [Zenodo](https://zenodo.org/records/3575495)), the **Epigraphic Database Heidelberg (EDH)** ([edh.ub.uni-heidelberg.de](https://edh.ub.uni-heidelberg.de/), CC-BY-SA 4.0 on [Zenodo](https://zenodo.org/records/3575155)), and the **ETL repository for Epigraphic Database Clauss-Slaby (`EDCS_ETL`)** ([manfredclauss.de](http://www.manfredclauss.de/) and [github.com/sdam-au/EDCS_ETL](https://github.com/sdam-au/EDCS_ETL), CC-BY 4.0 on [Zenodo](https://zenodo.org/records/7072337)).

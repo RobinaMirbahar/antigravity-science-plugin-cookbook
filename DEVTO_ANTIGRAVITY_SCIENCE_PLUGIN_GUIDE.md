@@ -1,7 +1,7 @@
 ---
 title: "From Ancient Epigraphy to 3D Proteins: Building Plugins, Skills & MCP Sidecars in Google Antigravity"
 published: true
-description: "Reverse-engineering Google Antigravity's Science Plugin (v1.3.1) with an open-source 3D WebGL Biomolecular Studio, 5 multi-skill pipelines, and 3 custom plugins."
+description: "Exploring the open-source (Apache 2.0 / CC-BY 4.0) architecture of Google Antigravity's Science Plugin (v1.3.1) with a 3D WebGL Biomolecular Studio, 5 multi-skill pipelines, and 3 custom plugins."
 tags: ai, gemini, bioinformatics, opensource
 cover_image: https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/devto_cover_banner.jpg
 ---
@@ -12,7 +12,7 @@ If you try to stuff 41 scientific APIs, rate limiters, clinical safety guardrail
 
 **Google Antigravity** solves this at the runtime level with its **Plugin & Customization Architecture** - combining **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Dual-Process 3D MCP Sidecars (`mcp_config.json` + `sidecar.json`)**.
 
-Instead of just reading the docs, I reverse-engineered the newly released **Google Antigravity Science Plugin (`v1.3.1`)** and built the open-source **[Antigravity Science Plugin Cookbook & Interactive 3D Studio](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)** - complete with a **live browser-based 3D Biomolecular & Variant WebGL Sandbox**, a **zero-dependency PEP 723 3D protein + PAE generator**, and a production **`bio-structural-qc` custom plugin**.
+Instead of just reading the docs, I explored the open-source (Apache 2.0 / CC-BY 4.0) architecture of the newly released **Google Antigravity Science Plugin (`v1.3.1`)** and built the open-source **[Antigravity Science Plugin Cookbook & Interactive 3D Studio](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)** - complete with a **live browser-based 3D Biomolecular & Variant WebGL Sandbox**, a **zero-dependency PEP 723 3D protein + PAE generator**, and a production **`bio-structural-qc` custom plugin**.
 
 > **Community Disclaimer:** This repository is an independent open-source engineering cookbook authored by **Robina Mirbahar** (Google Developer Expert in AI & Google Cloud and open-source contributor).
 
@@ -66,7 +66,7 @@ flowchart TB
 | Primitive | Config File / Path | Loading Behavior | Token Budget & Engineering Role |
 | :--- | :--- | :--- | :--- |
 | **Rules** | `GEMINI.md`, `AGENTS.md`, `rules/AGENTS.md` | **Always-On** (within directory or active plugin scope) | **24,000 bytes/file cap**; shares a dedicated **20,000-token aggregate rules budget** . Over-budget rules gracefully demote to file path pointers. |
-| **Skills** | `skills/<name>/SKILL.md` | **Progressive Disclosure** (On-Demand) | Only the YAML `name` and `description` (~40–80 tokens) are injected into the system prompt. The full `SKILL.md` (up to 32 KB!) and `references/` are read *only* when activated. |
+| **Skills** | `skills/<name>/SKILL.md` | **Progressive Disclosure** (On-Demand) | Only the YAML `name` and `description` (~40-80 tokens) are injected into the system prompt. The full `SKILL.md` (up to 32 KB!) and `references/` are read *only* when activated. |
 | **Plugins** | `plugins/<dir>/plugin.json` | **Atomic Bundle** | Namespaces and toggles related `skills/`, `rules/`, `hooks.json`, `mcp_config.json`, and `sidecars/` as a single unit. |
 | **Hooks** | `hooks.json` (at plugin or `.agents/` root) | **Lifecycle Event Triggers** | Intercepts `SessionStart`, `PreInvocation`, `PreToolUse`, `PostToolUse`, `PostInvocation`, and `Stop` to run shell validators, audit loggers, or linters. |
 | **MCP & Sidecars** | `mcp_config.json` + `sidecars/<name>/sidecar.json` | **Tool + UI Integration** | Connects local (`stdio`) or remote (`Streamable HTTP`) tool servers and mounts interactive HTML/WebGL views in the Auxiliary Pane. |
@@ -807,6 +807,15 @@ Simply close the sidecar pane, quit Antigravity completely (checking the system 
 * **[PDBe Mol\* 3D Biomolecular WebGL Viewer (`github.com/molstar/pdbe-molstar`)](https://github.com/molstar/pdbe-molstar)**
 * **[Foldseek Structural Similarity Search (`search.foldseek.com`)](https://search.foldseek.com/search)**
 * **[EMBL-EBI ChEMBL Bioactivity Database (`ebi.ac.uk/chembl`)](https://www.ebi.ac.uk/chembl/)**, **[gnomAD (`gnomad.broadinstitute.org`)](https://gnomad.broadinstitute.org/)**, **[NCBI ClinVar (`ncbi.nlm.nih.gov/clinvar`)](https://www.ncbi.nlm.nih.gov/clinvar/)**, **[Open Targets Platform (`platform.opentargets.org`)](https://platform.opentargets.org/)**, **[openFDA API (`open.fda.gov/apis`)](https://open.fda.gov/apis/)**, and **[ClinicalTrials.gov APIv2 (`clinicaltrials.gov`)](https://clinicaltrials.gov/)**
+
+### C. Licensing, Academic Citations & Dataset Acknowledgements
+* **Google Antigravity Science Plugin License (`README.md` & `SKILL_LICENSES.md`):** Copyright 2026 Google LLC. All software and helper scripts in the Science Plugin (including `analyze_pae.py`) are licensed under the **[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)**, and all skill definitions and documentation materials (including `SKILL.md` and `rules/AGENTS.md`) are licensed under the **[Creative Commons Attribution 4.0 International License (CC-BY 4.0)](https://creativecommons.org/licenses/by/4.0/legalcode)**. Third-party biological and clinical databases referenced by individual skills are governed by their respective terms listed in `SKILL_LICENSES.md`.
+* **Google DeepMind `predictingthepast` (`Aeneas` & `Ithaca`) Citations:**
+  * **Aeneas (Latin):** Assael, Y., Sommerschield, T., Cooley, A. et al. *Contextualizing ancient texts with generative neural networks.* **Nature** 645, 141-147 (2025). ([github.com/google-deepmind/predictingthepast](https://github.com/google-deepmind/predictingthepast))
+  * **Ithaca (Ancient Greek):** Assael, Y., Sommerschield, T., Shillingford, B. et al. *Restoring and attributing ancient texts using deep neural networks.* **Nature** 603, 280-283 (2022).
+* **Epigraphic Dataset Acknowledgements (`predictingthepast`):**
+  * **Ithaca (Ancient Greek):** Draws on the 2019 version of the *Searchable Greek Inscriptions* database made available under Fair Use license by the **Packard Humanities Institute**, generously supported by David Packard ([inscriptions.packhum.org](https://inscriptions.packhum.org)).
+  * **Aeneas (Latin):** Trained on data from the **Epigraphic Database Roma (EDR)** ([edr-edr.it](http://www.edr-edr.it/), CC-BY 4.0 on [Zenodo](https://zenodo.org/records/3575495)), the **Epigraphic Database Heidelberg (EDH)** ([edh.ub.uni-heidelberg.de](https://edh.ub.uni-heidelberg.de/), CC-BY-SA 4.0 on [Zenodo](https://zenodo.org/records/3575155)), and the **ETL repository for Epigraphic Database Clauss-Slaby (`EDCS_ETL`)** ([manfredclauss.de](http://www.manfredclauss.de/) and [github.com/sdam-au/EDCS_ETL](https://github.com/sdam-au/EDCS_ETL), CC-BY 4.0 on [Zenodo](https://zenodo.org/records/7072337)).
 
 ---
 
