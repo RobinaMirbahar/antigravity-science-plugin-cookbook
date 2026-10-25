@@ -810,25 +810,10 @@ Simply close the sidecar pane, quit Antigravity completely (checking the system 
 
 ---
 
-## Support, Star, Fork & Contribute on GitHub
+## 9. Try the Open-Source Cookbook & 3D WebGL Studio
 
-[![Star on GitHub](https://img.shields.io/github/stars/RobinaMirbahar/antigravity-science-plugin-cookbook?style=for-the-badge&logo=github&label=Star)](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)
-[![Fork on GitHub](https://img.shields.io/github/forks/RobinaMirbahar/antigravity-science-plugin-cookbook?style=for-the-badge&logo=github&label=Fork)](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/fork)
-[![Sponsor @RobinaMirbahar](https://img.shields.io/badge/Sponsor-%40RobinaMirbahar-ea4aaa?style=for-the-badge&logo=githubsponsors)](https://github.com/sponsors/RobinaMirbahar)
-
-If you find the **Antigravity Science Plugin Cookbook & Interactive 3D WebGL Studio** useful for your research or engineering workflows:
-
-* **Star this Repository:** [**Star `RobinaMirbahar/antigravity-science-plugin-cookbook` on GitHub**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook) to bookmark the 3 starter plugins and help other developers discover the cookbook.
-* **Fork & Customize:** [**Fork `RobinaMirbahar/antigravity-science-plugin-cookbook`**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/fork) to scaffold and publish your own custom [**Google Antigravity (`@google-antigravity`)**](https://antigravity.google/docs) plugins, progressive-disclosure skills, and MCP servers.
-* **Sponsor on GitHub:** [**Sponsor `@RobinaMirbahar` on GitHub Sponsors (`github.com/sponsors/RobinaMirbahar`)**](https://github.com/sponsors/RobinaMirbahar) to support future open-source [**Google (`@google`)**](https://github.com/google), [**Google Gemini (`@google-gemini`)**](https://github.com/google-gemini), [**Google DeepMind (`@google-deepmind`)**](https://github.com/google-deepmind), and [**Google Cloud (`@GoogleCloudPlatform`)**](https://github.com/GoogleCloudPlatform) engineering cookbooks!
-* **Play Live in Your Browser:** [**Launch the Interactive 3D Biomolecular & Variant WebGL Studio**](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)
-* **Collaborate & Submit a Domain Plugin PR (CONTRIBUTING.md):** Want to co-author a scientific or cloud engineering plugin? Follow our [**google-gemini/cookbook-style Contribution Guide (CONTRIBUTING.md)**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/CONTRIBUTING.md), validate your bundle with uv run examples/scaffold_custom_plugin.py, and open a [**Pull Request**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/pulls) or [**Issue**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/issues)!
-
-### Ecosystem Links & Tags
-* **Google:** [github.com/google (`@google`)](https://github.com/google) | [about.google](https://about.google/)
-* **Google Gemini API & SDKs:** [github.com/google-gemini (`@google-gemini`)](https://github.com/google-gemini) | [ai.google.dev/gemini-api/docs](https://ai.google.dev/gemini-api/docs)
-* **Google DeepMind Science & Models:** [github.com/google-deepmind (`@google-deepmind`)](https://github.com/google-deepmind) | [deepmind.google](https://deepmind.google/) | [AlphaGenome](https://deepmind.google.com/science/alphagenome/) | [AlphaFold](https://alphafold.ebi.ac.uk/) | [Aeneas & Ithaca](https://predictingthepast.com/)
-* **Google Antigravity Platform:** [antigravity.google/docs](https://antigravity.google/docs) | [antigravity.google/use-cases/science](https://antigravity.google/use-cases/science) | [github.com/google-antigravity (`@google-antigravity`)](https://github.com/google-antigravity/antigravity-sdk-python)
-* **Google Cloud Platform:** [github.com/GoogleCloudPlatform (`@GoogleCloudPlatform`)](https://github.com/GoogleCloudPlatform) | [cloud.google.com](https://cloud.google.com/)
+* **GitHub Repository & 3 Starter Plugins:** [github.com/RobinaMirbahar/antigravity-science-plugin-cookbook](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)
+* **Interactive 3D Biomolecular & Variant WebGL Studio:** [robinamirbahar.github.io/antigravity-science-plugin-cookbook](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)
+* **Contribute a Domain Plugin:** Read [CONTRIBUTING.md](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/CONTRIBUTING.md), validate your bundle with `uv run examples/scaffold_custom_plugin.py`, and open a [Pull Request](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/pulls).
 
 Let me know in the comments what domain you're packaging into an Antigravity plugin next - whether it's **3D structural biology**, **genomic variant scoring**, **ancient epigraphy**, or **autonomous cloud SRE**!
