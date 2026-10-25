@@ -298,6 +298,15 @@ Here are the exact two config files that wire this up:
   }
   ```
 
+#### Verified MCP State Test: Large Structure Whole-Chain Culling & Multi-Structure Isolation
+
+How does the Mol* sidecar stay fast on multi-chain complexes and avoid race conditions when switching structures or clicking residues concurrently?
+
+1. **Zero-Token Coordinate Loading & Whole-Chain Targeting (`chains=["A"]`):** The LLM never ingests raw `.cif`/`.mmcif`/`.pdb` coordinates into context. `load_structure` passes only the relative file path inside the conversation's artifact directory to the Mol* WebGL canvas, which defaults to `cartoon` backbone rendering with `waters`, `sugars`, and `sidechains` culled out until toggled via `set_representation`. When targeting an entire polymer chain (`annotate_region(chains=["A"], ...)`), the MCP payload sends `"residues": [], "wholeChains": ["A"]` (`s1` below) so Mol* resolves the polymer chain client-side instead of streaming thousands of residue IDs through tool calls.
+2. **Conversation-Scoped Isolation & Versioned `state.structures` Map:** Each sidecar instance and its artifact directory are isolated per `<conversation-id>`. Inside a session, `get_state()` maintains an atomic `"version"` counter (`"version": 4`), a monotonic `"nextSelectionId": 3`, and a per-file `state.structures` dictionary (`synthetic_p53_multidomain.pdb` vs. `sample_crambin_fragment.pdb`), so switching between structures restores each model's own overlays and `s<n>` annotations without UI/agent race conditions:
+
+![Verified Mol* MCP Multi-Structure & Whole-Chain Culling Test](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/molstar_mcp_state_test.png)
+
 ---
 
 ### Pattern 5: Domain-Specific Guardrails - From Clinical Genetics (`AlphaGenome`) to Ancient Epigraphy (`Aeneas` & `Ithaca`)
@@ -659,6 +668,10 @@ Verified `--self-test` output:
   "status": "OK"
 }
 ```
+
+When an agent iterates on an analysis script multiple times mid-session before committing, `git_revision` stays on `<commit>-dirty` across runs while the per-file `sha256_file()` digest in `script_versions` (`sha256:b305f0ca720d7673` -> `sha256:2ba2a67737484325` -> `sha256:a8a20c0d909ebcbd`) uniquely identifies which uncommitted local iteration produced each output row in `qc_command_audit.jsonl`:
+
+![Verified PostToolUse Reproducibility Hook Clean vs Dirty Git Test](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/reproducibility_dirty_git_test.png)
 
 
 ### 4. Interactive 1-Command Plugin Scaffolder & Loader Validator (`scaffold_custom_plugin.py`)

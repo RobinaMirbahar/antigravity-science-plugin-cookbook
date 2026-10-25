@@ -139,6 +139,22 @@ uv run examples/scaffold_custom_plugin.py
 
 ---
 
+## Verified Runtime Benchmarks: 3D Mol* MCP State Isolation & `PostToolUse` Reproducibility Hook
+
+### 1. Live `science_biomolecular_structure_viewer_mcp` Multi-Structure & Chain-Culling Verification
+When visualizing large structures or switching between multiple `.pdb`/`.cif` models in a single session:
+- **Zero-Token Coordinate Loading & Whole-Chain Targeting (`chains=["A"]`):** `load_structure` passes only the relative file path inside the conversation's artifact directory to the Mol* WebGL canvas (`waters`, `sugars`, and `sidechains` culled by default). Passing `chains=["A"]` sends `"residues": [], "wholeChains": ["A"]` (`s1` below) so Mol* resolves polymer chains client-side without streaming thousands of residue IDs through tool calls.
+- **Versioned `state.structures` Map:** `get_state()` maintains an atomic `"version"` counter (`"version": 4`), `"nextSelectionId": 3`, and a per-file `state.structures` map so switching between `synthetic_p53_multidomain.pdb` (`s1`) and `sample_crambin_fragment.pdb` (`s2`) restores each model's own overlays and annotations cleanly:
+
+![Verified Mol* MCP Multi-Structure & Whole-Chain Culling Test](./assets/molstar_mcp_state_test.png)
+
+### 2. Live `PostToolUse` Reproducibility Hook (`log_reproducibility_audit.py`) Across Clean & Dirty Git States
+Even when an agent modifies a script multiple times mid-session before committing (`git_revision: "0ff72b2-dirty"`), the per-file `sha256_file()` digest in `script_versions` (`sha256:b305f0ca720d7673` -> `sha256:2ba2a67737484325` -> `sha256:a8a20c0d909ebcbd`) records which exact local iteration ran alongside redacted secrets (`ALPHAGENOME_API_KEY=[REDACTED]`) and input `.pdb` file hashes:
+
+![Verified PostToolUse Reproducibility Hook Clean vs Dirty Git Test](./assets/reproducibility_dirty_git_test.png)
+
+---
+
 ## Official Antigravity MCP Server Architecture Patterns & Plugin Catalog
 
 Across Google Antigravity's official marketplace plugins (`~/.gemini/config/plugins/`), `mcp_config.json` uses **4 distinct MCP server architecture patterns**:
