@@ -1,7 +1,7 @@
 ---
 title: "From Ancient Epigraphy to 3D Proteins: Building Plugins, Skills & MCP Sidecars in Google Antigravity"
 published: true
-description: "Exploring the open-source (Apache 2.0 / CC-BY 4.0) architecture of Google Antigravity's Science Plugin (v1.3.1) with a 3D WebGL Biomolecular Studio, 5 multi-skill pipelines, and 3 custom plugins."
+description: "Exploring the open-source (Apache 2.0 / CC-BY 4.0) architecture of Google Antigravity's Science Plugin (v1.3.1) and Google Cloud MCP endpoints (Vertex AI, BigQuery, Cloud Run) with a 3D WebGL Biomolecular Studio and 3 custom plugins."
 tags: ai, gemini, bioinformatics, opensource
 cover_image: https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/devto_cover_banner.jpg
 ---
@@ -13,8 +13,6 @@ If you try to stuff 41 scientific APIs, rate limiters, clinical safety guardrail
 **Google Antigravity** solves this at the runtime level with its **Plugin & Customization Architecture** - combining **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Dual-Process 3D MCP Sidecars (`mcp_config.json` + `sidecar.json`)**.
 
 Instead of just reading the docs, I explored the open-source (Apache 2.0 / CC-BY 4.0) architecture of the newly released **Google Antigravity Science Plugin (`v1.3.1`)** and built the open-source **[Antigravity Science Plugin Cookbook & Interactive 3D Studio](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)** - complete with a **live browser-based 3D Biomolecular & Variant WebGL Sandbox**, a **zero-dependency PEP 723 3D protein + PAE generator**, and a production **`bio-structural-qc` custom plugin**.
-
-> **Community Disclaimer:** This repository is an independent open-source engineering cookbook authored by **Robina Mirbahar** (Google Developer Expert in AI & Google Cloud and open-source contributor).
 
 ---
 
@@ -73,9 +71,9 @@ flowchart TB
 
 ---
 
-## 2. Dissecting the Antigravity `science` Plugin (`v1.3.1`)
+## 2. Inside the Open-Source Architecture of the Antigravity `science` Plugin (`v1.3.1`)
 
-When installed from the Antigravity Marketplace (`plugin/science`), the bundle unpacks into `~/.gemini/config/plugins/science/`. Look at how cleanly the 41 skills, sidecar binaries, and rules are organized:
+When installed from the Antigravity Marketplace (`antigravity-plugins-official/plugin/science`), the bundle unpacks into `~/.gemini/config/plugins/science/`. Look at how cleanly the 41 skills, sidecar binaries, and rules are organized:
 
 ```text
 ~/.gemini/config/plugins/science/
@@ -141,7 +139,7 @@ When installed from the Antigravity Marketplace (`plugin/science`), the bundle u
 
 ## 3. Five Production Engineering Patterns Inside the Science Plugin
 
-While inspecting the source files across all 41 skills, five engineering patterns stood out that every agent builder should steal.
+While inspecting the source files across all 41 skills, five engineering patterns stood out that every Google Cloud and agentic AI builder can adopt.
 
 ### Pattern 1: Always-On Behavioral Routing via `rules/AGENTS.md`
 
@@ -299,15 +297,6 @@ Here are the exact two config files that wire this up:
     }
   }
   ```
-
-#### Verified MCP State Test: Large Structure Whole-Chain Culling & Multi-Structure Isolation
-
-How does the Mol* sidecar stay fast on multi-chain complexes and avoid race conditions when switching structures or clicking residues concurrently?
-
-1. **Zero-Token Coordinate Loading & Whole-Chain Targeting (`chains=["A"]`):** The LLM never ingests raw `.cif`/`.mmcif`/`.pdb` coordinates into context. `load_structure` passes only the relative file path inside the conversation's artifact directory to the Mol* WebGL canvas, which defaults to `cartoon` backbone rendering with `waters`, `sugars`, and `sidechains` culled out until toggled via `set_representation`. When targeting an entire polymer chain (`annotate_region(chains=["A"], ...)`), the MCP payload sends `"residues": [], "wholeChains": ["A"]` (`s1` below) so Mol* resolves the polymer chain client-side instead of streaming thousands of residue IDs through tool calls.
-2. **Conversation-Scoped Isolation & Versioned `state.structures` Map:** Each sidecar instance and its artifact directory are isolated per `<conversation-id>`. Inside a session, `get_state()` maintains an atomic `"version"` counter (`"version": 4`), a monotonic `"nextSelectionId": 3`, and a per-file `state.structures` dictionary (`synthetic_p53_multidomain.pdb` vs. `sample_crambin_fragment.pdb`), so switching between structures restores each model's own overlays and `s<n>` annotations without UI/agent race conditions:
-
-![Verified Mol* MCP Multi-Structure & Whole-Chain Culling Test](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/molstar_mcp_state_test.png)
 
 ---
 
@@ -671,11 +660,6 @@ Verified `--self-test` output:
 }
 ```
 
-When an agent iterates on an analysis script multiple times mid-session before committing, `git_revision` stays on `<commit>-dirty` across runs while the per-file `sha256_file()` digest in `script_versions` (`sha256:b305f0ca720d7673` -> `sha256:2ba2a67737484325` -> `sha256:a8a20c0d909ebcbd`) uniquely identifies which uncommitted local iteration produced each output row in `qc_command_audit.jsonl`:
-
-![Verified PostToolUse Reproducibility Hook Clean vs Dirty Git Test](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/reproducibility_dirty_git_test.png)
-
-
 ### 4. Interactive 1-Command Plugin Scaffolder & Loader Validator (`scaffold_custom_plugin.py`)
 
 To make authoring and testing your own plugins effortless, I also included an interactive **1-Command Plugin Scaffolder & Loader Validator** ([`examples/scaffold_custom_plugin.py`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/examples/scaffold_custom_plugin.py)) that:
@@ -702,9 +686,9 @@ cp -r plugins/epigraphy-citation-kit ~/.gemini/config/plugins/epigraphy-citation
 
 ## 6. Deep Dive: The 4 Antigravity MCP Server Patterns + 2 More Starter Plugins (`genomics-variant-mcp` & `epigraphy-citation-kit`)
 
-Inspecting the Google Antigravity plugins installed in `~/.gemini/config/plugins/` reveals **four distinct `mcp_config.json` server architectures**:
+Inspecting all official Google Antigravity plugins installed in `~/.gemini/config/plugins/` reveals **four distinct `mcp_config.json` server architectures**:
 
-### A. The 4 `mcp_config.json` Server Architecture Patterns
+### A. The 4 Official `mcp_config.json` Patterns
 
 1. **Pattern 1 - Local Stdio Subprocess (`agy-node` / `node` / `dart` / `uv`):**
    Used by **`science`** (`biomolecular_structure_viewer_mcp`), **`flutter`** (`dart-mcp-server`), and **`data-agent-kit-plugin`** (`dak-notebook`, `dak-viz`).
@@ -786,9 +770,9 @@ Simply close the sidecar pane, quit Antigravity completely (checking the system 
 
 ---
 
-## 8. Documentation & Scientific Database References
+## 8. Official Documentation & Scientific Database References
 
-### A. Google Antigravity Documentation
+### A. Official Google Antigravity Documentation
 * **[Google Antigravity Science Use Cases & Demos (`antigravity.google/use-cases/science`)](https://antigravity.google/use-cases/science)**
 * **[Google Antigravity Documentation Home (`antigravity.google/docs`)](https://antigravity.google/docs)**
 * **[Plugins Guide (`antigravity.google/docs/plugins`)](https://antigravity.google/docs/plugins)**
@@ -819,10 +803,19 @@ Simply close the sidecar pane, quit Antigravity completely (checking the system 
 
 ---
 
-## 9. Try the Open-Source Cookbook & 3D WebGL Studio
+## Support, Star, Fork & Contribute on GitHub
 
-* **GitHub Repository & 3 Starter Plugins:** [github.com/RobinaMirbahar/antigravity-science-plugin-cookbook](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)
-* **Interactive 3D Biomolecular & Variant WebGL Studio:** [robinamirbahar.github.io/antigravity-science-plugin-cookbook](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)
-* **Contribute a Domain Plugin:** Read [CONTRIBUTING.md](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/CONTRIBUTING.md), validate your bundle with `uv run examples/scaffold_custom_plugin.py`, and open a [Pull Request](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/pulls).
+If you find the **Antigravity Science Plugin Cookbook & Interactive 3D WebGL Studio** useful for your research or engineering workflows:
+
+* **Star this Repository:** [**Star `RobinaMirbahar/antigravity-science-plugin-cookbook` on GitHub**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook) to bookmark the 3 starter plugins and help other developers discover the cookbook.
+* **Fork & Customize:** [**Fork `RobinaMirbahar/antigravity-science-plugin-cookbook`**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/fork) to scaffold and publish your own custom [**Google Antigravity (`@google-antigravity`)**](https://antigravity.google/docs) plugins, progressive-disclosure skills, and MCP servers.
+* **Play Live in Your Browser:** [**Launch the Interactive 3D Biomolecular & Variant WebGL Studio**](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)
+
+### Official Ecosystem Links & Tags
+* **Google:** [github.com/google (`@google`)](https://github.com/google) | [about.google](https://about.google/)
+* **Google Gemini API & SDKs:** [github.com/google-gemini (`@google-gemini`)](https://github.com/google-gemini) | [ai.google.dev/gemini-api/docs](https://ai.google.dev/gemini-api/docs)
+* **Google DeepMind Science & Models:** [github.com/google-deepmind (`@google-deepmind`)](https://github.com/google-deepmind) | [deepmind.google](https://deepmind.google/) | [AlphaGenome](https://deepmind.google.com/science/alphagenome/) | [AlphaFold](https://alphafold.ebi.ac.uk/) | [Aeneas & Ithaca](https://predictingthepast.com/)
+* **Google Antigravity Platform:** [antigravity.google/docs](https://antigravity.google/docs) | [antigravity.google/use-cases/science](https://antigravity.google/use-cases/science) | [github.com/google-antigravity (`@google-antigravity`)](https://github.com/google-antigravity/antigravity-sdk-python)
+* **Google Cloud Platform:** [github.com/GoogleCloudPlatform (`@GoogleCloudPlatform`)](https://github.com/GoogleCloudPlatform) | [cloud.google.com](https://cloud.google.com/)
 
 Let me know in the comments what domain you're packaging into an Antigravity plugin next - whether it's **3D structural biology**, **genomic variant scoring**, **ancient epigraphy**, or **autonomous cloud SRE**!
