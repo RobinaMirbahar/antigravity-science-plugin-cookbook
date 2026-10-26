@@ -30,5 +30,5 @@
 <text x="678" y="194" fill="#00E676" font-family="monospace" font-size="16" font-weight="bold">LOEUF = 0.24</text>
 <rect x="504" y="214" width="312" height="54" rx="6" fill="#040711" stroke="#00E5FF" stroke-opacity="0.35"/>
 <text x="514" y="234" fill="#00E676" font-family="monospace" font-size="10.5">mcp: highlight_region(chain="A", 855..862)</text>
-<text x="514" y="254" fill="#A5F3FC" font-family="monospace" font-size="10.5">pill: sidecar://science/biomolecular_.../ui.html</text>
+<text x="514" y="254" fill="#A5F3FC" font-family="monospace" font-size="10.5">pill: https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/#science/biomolecular_.../ui.html</text>
 </svg>

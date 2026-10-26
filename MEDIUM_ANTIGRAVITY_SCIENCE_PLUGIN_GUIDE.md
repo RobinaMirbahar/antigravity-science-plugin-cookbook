@@ -1,18 +1,18 @@
-# From Ancient Epigraphy to 3D Proteins: Building Plugins, Skills & MCP Sidecars in Google Antigravity
-
-### Reverse-engineering Google Antigravity's Science Plugin (`v1.3.1`) with an open-source 3D WebGL Biomolecular Studio, 5 multi-skill pipelines, and 3 custom plugins.
-
-![From Ancient Epigraphy to 3D Proteins: Building Plugins, Skills & MCP Sidecars in Google Antigravity](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/devto_cover_banner.jpg)
+---
+title: "From Ancient Epigraphy to 3D Proteins: Building Plugins, Skills & MCP Sidecars in Google Antigravity"
+published: true
+description: "Exploring the open-source (Apache 2.0 / CC-BY 4.0) architecture of Google Antigravity's Science Plugin (v1.3.1) and Google Cloud MCP endpoints (Vertex AI, BigQuery, Cloud Run) with a 3D WebGL Biomolecular Studio and 3 custom plugins."
+tags: ai, gemini, bioinformatics, opensource
+cover_image: https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/devto_cover_banner.jpg
+---
 
 What happens when you ask an AI coding agent to **score a non-coding human genomic variant with AlphaGenome**, **map a missense mutation onto an AlphaFold 3D protein structure**, **screen ChEMBL for nanomolar small-molecule inhibitors**, or **restore a damaged 2,000-year-old Roman inscription using Google DeepMind's Aeneas model**?
 
-If you try to stuff 41 scientific APIs, rate limiters, clinical safety guardrails, and 3D WebGL visualizers into a single mega-prompt, the agent collapses under context bloat and hallucinated parameters.
+If you try to stuff 40 scientific APIs, rate limiters, clinical safety guardrails, and 3D WebGL visualizers into a single mega-prompt, the agent collapses under context bloat and hallucinated parameters.
 
 **Google Antigravity** solves this at the runtime level with its **Plugin & Customization Architecture** - combining **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Dual-Process 3D MCP Sidecars (`mcp_config.json` + `sidecar.json`)**.
 
-Instead of just reading the docs, I reverse-engineered the newly released **Google Antigravity Science Plugin (`v1.3.1`)** and built the open-source **[Antigravity Science Plugin Cookbook & Interactive 3D Studio](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)** - complete with a **live browser-based 3D Biomolecular & Variant WebGL Sandbox**, a **zero-dependency PEP 723 3D protein + PAE generator**, and a production **`bio-structural-qc` custom plugin**.
-
-> **Community Disclaimer:** This repository is an independent open-source engineering cookbook authored by **Robina Mirbahar** (Google Developer Expert in AI & Google Cloud and open-source contributor).
+Instead of just reading the docs, I explored the open-source (Apache 2.0 / CC-BY 4.0) architecture of the newly released **Google Antigravity Science Plugin (`v1.3.1`)** and built the open-source **[Antigravity Science Plugin Cookbook & Interactive 3D Studio](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)** - complete with a **live browser-based 3D Biomolecular & Variant WebGL Sandbox**, a **zero-dependency PEP 723 3D protein + PAE generator**, and a production **`bio-structural-qc` custom plugin**.
 
 ---
 
@@ -27,49 +27,65 @@ Instead of just reading the docs, I reverse-engineered the newly released **Goog
 
 ## 1. The Antigravity Customization Architecture & Context Economics
 
-Why can the Science plugin bundle **41 complex scientific skills** and a **9-tool 3D WebGL MCP server** without slowing down everyday coding turns? Because Antigravity strictly separates **always-on behavioral guardrails** from **on-demand procedural execution**:
+Why can the Science plugin bundle **40 complex scientific skills** and a **9-tool 3D WebGL MCP server** without slowing down everyday coding turns? Because Antigravity strictly separates **always-on behavioral guardrails** from **on-demand procedural execution**:
 
-![Google Antigravity Customization Architecture & Context Economics](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/medium_mermaid_architecture.png)
+```mermaid
+flowchart TB
+    subgraph Discovery["1. Hierarchical Discovery & Precedence (Highest -> Lowest)"]
+        P1["1. Workspace (.agents/ walking up to repo root)"]
+        P2["2. Workspace Declared (skills.json / plugins.json)"]
+        P3["3. Global Config (~/.gemini/config/)"]
+        P4["4. Built-in Bundles (/builtin/plugins/)"]
+        P5["5. Global Declared JSON"]
+        P1 --> P2 --> P3 --> P4 --> P5
+    end
+
+    subgraph Bundle["2. Plugin Bundle (~/.gemini/config/plugins/science/)"]
+        Manifest["plugin.json (Manifest & Metadata)"]
+        Rules["rules/AGENTS.md (Always-On Guardrails)"]
+        Skills["skills/*/SKILL.md (40 On-Demand Skills)"]
+        Hooks["hooks.json (PreToolUse / PostToolUse)"]
+        MCP["mcp_config.json (Stdio / Streamable HTTP)"]
+        Sidecar["sidecars/*/sidecar.json (Background Sidecar Process)"]
+    end
+
+    subgraph Runtime["3. Agent Context & Execution Loop"]
+        SysPrompt["System Prompt\n• Rules inlined (24KB/file, 20K token cap)\n• Skill names + descriptions ONLY\n• Eager MCP tool schemas"]
+        Activate["Progressive Disclosure\nAgent calls read_file(SKILL.md)\nONLY when task matches description"]
+        Exec["Deterministic Execution\n• uv run scripts/*.py (PEP 723)\n• Call MCP tools & Sidecar workers\n• Render 3D PyMOL / WebGL outputs"]
+        SysPrompt --> Activate --> Exec
+    end
+
+    Discovery --> Bundle --> Runtime
+```
 
 ### The 5 Customization Primitives & Their Token Budgets
 
-![The 5 Antigravity Customization Primitives & Their Token Budgets](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/medium_table_primitives.png)
-
-* **Rules (`GEMINI.md`, `AGENTS.md`, `rules/AGENTS.md`):** Always-on within active scope; capped at **24,000 bytes/file** inside a **20,000-token aggregate rules budget**.
-* **Skills (`skills/<name>/SKILL.md`):** Progressive disclosure (on-demand); only the YAML `name` and `description` (~40-80 tokens) load at startup, while the full `SKILL.md` (up to 32 KB) is read only when activated.
-* **Plugins (`plugins/<dir>/plugin.json`):** Atomic bundle that namespaces and toggles related `skills/`, `rules/`, `hooks.json`, `mcp_config.json`, and `sidecars/` as a single unit.
-* **Hooks (`hooks.json`):** Lifecycle event triggers (`SessionStart`, `PreInvocation`, `PreToolUse`, `PostToolUse`, `PostInvocation`, `Stop`) for deterministic shell validators and audit loggers.
-* **MCP & Sidecars (`mcp_config.json` + `sidecars/<name>/sidecar.json`):** Connects local (`stdio`) or remote (`Streamable HTTP`) tool servers and mounts interactive HTML/WebGL views in the Auxiliary Pane.
-
+| Primitive | Config File / Path | Loading Behavior | Token Budget & Engineering Role |
+| :--- | :--- | :--- | :--- |
+| **Rules** | `GEMINI.md`, `AGENTS.md`, `rules/AGENTS.md` | **Always-On** (within directory or active plugin scope) | **24,000 bytes/file cap**; shares a dedicated **20,000-token aggregate rules budget** . Over-budget rules gracefully demote to file path pointers. |
+| **Skills** | `skills/<name>/SKILL.md` | **Progressive Disclosure** (On-Demand) | Only the YAML `name` and `description` (~40-80 tokens) are injected into the system prompt. The full `SKILL.md` (up to 32 KB!) and `references/` are read *only* when activated. |
+| **Plugins** | `plugins/<dir>/plugin.json` | **Atomic Bundle** | Namespaces and toggles related `skills/`, `rules/`, `hooks.json`, `mcp_config.json`, and `sidecars/` as a single unit. |
+| **Hooks** | `hooks.json` (at plugin or `.agents/` root) | **Lifecycle Event Triggers** | Intercepts `SessionStart`, `PreInvocation`, `PreToolUse`, `PostToolUse`, `PostInvocation`, and `Stop` to run shell validators, audit loggers, or linters. |
+| **MCP & Sidecars** | `mcp_config.json` + `sidecars/<name>/sidecar.json` | **Tool + UI Integration** | Connects local (`stdio`) or remote (`Streamable HTTP`) tool servers (`mcp_config.json`) and manages persistent background sidecar processes (`sidecar.json`). |
 
 ---
 
-## 2. Dissecting the Antigravity `science` Plugin (`v1.3.1`)
+## 2. Inside the Open-Source Architecture of the Antigravity `science` Plugin (`v1.3.1`)
 
-When installed from the Antigravity Marketplace (`plugin/science`), the bundle unpacks into `~/.gemini/config/plugins/science/`. Look at how cleanly the 41 skills, sidecar binaries, and rules are organized:
+When installed from the Antigravity Marketplace (`antigravity-plugins-official/plugin/science`), the bundle unpacks into `~/.gemini/config/plugins/science/`. Look at how cleanly the 40 open-source skills and manifest files are organized:
 
 ```text
-~/.gemini/config/plugins/science/
-├── plugin.json                                  # Bundle manifest (v1.3.1)
-├── mcp_config.json                              # Registers biomolecular_structure_viewer_mcp
-├── README.md                                    # User-facing documentation (never read by agent)
+google-deepmind/science-skills/ (installed at ~/.gemini/config/plugins/science/)
+├── plugin.json                                  # Bundle manifest (name, description, $schema)
+├── LICENSE                                      # Apache 2.0 & CC-BY 4.0 Open-Source Licenses
+├── README.md                                    # User-facing setup & documentation
 ├── SKILL_LICENSES.md                            # Third-party database attribution & terms
-├── rules/
-│   └── AGENTS.md                                # Visualization Priority Rules (always active)
-├── sidecars/
-│   └── biomolecular_structure_viewer/
-│       ├── sidecar.json                         # Auxiliary Pane Web UI definition
-│       ├── ui.html                              # PDBe Mol* v3.12.0 + Lit v3.1.2 3D entrypoint
-│       └── dist/
-│           ├── main.js                          # Bundled Mol* UI overlay frontend (183 KB)
-│           ├── server.cjs                       # Local state & WebSocket/HTTP server (68 KB)
-│           └── mcp_entry.cjs                    # MCP stdio server entrypoint (30 KB)
-└── skills/                                      # 41 Progressive-Disclosure Scientific Skills
+└── skills/                                      # 40 Progressive-Disclosure Scientific Skills
     ├── alphafold_database_fetch_and_analyze/    # pLDDT & sliding-window PAE domain heuristics
     ├── alphagenome_atlas_website_links/         # Deep-links to AlphaGenome Atlas
     ├── alphagenome_single_variant_analysis/     # RNA-seq, DNASE, ChIP & splicing effects
     ├── alphagenome_variant_impact_score/        # AVI scoring, VCF annotation, GENCODE v46 GTF
-    ├── biomolecular_structure_viewer/           # Mol* MCP orchestration & highlight/annotate workflows
     ├── chembl_database/                         # Bioactivity (IC50/Ki), targets, drug mechanisms
     ├── clinical_trials_database/                # ClinicalTrials.gov APIv2 queries
     ├── clinvar_database/                        # Pathogenicity & clinical review status
@@ -112,32 +128,21 @@ When installed from the Antigravity Marketplace (`plugin/science`), the bundle u
 
 ## 3. Five Production Engineering Patterns Inside the Science Plugin
 
-While inspecting the source files across all 41 skills, five engineering patterns stood out that every agent builder should steal.
+While inspecting the source files across all 40 skills, five engineering patterns stood out that every Google Cloud and agentic AI builder can adopt.
 
 ### Pattern 1: Always-On Behavioral Routing via `rules/AGENTS.md`
 
-When an agent has access to Matplotlib, headless PyMOL, and an interactive 3D Mol\* sidecar, how do you guarantee it prioritizes the interactive 3D viewer and never forgets to surface the clickable UI pill?
+As documented in the public **[Antigravity Rules Guide (`antigravity.google/docs/rules`)](https://antigravity.google/docs/rules)**, rules define persistent coding standards and architectural constraints (`always_on`, `model_decision`, `glob`, or `manual`) within a **24,000-byte per-file limit** and a **20,000-token aggregate rules budget**.
 
-You place a compact, always-on rule in `rules/AGENTS.md`:
+In our custom `bio-structural-qc` plugin (`plugins/bio-structural-qc/rules/AGENTS.md`), we use a compact `AGENTS.md` rule so the agent automatically audits 3D coordinate files (`.pdb`, `.cif`, `.mmcif`) and warns about low-confidence disordered regions before running downstream structural searches or headless PyMOL renders:
 
 ```markdown
-# Science Visualization Priority Rules
+# Biomolecular Structure QC Gate
 
-For any science visualization task, **prefer the interactive sidecar viewers**
-(e.g. Biomolecular Structure Viewer) over static image generation, Generative
-UI, or text-based representations. The sidecars provide an interactive
-experience that the user can explore directly.
+Whenever a workflow downloads or modifies a 3D coordinate file (`.pdb`, `.cif`, or `.mmcif`) for downstream structural analysis, homology search, or variant mapping:
 
-## Key Rules
-
--   Only fall back to other visualization skills (e.g. `pymol`) when no viewer
-    sidecar can do what the user needs.
-
--   **Always surface a sidecar link.** Whenever the agent loads or updates a
-    visualization in a sidecar (e.g. by calling its MCP tools), it **MUST**
-    include that viewer's `sidecar://` pill link in the chat response so the
-    user can open the viewer panel with one click. Copy the exact link given in
-    the viewer's skill; don't read sidecar files to build it.
+1. **Mandatory QC Audit**: Run the `structure-qc-audit` skill on the coordinate file before passing it to downstream modeling tools.
+2. **Disorder Warning**: If more than 30% of alpha-carbon (`CA`) atoms have a B-factor / pLDDT score below `50.0`, explicitly warn the user about disordered or low-confidence regions and report the high-confidence domain boundaries (`pLDDT >= 70`).
 ```
 
 ---
@@ -208,57 +213,52 @@ The `credentials` skill solves this with a strict **Zero-Leak Protocol**:
 
 ---
 
-### Pattern 4: Dual-Process 3D WebGL Sidecars (`mcp_config.json` + `sidecar.json` + `ui.html`)
+### Pattern 4: Background Sidecars (`sidecar.json`) & Custom 3D WebGL / MCP Tool Servers (`mcp_config.json`)
 
-How does the **Biomolecular Structure Viewer** let the agent highlight 3D protein regions while the human rotates the molecule and pins 3D residue notes in real time?
+As documented in the public **[Antigravity Sidecars Guide (`antigravity.google/docs/sidecars`)](https://antigravity.google/docs/sidecars)** and **[MCP Guide (`antigravity.google/docs/mcp`)](https://antigravity.google/docs/mcp)**, Antigravity lets plugins pair **Model Context Protocol (`mcp_config.json`)** tool servers with managed background **Sidecar processes (`sidecar.json`)** that support `command`, `builtin` (`schedule`), `args`, `restart_policy` (`always`, `on-failure`, `never`), `description`, `env`, and `display_name`, plus programmatic interaction via `agentapi`.
 
-It pairs an **MCP Server** (`dist/mcp_entry.cjs`, launched via `agy-node`) with an **Auxiliary Pane Web UI Sidecar** (`dist/server.cjs` + `ui.html`, powered by **PDBe Mol\* `v3.12.0`** and **Lit `v3.1.2`**):
+In our open-source **[Antigravity Science Plugin Cookbook](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)**, we pair a zero-dependency Python Stdio MCP Server (`plugins/genomics-variant-mcp/mcp_config.json`) with a documented background Sidecar worker (`sidecar.json`) and our browser-based **3D PDBe Mol\* / WebGL Biomolecular Studio (`index.html`)**:
 
-![Bidirectional 3D Mol* Sidecar & MCP Execution Sequence](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/medium_mermaid_sidecar_sequence.png)
+```mermaid
+sequenceDiagram
+    participant User
+    participant Agent as Antigravity Agent
+    participant AF as Skill: alphafold / pdb / pymol
+    participant MCP as Custom MCP: variant_mcp_server.py
+    participant Sidecar as Sidecar: worker.py + 3D Studio
 
-Here are the exact two config files that wire this up:
+    User->>Agent: "Analyze TP53 (UniProt P04637) and evaluate the R248Q DNA-contact hotspot"
+    Agent->>AF: uv run scripts/fetch_structure.py P04637 -o <artifact_dir>
+    AF-->>Agent: Saved AF-P04637-F1-model_v6.cif + PAE JSON
+    Agent->>MCP: score_variant_impact(variant="chr17:7674220:C>T", gene="TP53")
+    MCP-->>Agent: Returns AVI score, phyloP100way conservation & domain coordinates
+    Agent->>Sidecar: Updates 3D structure state & renders headless PyMOL / 3D WebGL view
+```
 
-* **`mcp_config.json` (at the plugin root):**
+Here are the two standard configuration files documented in `antigravity.google/docs/mcp` and `antigravity.google/docs/sidecars`:
+
+* **`mcp_config.json` (connecting a local Stdio MCP server at the plugin root):**
   ```json
   {
     "mcpServers": {
-      "biomolecular_structure_viewer_mcp": {
-        "command": "agy-node",
-        "args": ["sidecars/biomolecular_structure_viewer/dist/mcp_entry.cjs"]
+      "genomics_variant_mcp": {
+        "command": "uv",
+        "args": ["run", "mcp/variant_mcp_server.py"],
+        "timeoutSeconds": 180
       }
     }
   }
   ```
-* **`sidecars/biomolecular_structure_viewer/sidecar.json`:**
+* **`sidecars/qc_monitor/sidecar.json` (configuring a managed background sidecar process per `antigravity.google/docs/sidecars`):**
   ```json
   {
-    "args": ["dist/server.cjs"],
-    "command": "node",
-    "description": "Interactive 3D biomolecular structure viewer via Mol*",
-    "display_name": "Biomolecular Structure Viewer",
-    "has_web_ui": true,
-    "restart_policy": "always",
-    "ui_config": {
-      "display_name": "Biomolecular Structure Viewer",
-      "views": [
-        {
-          "entrypoint": "SIDECAR_UI_ENTRYPOINT_AUX_PANE",
-          "path": "/ui.html",
-          "title": "Biomolecular Structure Viewer"
-        }
-      ]
-    }
+    "description": "Background 3D structure QC & artifact monitor",
+    "display_name": "Structure QC Sidecar",
+    "command": "uv",
+    "args": ["run", "worker.py"],
+    "restart_policy": "on-failure"
   }
   ```
-
-#### Verified MCP State Test: Large Structure Whole-Chain Culling & Multi-Structure Isolation
-
-How does the Mol* sidecar stay fast on multi-chain complexes and avoid race conditions when switching structures or clicking residues concurrently?
-
-1. **Zero-Token Coordinate Loading & Whole-Chain Targeting (`chains=["A"]`):** The LLM never ingests raw `.cif`/`.mmcif`/`.pdb` coordinates into context. `load_structure` passes only the relative file path inside the conversation's artifact directory to the Mol* WebGL canvas, which defaults to `cartoon` backbone rendering with `waters`, `sugars`, and `sidechains` culled out until toggled via `set_representation`. When targeting an entire polymer chain (`annotate_region(chains=["A"], ...)`), the MCP payload sends `"residues": [], "wholeChains": ["A"]` (`s1` below) so Mol* resolves the polymer chain client-side instead of streaming thousands of residue IDs through tool calls.
-2. **Conversation-Scoped Isolation & Versioned `state.structures` Map:** Each sidecar instance and its artifact directory are isolated per `<conversation-id>`. Inside a session, `get_state()` maintains an atomic `"version"` counter (`"version": 4`), a monotonic `"nextSelectionId": 3`, and a per-file `state.structures` dictionary (`synthetic_p53_multidomain.pdb` vs. `sample_crambin_fragment.pdb`), so switching between structures restores each model's own overlays and `s<n>` annotations without UI/agent race conditions:
-
-![Verified Mol* MCP Multi-Structure & Whole-Chain Culling Test](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/molstar_mcp_state_test.png)
 
 ---
 
@@ -278,9 +278,9 @@ Two of the most fascinating skills in the bundle demonstrate how `SKILL.md` enfo
 
 ---
 
-## 4. Five End-to-End Multi-Skill Use Cases Across the 41 Science Skills
+## 4. Five End-to-End Multi-Skill Use Cases Across the 40 Science Skills
 
-Because all 41 skills share the conversation's artifact directory, Antigravity can chain multiple domain-specific CLI scripts and MCP sidecars in a single research session.
+Because all 40 skills share the conversation's artifact directory, Antigravity can chain multiple domain-specific CLI scripts and MCP sidecars in a single research session.
 
 I included a runnable benchmark suite in [`examples/multi_domain_science_use_cases.py`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/examples/multi_domain_science_use_cases.py) (`uv run examples/multi_domain_science_use_cases.py`) that executes and scores all five multi-skill pipelines below:
 
@@ -288,7 +288,7 @@ I included a runnable benchmark suite in [`examples/multi_domain_science_use_cas
 
 ---
 
-### Use Case 1: Precision Oncology & 3D Pocket Triage (`ClinVar` → `gnomAD` → `AlphaFold` → `ChEMBL` → `3D Mol* Sidecar`)
+### Use Case 1: Precision Oncology & 3D Pocket Triage (`ClinVar` → `gnomAD` → `AlphaFold` → `ChEMBL` → `PyMOL / 3D WebGL Studio`)
 
 **Scenario:** A translational oncology team wants to evaluate an **EGFR L858R** (`rs121434568`, `chr7:55191822:T>G`) driver mutation, verify gene loss-of-function constraint, inspect 3D active-site confidence, rank nanomolar kinase inhibitors, and highlight the pocket in 3D.
 
@@ -310,7 +310,7 @@ uv run ~/.gemini/config/plugins/science/skills/chembl_database/scripts/chembl_ap
   molecule --id CHEMBL939 --dl_format sdf --output ./artifacts/gefitinib.sdf
 ```
 
-Finally, the agent invokes `science_biomolecular_structure_viewer_mcp` (`load_structure` + `highlight_region(auth_asym_id="A", start_auth_seq_id=855, end_auth_seq_id=862, color="#FF1744")`) and surfaces `[Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html)`:
+Finally, the agent renders the 3D kinase pocket (`residues 855-862` in chain `A`) using headless PyMOL (`pymol` skill) or our interactive **[3D Biomolecular & Variant WebGL Studio (`index.html`)](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)**:
 
 ![Use Case 1 - Precision Oncology & 3D Kinase Pocket Triage](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/examples/generated_use_cases/uc1_precision_oncology_3d.png)
 
@@ -450,7 +450,7 @@ plugins/bio-structural-qc/
 Whenever a workflow downloads or modifies a 3D coordinate file (`.pdb`, `.cif`, or `.mmcif`) for downstream structural analysis, homology search, or variant mapping:
 
 1. **Mandatory QC Audit**: Run the `structure-qc-audit` skill on the coordinate file before passing it to downstream modeling tools.
-2. **Disorder Warning**: If more than 30% of alpha-carbon (`CA`) atoms have a B-factor / pLDDT score below `50.0`, explicitly warn the user about disordered or low-confidence regions and highlight the high-confidence domain boundaries in the [Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html).
+2. **Disorder Warning**: If more than 30% of alpha-carbon (`CA`) atoms have a B-factor / pLDDT score below `50.0`, explicitly warn the user about disordered or low-confidence regions and report the high-confidence domain boundaries (`pLDDT >= 70`) before rendering.
 ```
 
 ### 2. The Zero-Dependency PEP 723 Structure Auditor (`audit_structure.py`)
@@ -622,11 +622,6 @@ Verified `--self-test` output:
 }
 ```
 
-When an agent iterates on an analysis script multiple times mid-session before committing, `git_revision` stays on `<commit>-dirty` across runs while the per-file `sha256_file()` digest in `script_versions` (`sha256:b305f0ca720d7673` -> `sha256:2ba2a67737484325` -> `sha256:a8a20c0d909ebcbd`) uniquely identifies which uncommitted local iteration produced each output row in `qc_command_audit.jsonl`:
-
-![Verified PostToolUse Reproducibility Hook Clean vs Dirty Git Test](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/reproducibility_dirty_git_test.png)
-
-
 ### 4. Interactive 1-Command Plugin Scaffolder & Loader Validator (`scaffold_custom_plugin.py`)
 
 To make authoring and testing your own plugins effortless, I also included an interactive **1-Command Plugin Scaffolder & Loader Validator** ([`examples/scaffold_custom_plugin.py`](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/examples/scaffold_custom_plugin.py)) that:
@@ -651,20 +646,20 @@ cp -r plugins/epigraphy-citation-kit ~/.gemini/config/plugins/epigraphy-citation
 
 ---
 
-## 6. Deep Dive: The 4 Antigravity MCP Server Patterns + 2 More Starter Plugins (`genomics-variant-mcp` & `epigraphy-citation-kit`)
+## 6. Deep Dive: The 4 Public Antigravity MCP Server Patterns + 2 More Starter Plugins (`genomics-variant-mcp` & `epigraphy-citation-kit`)
 
-Inspecting the Google Antigravity plugins installed in `~/.gemini/config/plugins/` reveals **four distinct `mcp_config.json` server architectures**:
+As documented in the public **[Antigravity MCP Guide (`antigravity.google/docs/mcp`)](https://antigravity.google/docs/mcp)**, `mcp_config.json` supports **four core server connection patterns** across local developer tools and Google Cloud services:
 
-### A. The 4 `mcp_config.json` Server Architecture Patterns
+### A. The 4 Documented `mcp_config.json` Patterns
 
-1. **Pattern 1 - Local Stdio Subprocess (`agy-node` / `node` / `dart` / `uv`):**
-   Used by **`science`** (`biomolecular_structure_viewer_mcp`), **`flutter`** (`dart-mcp-server`), and **`data-agent-kit-plugin`** (`dak-notebook`, `dak-viz`).
-2. **Pattern 2 - Cloud Proxy Stdio (`mcp_proxy_bundle.cjs` + `X_GOOG_PROXY_HEADERS`):**
-   Used by **`data-agent-kit-plugin`** (`v1.1.0`) to bridge **9 managed Google Cloud MCP endpoints** (`https://bigquery.googleapis.com/mcp`, `https://dataproc-$GCP_REGION.googleapis.com/mcp`, `https://spanner.googleapis.com/mcp`, `https://alloydb.googleapis.com/mcp`, `https://sqladmin.googleapis.com/mcp`, `https://bigtableadmin.googleapis.com/mcp`, `https://bigtable.googleapis.com/mcp`, `https://storage.googleapis.com/mcp`, and `https://dataplex.googleapis.com/mcp`).
-3. **Pattern 3 - Remote Streamable HTTP with Eager Tools (`serverUrl` + `"eager": true`):**
-   Used by **`gemini-api`** (`v2.3.0`) to expose `gemini_search_docs` and `gemini_get_doc` from `https://gemini-api-docs-mcp.dev` as native first-class tools without spawning a local process.
-4. **Pattern 4 - Google-Credentials Authenticated HTTP (`authProviderType: "google_credentials"`):**
-   Used by **`google-cloud-developer`** (`v1.1.13`) and **`google-developer-knowledge`** (`v1.0.1`) to connect directly to `https://developerknowledge.googleapis.com/mcp` using Application Default Credentials (ADC).
+1. **Pattern 1 - Local Stdio Subprocess (`command` + `args` + `env`):**
+   Spawns a local MCP process over `stdio` using `uv`, `node`, `python3`, or `dart` (for example, our cookbook's `genomics_variant_mcp` server or local SQLite/file-system explorers).
+2. **Pattern 2 - Google-Credentials Authenticated HTTP (`authProviderType: "google_credentials"`):**
+   Connects directly to managed Google Cloud and developer MCP endpoints (such as **BigQuery**, **AlloyDB for PostgreSQL**, **Spanner**, **Cloud SQL**, **Bigtable**, **Dataplex**, and **Google Developer Knowledge** at `https://developerknowledge.googleapis.com/mcp`) using local Application Default Credentials (`gcloud auth application-default login`).
+3. **Pattern 3 - Remote Streamable HTTP with Custom Headers (`serverUrl` + `headers` + `timeoutSeconds`):**
+   Connects to remote Streamable HTTP MCP endpoints (such as `https://gemini-api-docs-mcp.dev` for `gemini_search_docs` and `gemini_get_doc`) with custom `Authorization` headers and configurable timeouts (`timeoutSeconds: 600`).
+4. **Pattern 4 - OAuth 2.0 Remote Servers (Dynamic Client Registration or Manual `oauth` Object):**
+   Authenticates against remote SaaS and enterprise MCP servers using automatic OAuth Dynamic Client Registration (DCR) or a manual `oauth` (`clientId`, `clientSecret`) configuration redirecting to `https://antigravity.google/oauth-callback`.
 
 ### B. Starter Plugin #2: `plugins/genomics-variant-mcp` (Custom Python Stdio MCP Server + Specialist Subagent)
 
@@ -727,19 +722,23 @@ uv run examples/inspect_installed_plugins.py
 uv run examples/inspect_installed_plugins.py --root ~/.gemini/config/plugins
 ```
 
-### C. Fixing Windows `unlinkat` Sidecar Locks During Plugin Upgrades
-If you upgrade or reinstall a plugin with an active sidecar (`"restart_policy": "always"`) on Windows and hit:
-```text
-Failed to install marketplace customization "science": failed to remove existing plugin:
-unlinkat ...\science\sidecars\biomolecular_structure_viewer: The process cannot access the file because it is being used by another process.
+### C. Installing & Inspecting Plugins from the Shell with `agy plugin`
+As documented in the **[Antigravity Plugins Guide (`antigravity.google/docs/plugins`)](https://antigravity.google/docs/plugins)**, you can install the open-source DeepMind Science skills or our cookbook plugins directly via `npx` or the `agy plugin` CLI:
+```bash
+# Install Google DeepMind's open-source science-skills bundle
+npx skills add google-deepmind/science-skills/
+
+# Or install and inspect plugins using the Antigravity CLI
+agy plugin install https://github.com/google-deepmind/science-skills
+agy plugin list --json
 ```
-Simply close the sidecar pane, quit Antigravity completely (checking the system tray so the directory handle is released), run `Remove-Item -Recurse -Force "$HOME\.gemini\config\plugins\science"` in PowerShell, and click **Install** in the Marketplace tab.
 
 ---
 
-## 8. Documentation & Scientific Database References
+## 8. Official Documentation & Scientific Database References
 
-### A. Google Antigravity Documentation
+### A. Official Google Antigravity Documentation
+* **[Google DeepMind Science Skills Open-Source Repository (`github.com/google-deepmind/science-skills`)](https://github.com/google-deepmind/science-skills)**
 * **[Google Antigravity Science Use Cases & Demos (`antigravity.google/use-cases/science`)](https://antigravity.google/use-cases/science)**
 * **[Google Antigravity Documentation Home (`antigravity.google/docs`)](https://antigravity.google/docs)**
 * **[Plugins Guide (`antigravity.google/docs/plugins`)](https://antigravity.google/docs/plugins)**
@@ -759,12 +758,30 @@ Simply close the sidecar pane, quit Antigravity completely (checking the system 
 * **[Foldseek Structural Similarity Search (`search.foldseek.com`)](https://search.foldseek.com/search)**
 * **[EMBL-EBI ChEMBL Bioactivity Database (`ebi.ac.uk/chembl`)](https://www.ebi.ac.uk/chembl/)**, **[gnomAD (`gnomad.broadinstitute.org`)](https://gnomad.broadinstitute.org/)**, **[NCBI ClinVar (`ncbi.nlm.nih.gov/clinvar`)](https://www.ncbi.nlm.nih.gov/clinvar/)**, **[Open Targets Platform (`platform.opentargets.org`)](https://platform.opentargets.org/)**, **[openFDA API (`open.fda.gov/apis`)](https://open.fda.gov/apis/)**, and **[ClinicalTrials.gov APIv2 (`clinicaltrials.gov`)](https://clinicaltrials.gov/)**
 
+### C. Licensing, Academic Citations & Dataset Acknowledgements
+* **Google Antigravity Science Plugin License (`README.md` & `SKILL_LICENSES.md`):** Copyright 2026 Google LLC. All software and helper scripts in the Science Plugin (including `analyze_pae.py`) are licensed under the **[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)**, and all skill definitions and documentation materials (including `SKILL.md` and `rules/AGENTS.md`) are licensed under the **[Creative Commons Attribution 4.0 International License (CC-BY 4.0)](https://creativecommons.org/licenses/by/4.0/legalcode)**. Third-party biological and clinical databases referenced by individual skills are governed by their respective terms listed in `SKILL_LICENSES.md`.
+* **Google DeepMind `predictingthepast` (`Aeneas` & `Ithaca`) Citations:**
+  * **Aeneas (Latin):** Assael, Y., Sommerschield, T., Cooley, A. et al. *Contextualizing ancient texts with generative neural networks.* **Nature** 645, 141-147 (2025). ([github.com/google-deepmind/predictingthepast](https://github.com/google-deepmind/predictingthepast))
+  * **Ithaca (Ancient Greek):** Assael, Y., Sommerschield, T., Shillingford, B. et al. *Restoring and attributing ancient texts using deep neural networks.* **Nature** 603, 280-283 (2022).
+* **Epigraphic Dataset Acknowledgements (`predictingthepast`):**
+  * **Ithaca (Ancient Greek):** Draws on the 2019 version of the *Searchable Greek Inscriptions* database made available under Fair Use license by the **Packard Humanities Institute**, generously supported by David Packard ([inscriptions.packhum.org](https://inscriptions.packhum.org)).
+  * **Aeneas (Latin):** Trained on data from the **Epigraphic Database Roma (EDR)** ([edr-edr.it](http://www.edr-edr.it/), CC-BY 4.0 on [Zenodo](https://zenodo.org/records/3575495)), the **Epigraphic Database Heidelberg (EDH)** ([edh.ub.uni-heidelberg.de](https://edh.ub.uni-heidelberg.de/), CC-BY-SA 4.0 on [Zenodo](https://zenodo.org/records/3575155)), and the **ETL repository for Epigraphic Database Clauss-Slaby (`EDCS_ETL`)** ([manfredclauss.de](http://www.manfredclauss.de/) and [github.com/sdam-au/EDCS_ETL](https://github.com/sdam-au/EDCS_ETL), CC-BY 4.0 on [Zenodo](https://zenodo.org/records/7072337)).
+
 ---
 
-## 9. Try the Open-Source Cookbook & 3D WebGL Studio
+## Support, Star, Fork & Contribute on GitHub
 
-* **GitHub Repository & 3 Starter Plugins:** [github.com/RobinaMirbahar/antigravity-science-plugin-cookbook](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)
-* **Interactive 3D Biomolecular & Variant WebGL Studio:** [robinamirbahar.github.io/antigravity-science-plugin-cookbook](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)
-* **Contribute a Domain Plugin:** Read [CONTRIBUTING.md](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/blob/main/CONTRIBUTING.md), validate your bundle with `uv run examples/scaffold_custom_plugin.py`, and open a [Pull Request](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/pulls).
+If you find the **Antigravity Science Plugin Cookbook & Interactive 3D WebGL Studio** useful for your research or engineering workflows:
+
+* **Star this Repository:** [**Star `RobinaMirbahar/antigravity-science-plugin-cookbook` on GitHub**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook) to bookmark the 3 starter plugins and help other developers discover the cookbook.
+* **Fork & Customize:** [**Fork `RobinaMirbahar/antigravity-science-plugin-cookbook`**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/fork) to scaffold and publish your own custom [**Google Antigravity (`@google-antigravity`)**](https://antigravity.google/docs) plugins, progressive-disclosure skills, and MCP servers.
+* **Play Live in Your Browser:** [**Launch the Interactive 3D Biomolecular & Variant WebGL Studio**](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)
+
+### Official Ecosystem Links & Tags
+* **Google:** [github.com/google (`@google`)](https://github.com/google) | [about.google](https://about.google/)
+* **Google Gemini API & SDKs:** [github.com/google-gemini (`@google-gemini`)](https://github.com/google-gemini) | [ai.google.dev/gemini-api/docs](https://ai.google.dev/gemini-api/docs)
+* **Google DeepMind Science & Models:** [github.com/google-deepmind (`@google-deepmind`)](https://github.com/google-deepmind) | [deepmind.google](https://deepmind.google/) | [AlphaGenome](https://deepmind.google.com/science/alphagenome/) | [AlphaFold](https://alphafold.ebi.ac.uk/) | [Aeneas & Ithaca](https://predictingthepast.com/)
+* **Google Antigravity Platform:** [antigravity.google/docs](https://antigravity.google/docs) | [antigravity.google/use-cases/science](https://antigravity.google/use-cases/science) | [github.com/google-antigravity (`@google-antigravity`)](https://github.com/google-antigravity/antigravity-sdk-python)
+* **Google Cloud Platform:** [github.com/GoogleCloudPlatform (`@GoogleCloudPlatform`)](https://github.com/GoogleCloudPlatform) | [cloud.google.com](https://cloud.google.com/)
 
 Let me know in the comments what domain you're packaging into an Antigravity plugin next - whether it's **3D structural biology**, **genomic variant scoring**, **ancient epigraphy**, or **autonomous cloud SRE**!

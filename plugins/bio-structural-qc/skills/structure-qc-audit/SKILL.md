@@ -21,4 +21,4 @@ uv run scripts/audit_structure.py /path/to/structure.cif -o ./qc_report.json
 
 1. **`status == "PASS"`**: Less than 30% of C-alpha residues fall below 50.0. Safe to proceed.
 2. **`status == "WARN_HIGH_DISORDER"`**: More than 30% of residues have scores `< 50.0`.
-   - Use the `high_confidence_span` coordinates from the JSON output to call `highlight_region` in `science_biomolecular_structure_viewer_mcp` so the user can visually distinguish rigid domains from disordered tails.
+   - Use the `high_confidence_span` coordinates from the JSON output to call `highlight_region` in `science_genomics_variant_mcp` so the user can visually distinguish rigid domains from disordered tails.

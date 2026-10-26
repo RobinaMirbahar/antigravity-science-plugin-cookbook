@@ -33,7 +33,7 @@
   <text x="45" y="293" fill="#F472B6" font-family="Consolas, monospace" font-size="12">4. Agent -&gt; MCP -&gt; Sidecar: highlight_region(auth_asym_id="A", start_auth_seq_id=245, end_auth_seq_id=250, color="#FF1744")</text>
 
   <rect x="30" y="314" width="905" height="36" rx="6" fill="#111827"/>
-  <text x="45" y="337" fill="#38BDF8" font-family="Consolas, monospace" font-size="12">5. Agent -&gt; Researcher: Surfaces [Biomolecular Structure Viewer](sidecar://science/biomolecular_structure_viewer/ui.html)</text>
+  <text x="45" y="337" fill="#38BDF8" font-family="Consolas, monospace" font-size="12">5. Agent -&gt; Researcher: Surfaces [Biomolecular Structure Viewer](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)</text>
 
   <rect x="30" y="358" width="905" height="36" rx="6" fill="#111827"/>
   <text x="45" y="381" fill="#C084FC" font-family="Consolas, monospace" font-size="12">6. Bidirectional Sync: User pins 3D residue note in Mol* -&gt; Agent calls get_state() to read activeSelection &amp; annotations</text>

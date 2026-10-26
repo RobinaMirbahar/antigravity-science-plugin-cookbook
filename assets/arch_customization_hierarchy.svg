@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440">
   <rect width="960" height="440" rx="14" fill="#0B1020"/>
   <text x="30" y="38" fill="#F8FAFC" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="bold">Google Antigravity Customization Architecture &amp; Context Economics</text>
-  <text x="30" y="62" fill="#94A3B8" font-family="Segoe UI, Arial, sans-serif" font-size="13">Separating Always-On Guardrails (Rules) from On-Demand Procedural Execution (41 Science Skills + 3D MCP Sidecar)</text>
+  <text x="30" y="62" fill="#94A3B8" font-family="Segoe UI, Arial, sans-serif" font-size="13">Separating Always-On Guardrails (Rules) from On-Demand Procedural Execution (40 Science Skills + 3D MCP Sidecar)</text>
 
   <!-- Column 1: Discovery -->
   <rect x="28" y="84" width="285" height="328" rx="10" fill="#111827" stroke="#38BDF8" stroke-width="1.5"/>
@@ -31,7 +31,7 @@
   <rect x="364" y="192" width="243" height="36" rx="6" fill="#1E293B"/>
   <text x="376" y="215" fill="#34D399" font-family="Consolas, monospace" font-size="12">rules/AGENTS.md (Always-On)</text>
   <rect x="364" y="236" width="243" height="36" rx="6" fill="#1E293B"/>
-  <text x="376" y="259" fill="#38BDF8" font-family="Consolas, monospace" font-size="12">skills/*/SKILL.md (41 Skills)</text>
+  <text x="376" y="259" fill="#38BDF8" font-family="Consolas, monospace" font-size="12">skills/*/SKILL.md (40 Skills)</text>
   <rect x="364" y="280" width="243" height="36" rx="6" fill="#1E293B"/>
   <text x="376" y="303" fill="#FBBF24" font-family="Consolas, monospace" font-size="12">hooks.json (Pre/PostToolUse)</text>
   <rect x="364" y="324" width="243" height="36" rx="6" fill="#1E293B"/>
@@ -56,5 +56,5 @@
   <rect x="674" y="312" width="242" height="78" rx="6" fill="#1E293B"/>
   <text x="686" y="334" fill="#34D399" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="bold">C. Deterministic Execution</text>
   <text x="686" y="354" fill="#94A3B8" font-family="Consolas, monospace" font-size="11">- uv run scripts/*.py (PEP 723)</text>
-  <text x="686" y="371" fill="#94A3B8" font-family="Consolas, monospace" font-size="11">- 3D Mol* MCP + sidecar:// pill</text>
+  <text x="686" y="371" fill="#94A3B8" font-family="Consolas, monospace" font-size="11">- 3D Mol* MCP + https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/# pill</text>
 </svg>

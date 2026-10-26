@@ -198,7 +198,7 @@
       </div>
 
       <div class="control-group">
-        <label>MCP Tool Quick Actions (`science_biomolecular_structure_viewer_mcp`)</label>
+        <label>MCP Tool Quick Actions (`science_genomics_variant_mcp`)</label>
         <div class="btn-row">
           <button class="chip" id="btn-highlight-hotspot">highlight_region (Hotspot)</button>
           <button class="chip" id="btn-highlight-disorder">Flag Disordered (&lt;50 pLDDT)</button>
@@ -213,7 +213,7 @@
 
       <div class="hud-top">
         <div class="hud-badge" id="hud-structure-title">
-          <strong>Active Sidecar:</strong> <code>sidecar://science/biomolecular_structure_viewer/ui.html</code><br/>
+          <strong>Active Sidecar:</strong> <code>https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/</code><br/>
           <span id="hud-subtitle">Click any 3D C-alpha residue sphere to inspect pLDDT, AlphaGenome AVI & pin an MCP annotation.</span>
         </div>
         <div class="hud-badge" id="hud-selected-residue">
@@ -252,7 +252,7 @@
       </div>
 
       <div class="panel-title">
-        <span>4. Live MCP Tool Call Stream (`mcp_entry.cjs`)</span>
+        <span>4. Live MCP Tool Call Stream (`variant_mcp_server.py`)</span>
       </div>
       <div class="console-box" id="mcp-console"></div>
 
@@ -327,7 +327,7 @@
             x = -12 + i * 1.4;
             y = 6 + Math.sin(i * 1.5) * 1.8;
             z = 4 - i * 0.7;
-            plddt = 41 + i * 1.5;
+            plddt = 40 + i * 1.5;
             domain = 1;
           } else {
             const t = (i - 6) * 0.88;
