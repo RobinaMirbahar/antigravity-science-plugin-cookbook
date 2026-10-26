@@ -743,7 +743,7 @@ agy plugin list --json
 * **[Google Antigravity Documentation Home (`antigravity.google/docs`)](https://antigravity.google/docs)**
 * **[Plugins Guide (`antigravity.google/docs/plugins`)](https://antigravity.google/docs/plugins)**
 * **[Progressive-Disclosure Skills Guide (`antigravity.google/docs/skills`)](https://antigravity.google/docs/skills)**
-* **[Rules & Workflows Guide (`antigravity.google/docs/rules-workflows`)](https://antigravity.google/docs/rules-workflows)**
+* **[Rules Guide (`antigravity.google/docs/rules`)](https://antigravity.google/docs/rules)**
 * **[Lifecycle Hooks Guide (`antigravity.google/docs/hooks`)](https://antigravity.google/docs/hooks)**
 * **[Auxiliary Pane Sidecars Guide (`antigravity.google/docs/sidecars`)](https://antigravity.google/docs/sidecars)**
 * **[Model Context Protocol (MCP) Guide (`antigravity.google/docs/mcp`)](https://antigravity.google/docs/mcp)**
