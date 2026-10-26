@@ -1,12 +1,12 @@
-# Google Antigravity Science Plugin Cookbook & 3D Biomolecular Studio
+# Google Antigravity Science Plugin Cookbook & 3D Biomolecular Studio (Built on `google-deepmind/science-skills`)
 
 What happens when you ask an AI coding agent to **score a non-coding human genomic variant with AlphaGenome**, **map a missense mutation onto an AlphaFold 3D protein structure**, **screen ChEMBL for nanomolar small-molecule inhibitors**, or **restore a damaged 2,000-year-old Roman inscription using Google DeepMind's Aeneas model**?
 
 If you try to stuff 40 scientific APIs, rate limiters, clinical safety guardrails, and 3D WebGL visualizers into a single mega-prompt, the agent collapses under context bloat and hallucinated parameters.
 
-**Google Antigravity** solves this at the runtime level with its **Plugin & Customization Architecture** - combining **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Dual-Process 3D MCP Sidecars (`mcp_config.json` + `sidecar.json`)**.
+**Google Antigravity** solves this at the runtime level with its **Plugin & Customization Architecture** - combining **Progressive-Disclosure Skills (`SKILL.md`)**, **Always-On Rules (`AGENTS.md`)**, **Lifecycle Hooks (`hooks.json`)**, **Zero-Leak Credential Protocols**, and **Model Context Protocol (`mcp_config.json`) + Background Sidecars (`sidecar.json`)**.
 
-Instead of just reading the docs, I explored the open-source (Apache 2.0 / CC-BY 4.0) architecture of the newly released **Google Antigravity Science Plugin (`v1.3.1`)** and built the open-source **[Antigravity Science Plugin Cookbook & Interactive 3D Studio](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)** - complete with a **live browser-based 3D Biomolecular & Variant WebGL Sandbox**, a **zero-dependency PEP 723 3D protein + PAE generator**, and a production **`bio-structural-qc` custom plugin**.
+Instead of just reading the docs, I explored the newly open-sourced **[Google DeepMind Science Skills (`google-deepmind/science-skills`, `v1.3.1`)](https://github.com/google-deepmind/science-skills)** repository (Apache 2.0 / CC-BY 4.0) and built the open-source **[Antigravity Science Plugin Cookbook & Interactive 3D Studio](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)** - complete with a **live browser-based 3D Biomolecular & Variant WebGL Sandbox**, a **zero-dependency PEP 723 3D protein + PAE generator**, and a production **`bio-structural-qc` custom plugin**.
 
 ---
 
@@ -65,9 +65,9 @@ flowchart TB
 
 ---
 
-## 2. Inside the Open-Source Architecture of the Antigravity `science` Plugin (`v1.3.1`)
+## 2. Inside the Open-Source `google-deepmind/science-skills` Repository (`v1.3.1`)
 
-When installed from the Antigravity Marketplace (`antigravity-plugins-official/plugin/science`), the bundle unpacks into `~/.gemini/config/plugins/science/`. Look at how cleanly the 40 open-source skills and manifest files are organized:
+You can enable the Science bundle directly in Google Antigravity (`Customizations > Build with Google > Science > Add`) or install it via `npx skills add google-deepmind/science-skills/` from **[github.com/google-deepmind/science-skills](https://github.com/google-deepmind/science-skills)**. Look at how cleanly `plugin.json` and the 40 open-source skills are organized:
 
 ```text
 google-deepmind/science-skills/ (installed at ~/.gemini/config/plugins/science/)
