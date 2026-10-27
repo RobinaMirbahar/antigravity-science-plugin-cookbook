@@ -1,5 +1,28 @@
 # Google Antigravity Science Plugin Cookbook & 3D Biomolecular Studio (Built on `google-deepmind/science-skills`)
 
+![Antigravity_SDK](https://img.shields.io/badge/Antigravity_SDK-Plugins_&_Skills-4285F4?style=for-the-badge&logo=google&logoColor=white)
+![Biomolecular_3D](https://img.shields.io/badge/Biomolecular_3D-Mol*_MCP_Sidecar-0F9D58?style=for-the-badge&logo=moleculer&logoColor=white)
+![DeepMind_Science](https://img.shields.io/badge/DeepMind_Science-AlphaFold_&_AlphaGenome-7C3AED?style=for-the-badge&logo=python&logoColor=white)
+![Author](https://img.shields.io/badge/Author-Robina_Mirbahar-EA4335?style=for-the-badge&logo=github&logoColor=white)
+
+> **Author & Architect:** [Robina Mirbahar](https://github.com/RobinaMirbahar) (Google Developer Expert in Cloud & AI)  
+> **Focus:** Building Google Antigravity Plugins, PEP 723 Skills, Lifecycle Hooks, and 3D Mol* MCP Sidecars
+
+---
+
+## 🎯 Why I Built Google Antigravity Science Plugin Cookbook & 3D Biomolecular Studio (Engineering Purpose & Real-World Value)
+
+### 1. 🧬 Bridging Agentic Coding with Computational Biology
+I created this cookbook to show how autonomous AI agents can orchestrate real scientific workflows—from AlphaFold structure retrieval and AlphaGenome variant scoring to ChEMBL bioactivity queries—using modular Antigravity plugins.
+
+### 2. 🔬 Interactive 3D Mol* MCP Sidecars Over Static Plots
+Scientific discovery requires interactive 3D inspection. I documented how to wire Model Context Protocol (MCP) sidecars with Mol* so agents can load `.pdb`/`.cif` structures, highlight active-site residues, and surface clickable `sidecar://` pills.
+
+### 3. 📦 Self-Contained PEP 723 `uv` Skills & Safety Hooks
+Every skill in my architecture uses inline PEP 723 dependency metadata executed via `uv`, paired with deterministic `before_tool` credential and safety hooks.
+
+---
+
 What happens when you ask an AI coding agent to **score a non-coding human genomic variant with AlphaGenome**, **map a missense mutation onto an AlphaFold 3D protein structure**, **screen ChEMBL for nanomolar small-molecule inhibitors**, or **restore a damaged 2,000-year-old Roman inscription using Google DeepMind's Aeneas model**?
 
 If you try to stuff 40 scientific APIs, rate limiters, clinical safety guardrails, and 3D WebGL visualizers into a single mega-prompt, the agent collapses under context bloat and hallucinated parameters.
@@ -779,3 +802,22 @@ If you find the **Antigravity Science Plugin Cookbook & Interactive 3D WebGL Stu
 * **Google Cloud Platform:** [github.com/GoogleCloudPlatform (`@GoogleCloudPlatform`)](https://github.com/GoogleCloudPlatform) | [cloud.google.com](https://cloud.google.com/)
 
 Let me know in the comments what domain you're packaging into an Antigravity plugin next - whether it's **3D structural biology**, **genomic variant scoring**, **ancient epigraphy**, or **autonomous cloud SRE**!
+
+<!-- AUTHOR_SIGNATURE_START -->
+---
+
+## 👩‍💻 About the Author
+
+**Robina Mirbahar — Google Cloud & AI Architect**  
+*Google Developer Expert (GDE) in Cloud & AI • Published Author • Multi-Agent Systems & Serverless GPU Builder*
+
+[![GitHub](https://img.shields.io/badge/GitHub-RobinaMirbahar-181717?style=for-the-badge&logo=github)](https://github.com/RobinaMirbahar)
+[![Medium](https://img.shields.io/badge/Medium-@robinamirbahar-000000?style=for-the-badge&logo=medium)](https://medium.com/@robinamirbahar)
+[![DEV.to](https://img.shields.io/badge/DEV.to-robinamirbahar-0A0A0A?style=for-the-badge&logo=devdotto)](https://dev.to/robinamirbahar)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Robina_Mirbahar-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/robina-mirbahar)
+[![GDE Profile](https://img.shields.io/badge/Google_Developer_Expert-Profile-4285F4?style=for-the-badge&logo=google)](https://g.dev/RobinaMirbahar)
+[![YouTube](https://img.shields.io/badge/YouTube-@RobinaMirbahar-FF0000?style=for-the-badge&logo=youtube)](https://www.youtube.com/@RobinaMirbahar)
+[![X](https://img.shields.io/badge/X-@RobinaMirbahar-000000?style=for-the-badge&logo=x)](https://x.com/RobinaMirbahar)
+[![Amazon Author](https://img.shields.io/badge/Amazon_Book-Cloud_Computing_Voyage-FF9900?style=for-the-badge&logo=amazon)](https://www.amazon.com/dp/B0D146249R)
+
+<!-- AUTHOR_SIGNATURE_END -->
