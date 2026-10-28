@@ -35,7 +35,7 @@ flowchart TB
         P1["1. Workspace (.agents/ walking up to repo root)"]
         P2["2. Workspace Declared (skills.json / plugins.json)"]
         P3["3. Global Config (~/.gemini/config/)"]
-        P4["4. Built-in Bundles (/builtin/plugins/)"]
+        P4["4. Application Default Bundles"]
         P5["5. Global Declared JSON"]
         P1 --> P2 --> P3 --> P4 --> P5
     end
@@ -50,7 +50,7 @@ flowchart TB
     end
 
     subgraph Runtime["3. Agent Context & Execution Loop"]
-        SysPrompt["System Prompt\n• Rules inlined (24KB/file, 20K token cap)\n• Skill names + descriptions ONLY\n• Eager MCP tool schemas"]
+        SysPrompt["System Prompt\n• Contextual Rules (GEMINI.md / AGENTS.md)\n• Skill names + descriptions ONLY\n• Eager MCP tool schemas"]
         Activate["Progressive Disclosure\nAgent calls read_file(SKILL.md)\nONLY when task matches description"]
         Exec["Deterministic Execution\n• uv run scripts/*.py (PEP 723)\n• Call MCP tools & Sidecar workers\n• Render 3D PyMOL / WebGL outputs"]
         SysPrompt --> Activate --> Exec
@@ -63,8 +63,8 @@ flowchart TB
 
 | Primitive | Config File / Path | Loading Behavior | Token Budget & Engineering Role |
 | :--- | :--- | :--- | :--- |
-| **Rules** | `GEMINI.md`, `AGENTS.md`, `rules/AGENTS.md` | **Always-On** (within directory or active plugin scope) | **24,000 bytes/file cap**; shares a dedicated **20,000-token aggregate rules budget** . Over-budget rules gracefully demote to file path pointers. |
-| **Skills** | `skills/<name>/SKILL.md` | **Progressive Disclosure** (On-Demand) | Only the YAML `name` and `description` (~40-80 tokens) are injected into the system prompt. The full `SKILL.md` (up to 32 KB!) and `references/` are read *only* when activated. |
+| **Rules** | `GEMINI.md`, `AGENTS.md`, `rules/AGENTS.md` | **Always-On** (within directory or active plugin scope) | Contextual rules loaded automatically for their active workspace or plugin scope, deduplicated by resolved file path. |
+| **Skills** | `skills/<name>/SKILL.md` | **Progressive Disclosure** (On-Demand) | Only the YAML `name` and `description` (~40-80 tokens) are injected into the system prompt. The full `SKILL.md`  and `references/` are read *only* when activated. |
 | **Plugins** | `plugins/<dir>/plugin.json` | **Atomic Bundle** | Namespaces and toggles related `skills/`, `rules/`, `hooks.json`, `mcp_config.json`, and `sidecars/` as a single unit. |
 | **Hooks** | `hooks.json` (at plugin or `.agents/` root) | **Lifecycle Event Triggers** | Intercepts `SessionStart`, `PreInvocation`, `PreToolUse`, `PostToolUse`, `PostInvocation`, and `Stop` to run shell validators, audit loggers, or linters. |
 | **MCP & Sidecars** | `mcp_config.json` + `sidecars/<name>/sidecar.json` | **Tool + UI Integration** | Connects local (`stdio`) or remote (`Streamable HTTP`) tool servers (`mcp_config.json`) and manages persistent background sidecar processes (`sidecar.json`). |
@@ -132,7 +132,7 @@ While inspecting the source files across all 40 skills, five engineering pattern
 
 ### Pattern 1: Always-On Behavioral Routing via `rules/AGENTS.md`
 
-As documented in the public **[Antigravity Rules Guide (`antigravity.google/docs/rules`)](https://antigravity.google/docs/rules)**, rules define persistent coding standards and architectural constraints (`always_on`, `model_decision`, `glob`, or `manual`) within a **24,000-byte per-file limit** and a **20,000-token aggregate rules budget**.
+As documented in the public **[Antigravity Rules Guide (`antigravity.google/docs/rules`)](https://antigravity.google/docs/rules)**, rules define persistent coding standards and architectural constraints (`always_on`, `model_decision`, `glob`, or `manual`) that automatically apply within their configured workspace or plugin scope.
 
 In our custom `bio-structural-qc` plugin (`plugins/bio-structural-qc/rules/AGENTS.md`), we use a compact `AGENTS.md` rule so the agent automatically audits 3D coordinate files (`.pdb`, `.cif`, `.mmcif`) and warns about low-confidence disordered regions before running downstream structural searches or headless PyMOL renders:
 
