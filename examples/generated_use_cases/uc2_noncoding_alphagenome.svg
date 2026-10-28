@@ -1,40 +1,40 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 310" width="860" height="310">
-<rect width="860" height="310" rx="16" fill="#070B19" stroke="#00E676" stroke-opacity="0.4"/>
+<rect width="860" height="310" rx="16" fill="#FFFFFF" stroke="#00E676" stroke-opacity="0.4"/>
 <text x="26" y="34" fill="#00E676" font-family="sans-serif" font-size="15" font-weight="bold">USE CASE 2 • Non-Coding GWAS Enhancer Variant Triage (SORT1 Locus chr1:109274968:G&gt;T / rs12740374)</text>
-<text x="26" y="54" fill="#94A3B8" font-family="monospace" font-size="11.5">Chain: alphagenome-variant-impact-score (AVI=0.94) → ucsc-conservation (phyloP) → encode-ccres → jaspar → gtex</text>
-<rect x="26" y="70" width="465" height="216" rx="10" fill="#0F172A" stroke="#1E293B"/>
-<text x="44" y="94" fill="#F8FAFC" font-family="sans-serif" font-size="12.5" font-weight="bold">AlphaGenome Multi-Modal Attribution Weights (Hepatocyte / Liver Tracks)</text>
-<text x="44" y="126" fill="#E2E8F0" font-family="sans-serif" font-size="11">RNA-seq Expression (SORT1 Liver)</text>
+<text x="26" y="54" fill="#475569" font-family="monospace" font-size="11.5">Chain: alphagenome-variant-impact-score (AVI=0.94) → ucsc-conservation (phyloP) → encode-ccres → jaspar → gtex</text>
+<rect x="26" y="70" width="465" height="216" rx="10" fill="#0F172A" stroke="#CBD5E1"/>
+<text x="44" y="94" fill="#0F172A" font-family="sans-serif" font-size="12.5" font-weight="bold">AlphaGenome Multi-Modal Attribution Weights (Hepatocyte / Liver Tracks)</text>
+<text x="44" y="126" fill="#1E293B" font-family="sans-serif" font-size="11">RNA-seq Expression (SORT1 Liver)</text>
 <rect x="265" y="114" width="185" height="15" rx="5" fill="#1E293B"/>
 <rect x="265" y="114" width="177.6" height="15" rx="5" fill="#00E676"/>
 <text x="458" y="126" fill="#00E676" font-family="monospace" font-size="11" font-weight="bold">0.96</text>
-<text x="44" y="153" fill="#E2E8F0" font-family="sans-serif" font-size="11">DNASE Chromatin Accessibility</text>
+<text x="44" y="153" fill="#1E293B" font-family="sans-serif" font-size="11">DNASE Chromatin Accessibility</text>
 <rect x="265" y="141" width="185" height="15" rx="5" fill="#1E293B"/>
 <rect x="265" y="141" width="164.7" height="15" rx="5" fill="#00E5FF"/>
 <text x="458" y="153" fill="#00E5FF" font-family="monospace" font-size="11" font-weight="bold">0.89</text>
-<text x="44" y="180" fill="#E2E8F0" font-family="sans-serif" font-size="11">ChIP-TF CEBPA Binding Gain</text>
+<text x="44" y="180" fill="#1E293B" font-family="sans-serif" font-size="11">ChIP-TF CEBPA Binding Gain</text>
 <rect x="265" y="168" width="185" height="15" rx="5" fill="#1E293B"/>
 <rect x="265" y="168" width="170.2" height="15" rx="5" fill="#7C4DFF"/>
 <text x="458" y="180" fill="#7C4DFF" font-family="monospace" font-size="11" font-weight="bold">0.92</text>
-<text x="44" y="207" fill="#E2E8F0" font-family="sans-serif" font-size="11">H3K27ac Active Enhancer Mark</text>
+<text x="44" y="207" fill="#1E293B" font-family="sans-serif" font-size="11">H3K27ac Active Enhancer Mark</text>
 <rect x="265" y="195" width="185" height="15" rx="5" fill="#1E293B"/>
 <rect x="265" y="195" width="155.4" height="15" rx="5" fill="#FFB300"/>
 <text x="458" y="207" fill="#FFB300" font-family="monospace" font-size="11" font-weight="bold">0.84</text>
-<text x="44" y="234" fill="#E2E8F0" font-family="sans-serif" font-size="11">CAGE Promoter / TSS Usage</text>
+<text x="44" y="234" fill="#1E293B" font-family="sans-serif" font-size="11">CAGE Promoter / TSS Usage</text>
 <rect x="265" y="222" width="185" height="15" rx="5" fill="#1E293B"/>
 <rect x="265" y="222" width="144.3" height="15" rx="5" fill="#38BDF8"/>
 <text x="458" y="234" fill="#38BDF8" font-family="monospace" font-size="11" font-weight="bold">0.78</text>
-<text x="44" y="261" fill="#E2E8F0" font-family="sans-serif" font-size="11">Splice Junction Usage (GENCODE v46)</text>
+<text x="44" y="261" fill="#1E293B" font-family="sans-serif" font-size="11">Splice Junction Usage (GENCODE v46)</text>
 <rect x="265" y="249" width="185" height="15" rx="5" fill="#1E293B"/>
 <rect x="265" y="249" width="25.9" height="15" rx="5" fill="#64748B"/>
 <text x="458" y="261" fill="#64748B" font-family="monospace" font-size="11" font-weight="bold">0.14</text>
-<rect x="508" y="70" width="326" height="216" rx="10" fill="#0F172A" stroke="#1E293B"/>
+<rect x="508" y="70" width="326" height="216" rx="10" fill="#0F172A" stroke="#CBD5E1"/>
 <text x="524" y="94" fill="#00E5FF" font-family="sans-serif" font-size="12.5" font-weight="bold">UCSC phyloP100way &amp; JASPAR Motif Gain</text>
-<text x="524" y="116" fill="#94A3B8" font-family="monospace" font-size="11">ENCODE cCRE: <tspan fill="#FFB300">dELS (Distal Enhancer)</tspan></text>
-<text x="524" y="136" fill="#94A3B8" font-family="monospace" font-size="11">phyloP100way: <tspan fill="#00E676">+4.82 (Conserved Peak)</tspan></text>
-<text x="524" y="156" fill="#94A3B8" font-family="monospace" font-size="11">GTEx Liver eQTL: <tspan fill="#00E5FF">NES +1.42 (p=1.8e-42)</tspan></text>
-<rect x="524" y="172" width="294" height="96" rx="8" fill="#040711" stroke="#7C4DFF" stroke-opacity="0.45"/>
-<text x="538" y="194" fill="#94A3B8" font-family="monospace" font-size="10.5">JASPAR MA0102.4 (CEBPA Transcription Factor)</text>
-<text x="538" y="226" fill="#F8FAFC" font-family="monospace" font-size="22" font-weight="bold" letter-spacing="6">TT<tspan fill="#00E676">G</tspan>CGCAAT</text>
+<text x="524" y="116" fill="#475569" font-family="monospace" font-size="11">ENCODE cCRE: <tspan fill="#FFB300">dELS (Distal Enhancer)</tspan></text>
+<text x="524" y="136" fill="#475569" font-family="monospace" font-size="11">phyloP100way: <tspan fill="#00E676">+4.82 (Conserved Peak)</tspan></text>
+<text x="524" y="156" fill="#475569" font-family="monospace" font-size="11">GTEx Liver eQTL: <tspan fill="#00E5FF">NES +1.42 (p=1.8e-42)</tspan></text>
+<rect x="524" y="172" width="294" height="96" rx="8" fill="#FFFFFF" stroke="#7C4DFF" stroke-opacity="0.45"/>
+<text x="538" y="194" fill="#475569" font-family="monospace" font-size="10.5">JASPAR MA0102.4 (CEBPA Transcription Factor)</text>
+<text x="538" y="226" fill="#0F172A" font-family="monospace" font-size="22" font-weight="bold" letter-spacing="6">TT<tspan fill="#00E676">G</tspan>CGCAAT</text>
 <text x="538" y="252" fill="#00E676" font-family="monospace" font-size="10.5">Alt Allele (T) creates de novo C/EBPα binding site (+6.4 bits)</text>
 </svg>

@@ -102,13 +102,13 @@ def write_svg_dashboard(residues: list[dict], pae: list[list[float]], out_svg: P
     n = len(residues)
     svg = [
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" width="820" height="340">',
-        '<rect width="820" height="340" rx="16" fill="#070B19" stroke="#00E5FF" stroke-opacity="0.35"/>',
-        '<text x="28" y="36" fill="#F8FAFC" font-family="sans-serif" font-size="16" font-weight="bold">'
+        '<rect width="820" height="340" rx="16" fill="#FFFFFF" stroke="#00E5FF" stroke-opacity="0.35"/>',
+        '<text x="28" y="36" fill="#0F172A" font-family="sans-serif" font-size="16" font-weight="bold">'
         'Antigravity Science Plugin - AlphaFold pLDDT Profile &amp; PAE Domain Matrix</text>',
-        '<text x="28" y="56" fill="#94A3B8" font-family="sans-serif" font-size="12">'
+        '<text x="28" y="56" fill="#475569" font-family="sans-serif" font-size="12">'
         'Generated via zero-dependency PEP 723 uv script (examples/generate_3d_protein_pae_demo.py)</text>',
         # Left Panel: pLDDT Bar Profile
-        '<rect x="28" y="76" width="460" height="230" rx="10" fill="#0F172A" stroke="#1E293B"/>',
+        '<rect x="28" y="76" width="460" height="230" rx="10" fill="#0F172A" stroke="#CBD5E1"/>',
         '<text x="44" y="100" fill="#00E5FF" font-family="sans-serif" font-size="12" font-weight="bold">'
         'Per-Residue C-Alpha pLDDT Confidence (Threshold = 50.0 &amp; 70.0)</text>',
         '<line x1="44" y1="210" x2="472" y2="210" stroke="#FF7D45" stroke-dasharray="4,4" stroke-width="1"/>',
@@ -125,7 +125,7 @@ def write_svg_dashboard(residues: list[dict], pae: list[list[float]], out_svg: P
         svg.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{max(2.0, bar_w - 1.2):.1f}" height="{h:.1f}" fill="{color}" rx="1.5"/>')
 
     # Right Panel: 2D PAE Heatmap
-    svg.append('<rect x="512" y="76" width="280" height="230" rx="10" fill="#0F172A" stroke="#1E293B"/>')
+    svg.append('<rect x="512" y="76" width="280" height="230" rx="10" fill="#0F172A" stroke="#CBD5E1"/>')
     svg.append('<text x="528" y="100" fill="#00E676" font-family="sans-serif" font-size="12" font-weight="bold">Predicted Aligned Error (PAE Å)</text>')
 
     grid_size = 182.0

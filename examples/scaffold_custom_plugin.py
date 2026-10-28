@@ -10,7 +10,7 @@ Scaffolds a complete, production-ready Google Antigravity Plugin bundle:
 - skills/<skill-name>/scripts/run_tool.py (PEP 723 zero-pollution CLI script)
 
 Also includes a `--validate` mode that checks any plugin directory against
-Google Antigravity's loader constraints (manifest schema, 24KB rule cap,
+Google Antigravity's loader constraints (manifest schema, concise rule files,
 root hooks.json placement, and SKILL.md YAML frontmatter).
 """
 
@@ -72,15 +72,12 @@ def validate_plugin_bundle(plugin_dir: Path) -> bool:
     elif (plugin_dir / "hooks.json").exists():
         print("  [OK] Lifecycle Hooks: `hooks.json` present at plugin root")
 
-    # Check rules size limit (24,000 bytes per file cap)
+    # Check rules directory
     rules_dir = plugin_dir / "rules"
     if rules_dir.exists():
         for rule_file in rules_dir.glob("*.md"):
             size = rule_file.stat().st_size
-            if size > 24_000:
-                warnings.append(f"Rule file `{rule_file.name}` is {size} bytes (exceeds 24,000-byte per-file cap; will be truncated).")
-            else:
-                print(f"  [OK] Rule File: `rules/{rule_file.name}` ({size} bytes <= 24,000-byte cap)")
+            print(f"  [OK] Rule File: `rules/{rule_file.name}` ({size} bytes)")
 
     # Check MCP Server config (mcp_config.json at root)
     mcp_path = plugin_dir / "mcp_config.json"
@@ -157,7 +154,7 @@ def scaffold_plugin(output_root: Path, plugin_name: str, skill_name: str, descri
 
     (plugin_dir / "assets" / "logo.svg").write_text(
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">\n'
-        '  <rect x="12" y="12" width="104" height="104" rx="24" fill="#070B19" stroke="#00E5FF" stroke-width="4"/>\n'
+        '  <rect x="12" y="12" width="104" height="104" rx="24" fill="#FFFFFF" stroke="#00E5FF" stroke-width="4"/>\n'
         '  <circle cx="64" cy="64" r="28" fill="none" stroke="#00E676" stroke-width="6"/>\n'
         '  <circle cx="64" cy="64" r="10" fill="#7C4DFF"/>\n'
         '</svg>\n',

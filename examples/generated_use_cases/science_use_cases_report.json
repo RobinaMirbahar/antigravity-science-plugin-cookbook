@@ -7,7 +7,7 @@
       "gnomad-database",
       "alphafold-database-fetch-and-analyze",
       "chembl-database",
-      "biomolecular-structure-viewer"
+      "pymol"
     ],
     "variant": "chr7:55191822:T>G (EGFR p.Leu858Arg / rs121434568)",
     "gnomad_loeuf": 0.24,
