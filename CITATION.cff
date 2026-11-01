@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use the Google Antigravity Science Plugin Cookbook in your research or engineering workflows, please cite it using the metadata below."
+title: "Google Antigravity Science Plugin Cookbook: Interactive 3D Biomolecular Viewers, AlphaGenome, and Multi-Agent Scientific Workflows"
+type: software
+authors:
+  - family-names: "Mirbahar"
+    given-names: "Robina"
+    affiliation: "Google Developer Expert (AI/ML & Cloud) & Google Cloud Champion Innovator"
+repository-code: "https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook"
+url: "https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/"
+keywords:
+  - google-antigravity
+  - alphafold
+  - alphagenome
+  - biomolecular-structure-viewer
+  - mcp-server
+  - scientific-ai-agents
+license: MIT
+version: 1.1.0
+date-released: "2026-11-01"
