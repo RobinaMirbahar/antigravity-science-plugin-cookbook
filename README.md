@@ -121,7 +121,7 @@ While inspecting the source files across all 40 skills, five engineering pattern
 
 ### Pattern 1: Always-On Behavioral Routing via `rules/AGENTS.md`
 
-As documented in the public **[Antigravity Rules Guide (`antigravity.google/docs/rules`)](https://antigravity.google/docs/rules)**, rules define persistent coding standards and architectural constraints (`always_on`, `model_decision`, `glob`, or `manual`) across workspace and global scopes.
+As documented in the public **[Antigravity Rules Guide (`antigravity.google/docs/rules`)](https://antigravity.google/docs/rules?utm_campaign=deveco_gdemembers&utm_source=deveco)**, rules define persistent coding standards and architectural constraints (`always_on`, `model_decision`, `glob`, or `manual`) across workspace and global scopes.
 
 In my custom `bio-structural-qc` plugin (`plugins/bio-structural-qc/rules/AGENTS.md`), I use a compact `AGENTS.md` rule so the agent automatically audits 3D coordinate files (`.pdb`, `.cif`, `.mmcif`) and warns about low-confidence disordered regions before running downstream structural searches or headless PyMOL renders:
 
@@ -204,7 +204,7 @@ The `credentials` skill solves this with a strict **Zero-Leak Protocol**:
 
 ### Pattern 4: Background Sidecars (`sidecar.json`) & Custom 3D WebGL / MCP Tool Servers (`mcp_config.json`)
 
-As documented in the public **[Antigravity Sidecars Guide (`antigravity.google/docs/sidecars`)](https://antigravity.google/docs/sidecars)** and **[MCP Guide (`antigravity.google/docs/mcp`)](https://antigravity.google/docs/mcp)**, Antigravity lets plugins pair **Model Context Protocol (`mcp_config.json`)** tool servers with managed background **Sidecar processes (`sidecar.json`)** that support `command`, `builtin` (`schedule`), `args`, `restart_policy` (`always`, `on-failure`, `never`), `description`, `env`, and `display_name`, plus programmatic interaction via `agentapi`.
+As documented in the public **[Antigravity Sidecars Guide (`antigravity.google/docs/sidecars`)](https://antigravity.google/docs/sidecars?utm_campaign=deveco_gdemembers&utm_source=deveco)** and **[MCP Guide (`antigravity.google/docs/mcp`)](https://antigravity.google/docs/mcp?utm_campaign=deveco_gdemembers&utm_source=deveco)**, Antigravity lets plugins pair **Model Context Protocol (`mcp_config.json`)** tool servers with managed background **Sidecar processes (`sidecar.json`)** that support `command`, `builtin` (`schedule`), `args`, `restart_policy` (`always`, `on-failure`, `never`), `description`, `env`, and `display_name`, plus programmatic interaction via `agentapi`.
 
 In my open-source **[Antigravity Science Plugin Cookbook](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook)**, I pair a zero-dependency Python Stdio MCP Server (`plugins/genomics-variant-mcp/mcp_config.json`) with a documented background Sidecar worker (`sidecar.json`) and my browser-based **3D PDBe Mol\* / WebGL Biomolecular Studio (`index.html`)**:
 
@@ -623,7 +623,7 @@ cp -r plugins/epigraphy-citation-kit ~/.gemini/config/plugins/epigraphy-citation
 
 ## 6. Deep Dive: The 4 Public Antigravity MCP Server Patterns + 2 More Starter Plugins (`genomics-variant-mcp` & `epigraphy-citation-kit`)
 
-As documented in the public **[Antigravity MCP Guide (`antigravity.google/docs/mcp`)](https://antigravity.google/docs/mcp)**, `mcp_config.json` supports **four core server connection patterns** across local developer tools and Google Cloud services:
+As documented in the public **[Antigravity MCP Guide (`antigravity.google/docs/mcp`)](https://antigravity.google/docs/mcp?utm_campaign=deveco_gdemembers&utm_source=deveco)**, `mcp_config.json` supports **four core server connection patterns** across local developer tools and Google Cloud services:
 
 ### A. The 4 Documented `mcp_config.json` Patterns
 
@@ -698,7 +698,7 @@ uv run examples/inspect_installed_plugins.py --root ~/.gemini/config/plugins
 ```
 
 ### C. Installing & Inspecting Plugins from the Shell with `agy plugin`
-As documented in the **[Antigravity Plugins Guide (`antigravity.google/docs/plugins`)](https://antigravity.google/docs/plugins)**, you can install the open-source DeepMind Science skills or my cookbook plugins directly via `npx` or the `agy plugin` CLI:
+As documented in the **[Antigravity Plugins Guide (`antigravity.google/docs/plugins`)](https://antigravity.google/docs/plugins?utm_campaign=deveco_gdemembers&utm_source=deveco)**, you can install the open-source DeepMind Science skills or my cookbook plugins directly via `npx` or the `agy plugin` CLI:
 ```bash
 # Install Google DeepMind's open-source science-skills bundle
 npx skills add google-deepmind/science-skills/
@@ -714,15 +714,15 @@ agy plugin list --json
 
 ### A. Official Google Antigravity Documentation
 * **[Google DeepMind Science Skills Open-Source Repository (`github.com/google-deepmind/science-skills`)](https://github.com/google-deepmind/science-skills)**
-* **[Google Antigravity Science Use Cases & Demos (`antigravity.google/use-cases/science`)](https://antigravity.google/use-cases/science)**
-* **[Google Antigravity Documentation Home (`antigravity.google/docs`)](https://antigravity.google/docs)**
-* **[Plugins Guide (`antigravity.google/docs/plugins`)](https://antigravity.google/docs/plugins)**
-* **[Progressive-Disclosure Skills Guide (`antigravity.google/docs/skills`)](https://antigravity.google/docs/skills)**
-* **[Rules Guide (`antigravity.google/docs/rules`)](https://antigravity.google/docs/rules)**
-* **[Lifecycle Hooks Guide (`antigravity.google/docs/hooks`)](https://antigravity.google/docs/hooks)**
-* **[Auxiliary Pane Sidecars Guide (`antigravity.google/docs/sidecars`)](https://antigravity.google/docs/sidecars)**
-* **[Model Context Protocol (MCP) Guide (`antigravity.google/docs/mcp`)](https://antigravity.google/docs/mcp)**
-* **[Agent Permissions & Security (`antigravity.google/docs/permissions`)](https://antigravity.google/docs/permissions)**
+* **[Google Antigravity Science Use Cases & Demos (`antigravity.google/use-cases/science`)](https://antigravity.google/use-cases/science?utm_campaign=deveco_gdemembers&utm_source=deveco)**
+* **[Google Antigravity Documentation Home (`antigravity.google/docs`)](https://antigravity.google/docs?utm_campaign=deveco_gdemembers&utm_source=deveco)**
+* **[Plugins Guide (`antigravity.google/docs/plugins`)](https://antigravity.google/docs/plugins?utm_campaign=deveco_gdemembers&utm_source=deveco)**
+* **[Progressive-Disclosure Skills Guide (`antigravity.google/docs/skills`)](https://antigravity.google/docs/skills?utm_campaign=deveco_gdemembers&utm_source=deveco)**
+* **[Rules Guide (`antigravity.google/docs/rules`)](https://antigravity.google/docs/rules?utm_campaign=deveco_gdemembers&utm_source=deveco)**
+* **[Lifecycle Hooks Guide (`antigravity.google/docs/hooks`)](https://antigravity.google/docs/hooks?utm_campaign=deveco_gdemembers&utm_source=deveco)**
+* **[Auxiliary Pane Sidecars Guide (`antigravity.google/docs/sidecars`)](https://antigravity.google/docs/sidecars?utm_campaign=deveco_gdemembers&utm_source=deveco)**
+* **[Model Context Protocol (MCP) Guide (`antigravity.google/docs/mcp`)](https://antigravity.google/docs/mcp?utm_campaign=deveco_gdemembers&utm_source=deveco)**
+* **[Agent Permissions & Security (`antigravity.google/docs/permissions`)](https://antigravity.google/docs/permissions?utm_campaign=deveco_gdemembers&utm_source=deveco)**
 * **[Google Antigravity Python SDK (`github.com/google-antigravity/antigravity-sdk-python`)](https://github.com/google-antigravity/antigravity-sdk-python)**
 
 ### B. Scientific AI Models, Databases & Open-Source Viewers
@@ -749,15 +749,15 @@ agy plugin list --json
 If you find the **Antigravity Science Plugin Cookbook & Interactive 3D WebGL Studio** useful for your research or engineering workflows:
 
 * **Star this Repository:** [**Star `RobinaMirbahar/antigravity-science-plugin-cookbook` on GitHub**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook) to bookmark the 3 starter plugins and help other developers discover the cookbook.
-* **Fork & Customize:** [**Fork `RobinaMirbahar/antigravity-science-plugin-cookbook`**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/fork) to scaffold and publish your own custom [**Google Antigravity (`@google-antigravity`)**](https://antigravity.google/docs) plugins, progressive-disclosure skills, and MCP servers.
+* **Fork & Customize:** [**Fork `RobinaMirbahar/antigravity-science-plugin-cookbook`**](https://github.com/RobinaMirbahar/antigravity-science-plugin-cookbook/fork) to scaffold and publish your own custom [**Google Antigravity (`@google-antigravity`)**](https://antigravity.google/docs?utm_campaign=deveco_gdemembers&utm_source=deveco) plugins, progressive-disclosure skills, and MCP servers.
 * **Play Live in Your Browser:** [**Launch the Interactive 3D Biomolecular & Variant WebGL Studio**](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)
 
 ### Official Ecosystem Links & Tags
 * **Google:** [github.com/google (`@google`)](https://github.com/google) | [about.google](https://about.google/)
-* **Google Gemini API & SDKs:** [github.com/google-gemini (`@google-gemini`)](https://github.com/google-gemini) | [ai.google.dev/gemini-api/docs](https://ai.google.dev/gemini-api/docs)
-* **Google DeepMind Science & Models:** [github.com/google-deepmind (`@google-deepmind`)](https://github.com/google-deepmind) | [deepmind.google](https://deepmind.google/) | [AlphaGenome](https://deepmind.google.com/science/alphagenome/) | [AlphaFold](https://alphafold.ebi.ac.uk/) | [Aeneas & Ithaca](https://predictingthepast.com/)
-* **Google Antigravity Platform:** [antigravity.google/docs](https://antigravity.google/docs) | [antigravity.google/use-cases/science](https://antigravity.google/use-cases/science) | [github.com/google-antigravity (`@google-antigravity`)](https://github.com/google-antigravity/antigravity-sdk-python)
-* **Google Cloud Platform:** [github.com/GoogleCloudPlatform (`@GoogleCloudPlatform`)](https://github.com/GoogleCloudPlatform) | [cloud.google.com](https://cloud.google.com/)
+* **Google Gemini API & SDKs:** [github.com/google-gemini (`@google-gemini`)](https://github.com/google-gemini) | [ai.google.dev/gemini-api/docs](https://ai.google.dev/gemini-api/docs?utm_campaign=deveco_gdemembers&utm_source=deveco)
+* **Google DeepMind Science & Models:** [github.com/google-deepmind (`@google-deepmind`)](https://github.com/google-deepmind) | [deepmind.google](https://deepmind.google/?utm_campaign=deveco_gdemembers&utm_source=deveco) | [AlphaGenome](https://deepmind.google.com/science/alphagenome/) | [AlphaFold](https://alphafold.ebi.ac.uk/) | [Aeneas & Ithaca](https://predictingthepast.com/)
+* **Google Antigravity Platform:** [antigravity.google/docs](https://antigravity.google/docs?utm_campaign=deveco_gdemembers&utm_source=deveco) | [antigravity.google/use-cases/science](https://antigravity.google/use-cases/science?utm_campaign=deveco_gdemembers&utm_source=deveco) | [github.com/google-antigravity (`@google-antigravity`)](https://github.com/google-antigravity/antigravity-sdk-python)
+* **Google Cloud Platform:** [github.com/GoogleCloudPlatform (`@GoogleCloudPlatform`)](https://github.com/GoogleCloudPlatform) | [cloud.google.com](https://cloud.google.com/?utm_campaign=deveco_gdemembers&utm_source=deveco)
 
 Let me know in the comments what domain you're packaging into an Antigravity plugin next - whether it's **3D structural biology**, **genomic variant scoring**, **ancient epigraphy**, or **autonomous cloud SRE**!
 
