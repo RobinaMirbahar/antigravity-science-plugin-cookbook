@@ -5,7 +5,8 @@
 ![DeepMind_Science](https://img.shields.io/badge/DeepMind_Science-AlphaFold_&_AlphaGenome-7C3AED?style=for-the-badge&logo=python&logoColor=white)
 ![Author](https://img.shields.io/badge/Author-Robina_Mirbahar-EA4335?style=for-the-badge&logo=github&logoColor=white)
 
-> **Author & Architect:** [Robina Mirbahar](https://github.com/RobinaMirbahar) (Google Developer Expert in Cloud & AI)  
+> **Author & Architect:** [Robina Mirbahar](https://github.com/RobinaMirbahar) ([Google Developer Expert in Cloud & AI](https://developers.google.com/profile/u/106918534005910641104?utm_campaign=deveco_gdemembers&utm_source=deveco) · Google Cloud Champion Innovator · Co-Author of [*AI Engineering*](https://www.amazon.com/dp/B0GWCZWCF4))  
+> 📚 **Companion Publications:** [DEV.to (@gde) Featured Article](https://dev.to/gde/from-ancient-epigraphy-to-3d-proteins-building-plugins-skills-mcp-sidecars-in-google-antigravity-4l1m) · [Medium Article](https://medium.com/@robinamirbahar/building-plugins-skills-mcp-sidecars-in-google-antigravity-8dad2d74cfa2) · [Live 3D Biomolecular Studio](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)  
 > **Focus:** Building Google Antigravity Plugins, PEP 723 Skills, Lifecycle Hooks, and 3D Mol* MCP Sidecars
 
 ---
@@ -47,6 +48,38 @@ Instead of just reading the docs, I explored the newly open-sourced **[Google De
 Why can the Science plugin bundle **40 complex scientific skills** and a **9-tool 3D WebGL MCP server** without slowing down everyday coding turns? Because Antigravity strictly separates **always-on behavioral guardrails** from **on-demand procedural execution**:
 
 ![Antigravity Plugin & Customization Architecture](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/arch_customization_hierarchy.png?v=white2)
+
+### 📐 Color-Coded 5-Layer Antigravity Science Plugin Architecture
+> *(🩷 Pink = Antigravity Host & Rules | 💙 Blue = 41 PEP 723 Science Skills | 💚 Green = Live Bio/Chem/Epigraphy Databases & MCP | 💜 Purple = 3D Mol* WebGL Sidecar & Verified Outputs)*
+
+```mermaid
+flowchart TD
+    subgraph Host ["1. Google Antigravity Host & Always-On Rules"]
+        H_Rules["AGENTS.md Grounding & Sidecar Priority Rules"]
+        H_Hooks["Pre/PostToolUse Credential & Safety Hooks"]
+    end
+    subgraph Skills ["2. Progressive-Disclosure PEP 723 Science Skills"]
+        S_Bio["Genomics & Structure<br/>(AlphaFold · AlphaGenome · Ensembl · ClinVar)"]
+        S_Chem["Cheminformatics & CADD<br/>(RDKit · ChEMBL · PubChem · Vina/OpenMM)"]
+        S_Past["Ancient Epigraphy & Literature<br/>(DeepMind Aeneas/Ithaca · OpenAlex · EuropePMC)"]
+    end
+    subgraph MCP ["3. Custom JSON-RPC 2.0 Stdio MCP & REST Connectors"]
+        M_API["Live REST / GraphQL / Atlas API Retrieval"]
+    end
+    subgraph Sidecar ["4. Interactive 3D WebGL & Sidecar Viewers"]
+        V_Mol["3D Mol* Biomolecular Structure Viewer (sidecar://)"]
+    end
+    H_Rules --> H_Hooks --> S_Bio & S_Chem & S_Past --> M_API --> V_Mol
+
+    style H_Rules fill:#fce7f3,stroke:#db2777,stroke-width:2px,color:#831843
+    style H_Hooks fill:#fce7f3,stroke:#db2777,stroke-width:2px,color:#831843
+    style S_Bio fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style S_Chem fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style S_Past fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style M_API fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
+    style V_Mol fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87
+```
+
 
 ### The 5 Customization Primitives & Their Token Budgets
 
@@ -760,22 +793,3 @@ If you find the **Antigravity Science Plugin Cookbook & Interactive 3D WebGL Stu
 * **Google Cloud Platform:** [github.com/GoogleCloudPlatform (`@GoogleCloudPlatform`)](https://github.com/GoogleCloudPlatform) | [cloud.google.com](https://cloud.google.com/?utm_campaign=deveco_gdemembers&utm_source=deveco)
 
 Let me know in the comments what domain you're packaging into an Antigravity plugin next - whether it's **3D structural biology**, **genomic variant scoring**, **ancient epigraphy**, or **autonomous cloud SRE**!
-
-<!-- AUTHOR_SIGNATURE_START -->
----
-
-## 👩‍💻 About the Author
-
-**Robina Mirbahar - Google Cloud & AI Architect**  
-*Google Developer Expert (GDE) in Cloud & AI • Published Author • Multi-Agent Systems & Serverless GPU Builder*
-
-[![GitHub](https://img.shields.io/badge/GitHub-RobinaMirbahar-181717?style=for-the-badge&logo=github)](https://github.com/RobinaMirbahar)
-[![Medium](https://img.shields.io/badge/Medium-@robinamirbahar-000000?style=for-the-badge&logo=medium)](https://medium.com/@robinamirbahar)
-[![DEV.to](https://img.shields.io/badge/DEV.to-robinamirbahar-0A0A0A?style=for-the-badge&logo=devdotto)](https://dev.to/robinamirbahar)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Robina_Mirbahar-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/robinamirbahar)
-[![GDE Profile](https://img.shields.io/badge/Google_Developer_Expert-Profile-4285F4?style=for-the-badge&logo=google)](https://g.dev/RobinaMirbahar?utm_campaign=deveco_gdemembers&utm_source=deveco)
-[![YouTube](https://img.shields.io/badge/YouTube-@RobinaCodesAI-FF0000?style=for-the-badge&logo=youtube)](https://www.youtube.com/@RobinaCodesAI)
-[![X](https://img.shields.io/badge/X-@RobinaMirbahar-000000?style=for-the-badge&logo=x)](https://x.com/RobinaMirbahar)
-[![Amazon Author](https://img.shields.io/badge/Amazon_Book-Cloud_Computing_Voyage-FF9900?style=for-the-badge&logo=amazon)](https://www.amazon.com/dp/B0D146249R)
-
-<!-- AUTHOR_SIGNATURE_END -->
