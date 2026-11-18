@@ -7,7 +7,7 @@
 
 > **Author & Architect:** [Robina Mirbahar](https://github.com/RobinaMirbahar) ([Google Developer Expert in Cloud & AI](https://developers.google.com/profile/u/106918534005910641104?utm_campaign=deveco_gdemembers&utm_source=deveco) · Google Cloud Champion Innovator · Co-Author of [*AI Engineering*](https://www.amazon.com/dp/B0GWCZWCF4))  
 > 📚 **Companion Publications:** [DEV.to (@gde) Featured Article](https://dev.to/gde/from-ancient-epigraphy-to-3d-proteins-building-plugins-skills-mcp-sidecars-in-google-antigravity-4l1m) · [Medium Article](https://medium.com/@robinamirbahar/building-plugins-skills-mcp-sidecars-in-google-antigravity-8dad2d74cfa2) · [Live 3D Biomolecular Studio](https://robinamirbahar.github.io/antigravity-science-plugin-cookbook/)  
-> **Focus:** Building Google Antigravity Plugins, PEP 723 Skills, Lifecycle Hooks, and 3D Mol* MCP Sidecars
+> **Core Stack:** [Google Antigravity](https://antigravity.google/?utm_campaign=deveco_gdemembers&utm_source=deveco), [Google Gemini API](https://ai.google.dev/gemini-api/docs?utm_campaign=deveco_gdemembers&utm_source=deveco), DeepMind AlphaFold & AlphaGenome, Aeneas/Ithaca Epigraphy, 3D Mol* WebGL Sidecars, and Model Context Protocol (MCP).
 
 ---
 
