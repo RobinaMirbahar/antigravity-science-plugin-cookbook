@@ -49,9 +49,7 @@ Why can the Science plugin bundle **40 complex scientific skills** and a **9-too
 
 ![Antigravity Plugin & Customization Architecture](https://raw.githubusercontent.com/RobinaMirbahar/antigravity-science-plugin-cookbook/main/assets/arch_customization_hierarchy.png?v=white2)
 
-### 📐 Color-Coded 5-Layer Antigravity Science Plugin Architecture
-> *(🩷 Pink = Antigravity Host & Rules | 💙 Blue = 41 PEP 723 Science Skills | 💚 Green = Live Bio/Chem/Epigraphy Databases & MCP | 💜 Purple = 3D Mol* WebGL Sidecar & Verified Outputs)*
-
+### 📐 5-Layer Antigravity Science Plugin Architecture
 ```mermaid
 flowchart TD
     subgraph Host ["1. Google Antigravity Host & Always-On Rules"]
@@ -70,14 +68,6 @@ flowchart TD
         V_Mol["3D Mol* Biomolecular Structure Viewer (sidecar://)"]
     end
     H_Rules --> H_Hooks --> S_Bio & S_Chem & S_Past --> M_API --> V_Mol
-
-    style H_Rules fill:#fce7f3,stroke:#db2777,stroke-width:2px,color:#831843
-    style H_Hooks fill:#fce7f3,stroke:#db2777,stroke-width:2px,color:#831843
-    style S_Bio fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    style S_Chem fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    style S_Past fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
-    style M_API fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
-    style V_Mol fill:#f3e8ff,stroke:#9333ea,stroke-width:2px,color:#581c87
 ```
 
 
